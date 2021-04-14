@@ -1,0 +1,62 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/IFrame.cshtml"; //母版页
+}
+
+<form method="post" singoo-data-ajax="true" singoo-data-dialog="true" action="/platform/Tags/@(ViewBag.ParamAction)">
+    <script type="text/html" id="singoo-template">
+        {{#result}}
+        <div class="form-box">
+            <ul>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        标签名称：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox1" type="text" value="{{TagName}}" maxlength="50" id="TextBox1" placeholder="请输入标签名称" required="required" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        是否热门：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <label>
+                            <input name="chkHot" {{#IsTop}}checked="checked"{{/IsTop}} type="checkbox" id="chkHot" class="common-check" />
+                            <span></span>是
+                        </label>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        是否推荐：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <label>
+                            <input name="chkRecommend" {{#IsRecommend}}checked="checked"{{/IsRecommend}} type="checkbox" id="chkRecommend" class="common-check" />
+                            <span></span>是
+                        </label>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        排序：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input type="number" name="TextBox2" {{#Sort}}{{#Sort}} value="{{Sort}}" {{/Sort}} {{^Sort}} value="99999" {{/Sort}}{{/Sort}} {{^Sort}}value="999"{{/Sort}}  id="TextBox2" style="width:60px;" />
+                    </div>
+                </li>
+                <li class="btn-box">
+                    <input type="submit" name="btnok" value="确 认" id="btnok" class="btn-style sure-btn" />
+                    <input id="btncancel" singoo-dialog-close="true" type="button" value="取 消(ESC)" class="btn-style cancel-btn" />
+                </li>
+            </ul>
+        </div>
+        {{/result}}
+    </script>
+</form>
+
+<script>
+    var json = @Html.Raw(ViewBag.InitData); //数据
+    var tmpl=$("#singoo-template").html(); //模板
+    h5.render($("form"),tmpl,json); //渲染并显示模板
+</script>

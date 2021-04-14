@@ -1,0 +1,68 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+@model SinGooCMS.Domain.Models.RoleInfo;
+
+<style type="text/css">
+    .tablechild1
+    {
+        width: 100%;
+        margin: 5px 0;
+        background: white;
+        border-collapse:collapse;
+        border-spacing:0;
+    }
+    .tablechild1 td
+    {
+        padding: 5px;
+        height: 25px;
+        line-height: 25px;
+        margin:3px 5px;
+        /*background:#fafafa;*/
+    }
+    .titlebar2
+    {
+        padding:5px 10px;
+        background: #f0f0f0;
+        font-size:14px;
+        font-weight: bold;
+    }
+    #ContMger,#UserMger,#MobMger,#WeixinMger,#ADMger,#ConfMger,#SysMger{
+       margin-bottom:20px;
+    }
+</style>
+<form singoo-data-ajax="true">
+    <div class="main-content">
+        <div class="column">
+            <div class="content-title">
+                <h3>
+                    设置角色【@(Model.RoleName)】权限
+                </h3>
+            </div>
+            <div class="column-right-title clear-fix hide">
+                <div class="rank hide">
+                    <input type="checkbox" /><a class="check-txt">删除选中</a>
+                </div>
+                <div class="search">
+                </div>
+            </div>
+            <div id="qxlb">
+                <!--在此显示权限信息start-->
+                @Html.Raw(ViewBag.Permission)
+                <!--在此显示权限信息end-->
+            </div>
+            <div style="width: 100%; height: 40px; padding-top: 10px;">
+                <input type="submit" value="确 认" class="btn-style sure-btn" />
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    $("input[sname='s1']").change(function () {
+        if ($(this).attr("checked") == "checked") {
+            $(this).parent().parent().parent().parent().find("td").eq(1).find("input[type='checkbox']").attr("checked", "checked");
+        } else {
+            $(this).parent().parent().parent().parent().find("td").eq(1).find("input[type='checkbox']").removeAttr("checked");
+        }
+    });
+</script>

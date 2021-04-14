@@ -1,0 +1,138 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+@inject SinGooCMS.Domain.Interface.IFileUploadRepository fileUpload;
+
+<script src="~/include/plugin/clipboard/clipboard.min.js"></script>
+<form singoo-data-ajax="true" singoo-data-list="true">
+    <div class="top-fix clear-fix">
+        <div class="clear-fix">
+            <ul class="btn-group clear-fix">
+                <li>
+                    <label class="label-box" for="checkall">
+                        <input type="checkbox" class="common-check" id="checkall" />
+                        <span></span>全选
+                    </label>
+                </li>
+                <li>
+                    <a singoo-action="BatDelete"><i class='iconfont'>&#xe6eb;</i><span>删除</span></a>
+                </li>
+            </ul>
+            <div class="selectBox fl">
+                <select id="ddlMoveTo" name="ddlMoveTo">
+                    <option value="-1">未归档(@(fileUpload.UnFiledCount))</option>
+                    @foreach (var item in ViewBag.Folders)
+                    {
+                        <option value="@(item.AutoID)">@(item.FolderName)(@(item.FileCount))</option>
+                    }
+                </select>
+                <input type="button" id="moveto" value="转移到" class="btn-normal mid-size" />
+            </div>
+            <ul class="btn-group clear-fix">
+                <li>
+                    <a singoo-uploadext="true">
+                        <i class="iconfont">&#xe611;</i><span>文件上传</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="focus-item fr">
+                <label class="fl label-box" style="border:1px solid #ddd;margin-right:5px;">
+                    <input type="checkbox" id="imgonly" name="imgonly" class="common-check" singoo-search-item="true" value="1" />仅显示图片
+                    <span></span>
+                </label>
+                <div class="selectBox fl" style="margin-right:5px;">
+                    <select id="selFolder" name="selFolder" singoo-search-item="true">
+                        <option value="0">所有文件夹</option>
+                        <option value="-1">未归档(@(fileUpload.UnFiledCount))</option>
+                        @foreach (var item in ViewBag.Folders)
+                        {
+                            <option value="@(item.AutoID)">@(item.FolderName)(@(item.FileCount))</option>
+                        }
+                    </select>
+                </div>
+                <div class="selectBox fl" style="margin-right:5px;">
+                    <select id="nian" name="nian" singoo-search-item="true">
+                        @foreach (var item in ViewBag.Years)
+                        {
+                            <option value="@(item.Key)">@(item.Value)</option>
+                        }
+                    </select>
+                </div>
+                <div class="selectBox fl" style="margin-right:5px;">
+                    <select id="yue" name="yue" singoo-search-item="true">
+                        @foreach (var item in ViewBag.Months)
+                        {
+                            <option value="@(item.Key)">@(item.Value)</option>
+                        }
+                    </select>
+                </div>
+                <div class="search-box focus-item fr">
+                    <input name="key" singoo-search-item="true" type="text" placeholder="请输入文件名称" />
+                    <input type="button" singoo-action="Search" name="searchbtn" value="&#xe60a;" class="search-btn iconfont" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="file-box" id="rowItems" style="margin-top: 20px;" viewer='true'>
+        <ul class="clear-fix li-4" id="singoo-content"></ul>
+        <script id="singoo-template" type="text/html">
+            {{#data}}
+            <li class="file-item">
+                <div class="file-con clear-fix">
+                    <a class="file-pic" title='原文件名：{{OriginalPath}}'>
+                        {{{ShowImg}}}
+                    </a>
+                    <div class="file-name">
+                        <label>
+                            <input name="chk" type="checkbox" class="common-check" value="{{AutoID}}" />
+                            <span style="margin:0 3px 0 0;"></span>
+                            {{FileName}}
+                            {{FileSizeStr}}
+                            <input type="hidden" name="AutoID" value="{{AutoID}}" />
+                        </label>
+                    </div>
+                    <div class="file-item-btn clear-fix">
+                        <ul class="btn-group clear-fix">
+                            <li style="padding:0;margin:0;border:0;"><input style="min-width:220px;padding:0;margin:0;border:0;" readonly="readonly" type="text" value="{{VirtualFilePath}}" id="FileID{{AutoID}}" /></li>
+                        </ul>
+                        <ul class="btn-group clear-fix">
+                            <li>
+                                <a singoo-action="Delete" singoo-data-id="{{AutoID}}" class="iconfont">&#xe6eb;<i>删除</i></a>
+                            </li>
+                            <li>
+                                <a class="copyfile" href="javascript:void(0)" data-clipboard-action="copy" data-clipboard-target="#FileID{{AutoID}}"><i class="iconfont">&#xe624;</i><span>复制链接</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            {{/data}}
+            {{^data}}
+            <li> 没有找到任何数据</li>
+            {{/data}}
+        </script>
+    </div>
+    <!--分页 start-->
+    <div id="singoo-pager"></div>
+    <!--分页 end-->
+</form>
+<script type="text/javascript">
+    $(function () {
+        var clipboard = new ClipboardJS('.copyfile');
+        clipboard.on('success', function (e) {
+            //console.log(e);
+            showsuccess("成功复制到剪贴板：" + e.text);
+        });
+
+        clipboard.on('error', function (e) {
+            showalert("未复制到剪贴板，请手动复制！");
+            console.log(e);
+        });
+    })
+    $("body").find("a[singoo-uploadext='true']").click(function () {
+        new UploadTool(null, null, null, 1, 1, 1).open();
+    });
+    $("#moveto").click(function () {
+        singoo.ajaxSubmit("ids=" + singoo.getIds("chk") + "&folderid=" + $("#ddlMoveTo").val(), null,"/platform/Upfiles/MoveToFolder");
+    });
+</script>

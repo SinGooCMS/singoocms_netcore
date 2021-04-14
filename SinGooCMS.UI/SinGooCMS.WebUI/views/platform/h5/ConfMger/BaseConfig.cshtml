@@ -1,0 +1,147 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+
+@model SinGooCMS.Domain.Models.BaseConfigInfo
+
+<form singoo-data-ajax="true">
+    <div class="form-box" id="singoo-content">
+        <ul>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    站点名称：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox1" type="text" value="@(Model.SiteName)" maxlength="100" id="TextBox1" placeholder="请输入站点名称" required="required" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    站点网址：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input type="url" name="TextBox2" value="@(Model.SiteDomain)" maxlength="100" id="TextBox2" placeholder="需要以http:// 或者 https:// 开头" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    logo图片：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox4" type="text" value="@(Model.SiteLogo)" maxlength="100" id="TextBox4" style="width:300px;" />
+                    <a class="smallbtn" singoo-showimg="true" singoo-showimg-target="TextBox4">查看</a>
+                    <a singoo-upload="true" singoo-upload-param="TextBox4|value|single">上传</a>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    横幅图片：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox10" value="@(Model.SiteBanner)" type="text" maxlength="100" id="TextBox10" style="width:300px;" />
+                    <a class="smallbtn" singoo-showimg="true" singoo-showimg-target="TextBox10">
+                        查看
+                    </a> <a singoo-upload="true" singoo-upload-param="TextBox10|value|single">上传</a>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    版权信息：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox5" type="text" value="@(Model.CopyRight)" maxlength="50" id="TextBox5" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    备案编号：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox6" type="text" value="@(Model.IcpNo)" maxlength="50" id="TextBox6" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    前端显示语言：@(Model.DefaultLang)
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <select name="showlang" id="showlang">
+                        <option @(Model.DefaultLang == "" ? "selected='selected'" : "") value="">不指定</option>
+                        @{
+                            foreach (var item in SinGooCMS.Language.GlobalLang.Value)
+                            {
+                                <option @(Model.DefaultLang == item.LangName ? "selected='selected'" : "") value="@(item.LangName)">@(item.Alias)</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    浏览方式：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <select name="DropDownList10" id="DropDownList10">
+                        @{
+                            string[] arr2 = { "MvcDefault", "HtmlRewrite" };
+                            string[] arrDesc2 = { "MVC路由", "伪静态" };
+                            for (int i = 0; i < arr2.Length; i++)
+                            {
+                                <option @(Model.BrowseType == arr2[i] ? "selected='selected'" : "") value="@(arr2[i])">@(arrDesc2[i])</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </li>
+            <li class="form-item clear-fix hide">
+                <div class="form-item-title">
+                    地址重写扩展名：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="urlwriteext" type="text" value="@(Model.UrlRewriteExt)" id="urlwriteext" class="input-normal" tip="默认为.aspx 如伪静态则可以是.html" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    全局分页记录数：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input type="number" name="globalpagesize" value="@(Model.GlobalPageSize)" id="globalpagesize" min="0" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    静态文件扩展名：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="htmlext" type="text" value="@(Model.HtmlFileExt)" maxlength="5" id="htmlext" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    是否生成静态文章页：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <label>
+                        <input @(Model.IsCreateStaticHTML ? "checked='checked'" : "") name="IsCreateStaticHTML" type="checkbox" id="IsCreateStaticHTML" class="common-check" />
+                        <span></span>是
+                    </label>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    是否代码压缩：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <label>
+                        <input @(Model.IsCompressHtml ? "checked='checked'" : "") name="IsCompressHtml" type="checkbox" id="IsCompressHtml" class="common-check" />
+                        <span></span>是
+                    </label>
+                </div>
+            </li>
+            <li class="btn-box">
+                <input type="submit" name="btnok" value="保 存" id="btnok" class="btn-style sure-btn" />
+            </li>
+        </ul>
+    </div>
+</form>

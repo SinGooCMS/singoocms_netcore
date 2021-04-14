@@ -1,0 +1,52 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/IFrame.cshtml"; //母版页
+}
+
+<form method="post" singoo-data-ajax="true" singoo-data-dialog="true" action="/platform/ContModel/@(ViewBag.ParamAction)">
+    <script type="text/html" id="singoo-template">
+        {{#result}}
+        <div class="form-box">
+            <ul>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        模型名称：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox1" type="text" value="{{ModelName}}" maxlength="50" id="TextBox1" class="form-control" required="required" placeholder="请输入模型名称 如普通文章" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        数据表名：
+                    </div>
+                    <div class="form-item-con text-item focus-item child-clear">
+                        cms_C_<input name="TextBox2" type="text" value="{{TableNamePart}}" maxlength="50" id="TextBox2" {{#TableNamePart}}readonly="readonly"{{/TableNamePart}} required="required" placeholder="请输入数据表名 如Common" pattern="\w+" style="width: 200px;" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        备注说明：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <textarea name="TextBox3" rows="5" cols="60" id="TextBox3" lenlimit="1000">{{ModelDesc}}</textarea>
+                    </div>
+                </li>
+                <li class="btn-box">
+                    <input type="submit" name="btnok" value="确 认" id="btnok" class="btn-style sure-btn" />
+                    <input id="btncancel" singoo-dialog-close="true" type="button" value="取 消(ESC)" class="btn-style cancel-btn" />
+                </li>
+            </ul>
+        </div>
+        {{/result}}
+    </script>
+</form>
+
+<script>
+    var json = @Html.Raw(ViewBag.InitData); //数据
+    json.result.TableNamePart=function(){
+        if(json.result.TableName!=null)
+            return json.result.TableName.replace("cms_C_","");
+    }
+    var tmpl=$("#singoo-template").html(); //模板
+    h5.render($("form"),tmpl,json); //渲染并显示模板
+</script>

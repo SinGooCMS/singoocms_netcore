@@ -1,0 +1,90 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+
+<form singoo-data-ajax="true" singoo-data-list="true">
+    <div class="top-fix clear-fix">
+        <div class="clear-fix">
+            <ul class="btn-group clear-fix">
+                <li style="padding-left:0">
+                    <input type="button" singoo-data-url="/platform/SysMger/CreateDBBack" value="&#xe681; 创建数据库备份" class="btn-style sure-btn iconfont singoo-create" />
+                    <input type="button" singoo-data-url="/platform/SysMger/CreateSiteBack" value="&#xe681; 创建整站备份" class="btn-style sure-btn iconfont singoo-create" />
+                    <input type="button" singoo-data-url="/platform/SysMger/CreateTempateBack" value="&#xe681; 创建当前模板备份" class="btn-style sure-btn iconfont singoo-create" />
+                    <input type="button" singoo-data-url="/platform/SysMger/CreateUploadBack" value="&#xe681; 创建上传文件备份" class="btn-style sure-btn iconfont singoo-create" />
+                </li>
+            </ul>
+        </div>
+    </div>
+    <table class="tab-con" style="margin-top: 50px;" id="rowItems">
+        <tr class="tab-title">
+            <td style="width: 60px;">
+                <label>
+                    <input type="checkbox" id="checkall" class="common-check" />
+                    <span></span>
+                </label>
+            </td>
+            <td>
+                备份名称
+            </td>
+            <td>
+                文件大小
+            </td>
+            <td>
+                备份类型
+            </td>
+            <td style="width: 180px;">
+                备份时间
+            </td>
+            <td style="width: 80px;">
+                操作
+            </td>
+        </tr>
+        <tbody id="singoo-content"></tbody>
+        <script id="singoo-template" type="text/html">
+            {{#data}}
+            <tr>
+                <td>
+                    <label>
+                        <input name="chk" type="checkbox" class="common-check" value="{{AutoID}}" />
+                        <span></span>
+                    </label>
+                    <input type="hidden" name="AutoID" value="{{AutoID}}" />
+                </td>
+                <td>
+                    {{BakFileName}}
+                </td>
+                <td>
+                    {{BakFileSize}}
+                </td>
+                <td>
+                    {{BakFileType}}
+                </td>
+                <td>
+                    {{UploadDate}}
+                </td>
+                <td>
+                    <div class="icon-btn clear-fix">                        
+                        <a href='/Include/Download?file={{EnCodeVPath}}' target="_blank" class="iconfont">&#xe630;<i>下载</i></a>
+                        <a singoo-action="Delete" singoo-data-urlext="&bakfile={{BakFilePath}}" class="iconfont">&#xe6eb;<i>删除</i></a>
+                    </div>
+                </td>
+            </tr>
+            {{/data}}
+            {{^data}}
+            <tr><td colspan='6'> 没有找到任何数据</td></tr>
+            {{/data}}
+        </script>
+    </table>
+</form>
+
+<script>
+    $(".singoo-create").click(function () {
+        var actionUrl = $(this).attr("singoo-data-url");
+        var d=$.dialog({ title: "正在备份", content: "<img src='/include/images/loading.gif' /> 正在创建备份文件..... 请不要关闭此页" });
+        singoo.ajaxSubmit("", function (result) {
+            d.close(); //关闭对话框
+            showtip(result.msg);
+            h5.loadData(1);
+        }, actionUrl);
+    });
+</script>

@@ -1,0 +1,59 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/IFrame.cshtml"; //母版页
+}
+
+<form method="post" singoo-data-ajax="true" singoo-data-dialog="true" action="/platform/CommentMger/@(ViewBag.ParamAction)">
+    <script type="text/html" id="singoo-template">
+        {{#result}}
+        <div class="form-box">
+            <ul>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        内容标题：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        @(ViewBag.Cont==null?"内容不存在或者已删除": ViewBag.Cont.Title)
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        评论消息：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <textarea class="form-control" name="comment" rows="6" cols="70">{{Comment}}</textarea>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        IP地址：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        {{IPAddress}}:{{IPArea}}
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        状态：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <label>
+                            <input name="isaudit" type="checkbox" id="isaudit" value="1" class="common-check" {{#IsAudit}} checked="checked" {{/IsAudit}} />
+                            <span></span>已审核
+                        </label>
+                    </div>
+                </li>
+                <li class="btn-box">
+                    <input type="submit" name="btnok" value="确 认" id="btnok" class="btn-style sure-btn" />
+                    <input id="btncancel" singoo-dialog-close="true" type="button" value="取 消(ESC)" class="btn-style cancel-btn" />
+                </li>
+            </ul>
+        </div>
+        {{/result}}
+    </script>
+</form>
+
+<script>
+    var json = @Html.Raw(ViewBag.InitData); //数据
+    var tmpl=$("#singoo-template").html(); //模板
+    h5.render($("form"),tmpl,json); //渲染并显示模板
+</script>

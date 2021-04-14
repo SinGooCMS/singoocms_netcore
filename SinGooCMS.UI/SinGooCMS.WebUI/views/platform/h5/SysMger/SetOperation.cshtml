@@ -1,0 +1,148 @@
+﻿@inject SinGooCMS.Domain.Interface.ICMSContext context;
+@{
+    Layout = "~/views/platform/h5/MasterPage/IFrame.cshtml"; //母版页
+}
+@model SinGooCMS.Domain.Models.ModuleInfo;
+
+<style type="text/css">
+    .outborder {
+        overflow: hidden;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .titlebar {
+        width: 100%;
+        background: #eee;
+        clear: both;
+        text-align: left;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .divauto {
+        clear: both;
+        padding: 2px;
+        width: 100%;
+        text-align: left;
+        background: #fafafa;
+        _height: 100%;
+        overflow: hidden;
+    }
+
+    .div1 {
+        float: left;
+        width: 15%;
+        text-align: left;
+        padding-left: 10px;
+    }
+
+    .div2 {
+        float: left;
+        width: 84%;
+    }
+
+        .div1 input, .div2 input {
+            width: 250px;
+            border: 1px solid #ddd;
+        }
+
+    .tab-title td, .tab-con td {
+        padding: 3px;
+    }
+
+    .outborder .titlebar {
+        padding: 5px 10px;
+    }
+</style>
+<form singoo-data-ajax="true" singoo-data-list="true">
+    <table class="tab-con" id="rowItems">
+        <tr class="tab-title">
+            <td style="width: 60px;">
+                <label>
+                    <input type="checkbox" id="checkall" class="common-check" />
+                    <span></span>
+                </label>
+            </td>
+            <td>
+                操作名称
+            </td>
+            <td>
+                操作代码
+            </td>
+            <td style="width: 150px;">
+                添加时间
+            </td>
+            <td style="width: 50px;">
+                操作
+            </td>
+        </tr>
+        <tbody id="singoo-content"></tbody>
+        <script id="singoo-template" type="text/html">
+            {{#data}}
+            <tr>
+                <td>
+                    <label>
+                        <input name="chk" type="checkbox" class="common-check" value="{{AutoID}}" />
+                        <span></span>
+                    </label>
+                    <input type="hidden" name="AutoID" value="{{AutoID}}" />
+                </td>
+                <td>
+                    {{OperateName}}
+                </td>
+                <td>
+                    {{OperateCode}}
+                </td>
+                <td>
+                    {{AutoTimeStamp}}
+                </td>
+                <td>
+                    <div class="icon-btn clear-fix">
+                        <a singoo-action="Delete" singoo-data-id="{{AutoID}}" class="iconfont">&#xe6eb;<i>删除</i></a>
+                    </div>
+                </td>
+            </tr>
+            {{/data}}
+            {{^data}}
+            <tr><td colspan='5'> 没有找到任何数据</td></tr>
+            {{/data}}
+        </script>
+    </table>
+    <!--分页 start-->
+    <div id="singoo-pager"></div>
+    <!--分页 end-->
+</form>
+<form action="/platform/Operation/Add" singoo-data-ajax="true">
+    <div class="outborder" style="position: relative">
+        <h1 class="titlebar">
+            添加操作
+        </h1>
+        <div class="divauto">
+            <div class="div1">
+                操作名称：
+            </div>
+            <div class="div2">
+                <input name="TextBox1" type="text" id="TextBox1" placeholder="请输入操作名称 如 增加" required="required" />
+            </div>
+        </div>
+        <div class="divauto">
+            <div class="div1">
+                操作代码：
+            </div>
+            <div class="div2">
+                <input name="TextBox2" type="text" id="TextBox2" placeholder="请输入操作代码 如 Add" required="required" />
+            </div>
+        </div>
+        <div style="margin-top: 10px;">
+            <input type="submit" name="btnok" value="确 认" id="btnok" class="btn-style sure-btn" />
+            <input id="btncancel" singoo-dialog-close="true" type="button" value="取 消(ESC)" class="btn-style cancel-btn" />
+            <input type="hidden" value="@(Model.AutoID)" name="_moduleid" />
+        </div>
+        <div style="position: absolute; left: 400px; top: 55px; width: 265px; text-align: center">
+            <a singoo-action="AddDefault" singoo-data-url="/platform/Operation/AddDefault">添加默认操作</a>
+            <br />
+            (默认操作为:查看/增加/修改/删除)
+        </div>
+    </div>
+</form>

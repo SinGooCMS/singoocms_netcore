@@ -1,0 +1,117 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+<script src="~/include/plugin/clipboard/clipboard.min.js"></script>
+
+<form method="post" singoo-data-ajax="true" singoo-data-list="true">
+    <div class="top-fix clear-fix">
+        <div class="clear-fix">
+            <ul class="btn-group clear-fix">
+                <li>
+                    <label class="label-box" for="checkall">
+                        <input type="checkbox" class="common-check" id="checkall" />
+                        <span></span>全选
+                    </label>
+                </li>
+            </ul>
+            <ul class="btn-group clear-fix">
+                <li>
+                    <a singoo-action="SetSort" singoo-data-url="/platform/AdPlace/SetSort"><i class='iconfont'>&#xe604;</i><span>保存排序</span></a>
+                </li>
+            </ul>
+            <ul class="btn-group clear-fix">
+                <li class="blue">
+                    <a singoo-action="Add" singoo-data-url="/platform/AdPlace/Edit" singoo-dialog-param="增加广告位|680|360">
+                        <i class="iconfont">&#xe611;</i><span>新增</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="search-box focus-item fr">
+                <input name="key" singoo-search-item="true" type="text" id="key" placeholder="请输入广告位名称" />
+                <input type="button" singoo-action="Search" name="searchbtn" value="&#xe60a;" id="searchbtn" class="search-btn iconfont" />
+            </div>
+        </div>
+    </div>
+    <table class="tab-con" style="margin-top: 50px;" id="rowItems">
+        <tr class="tab-title">
+            <td style="width: 60px;"></td>
+            <td>
+                广告位名称
+            </td>
+            <td style="width: 150px;">
+                尺寸
+            </td>
+            <td style="width: 120px;">
+                排序
+            </td>
+            <td style="width: 120px;">
+                操作
+            </td>
+        </tr>
+        <tbody id="singoo-content"></tbody>
+        <script id="singoo-template" type="text/html">
+            {{#data}}
+            <tr>
+                <td>
+                    <label>
+                        <input name="chk" type="checkbox" id="chk" class="common-check" value="{{AutoID}}" />
+                        <span></span>
+                    </label>
+                    <input type="hidden" name="AutoID" value="{{AutoID}}" />
+                </td>
+                <td>
+                    [#{{AutoID}}] {{PlaceName}}
+                </td>
+                <td>
+                    {{Width}}(px) X {{Height}}(px)
+                </td>
+                <td class="short-input">
+                    <input type="number" name="txtSort" {{#Sort}} value="{{Sort}}" {{/Sort}} {{^Sort}} value="99999" {{/Sort}} id="txtSort" step="1" />
+                </td>
+                <td>
+                    <div class="icon-btn clear-fix">
+                        <a class="iconfont" singoo-action="Modify" singoo-data-url="/platform/AdPlace/Edit" singoo-data-urlext="&opid={{AutoID}}" singoo-dialog-param="编辑广告位|680|360">
+                            &#xe67f;<i>编辑</i>
+                        </a>
+                        <a class="iconfont" href="javascript:void(0)" onclick="getadcode({{AutoID}})">
+                            &#xe600;<i>获取广告代码</i>
+                        </a>
+                        <a class="tab-a" href="/platform/Ads/Index?PlaceID={{AutoID}}">
+                            <span class="iconfont">&#xe69a;</span><i>广告详情</i>
+                        </a>
+                        <a singoo-action="Delete" singoo-data-id="{{AutoID}}" class="iconfont">&#xe6eb;<i>删除</i></a>
+                    </div>
+                </td>
+            </tr>
+            {{/data}}
+            {{^data}}
+            <tr><td colspan='5'> 没有找到任何数据</td></tr>
+            {{/data}}
+        </script>
+    </table>
+    <!--分页 start-->
+    <div id="singoo-pager"></div>
+    <!--分页 end-->
+</form>
+<script type="text/javascript">
+    function getadcode(placeid) {
+        $.dialog({
+            title: "获取广告代码", content: "<div id='adlnk'>&lt;script type='text/javascript' src='/include/generatead?placeid=" + placeid + "'&gt;&lt;/script&gt;</div><br/><hr/> <a href='javascript:;' class='btn'><i class='iconfont'>&#xe624;</i><span>复制</span></a> <p><br/>如复制按钮无效，请手动复制！</p>"
+        });
+    }
+    var clipboard = new ClipboardJS('.btn', {
+        text: function () {
+            return $("#adlnk").text();
+        },
+    });
+
+    clipboard.on('success', function (e) {
+        showsuccess("成功复制到剪贴板");
+        //console.log(e);        
+    });
+
+    clipboard.on('error', function (e) {
+        showalert("未复制到剪贴板，请手动复制！");
+        //console.log(e);
+    });
+</script>

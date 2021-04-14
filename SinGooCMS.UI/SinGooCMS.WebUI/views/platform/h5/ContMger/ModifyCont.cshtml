@@ -1,0 +1,74 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+
+@model SinGooCMS.Domain.Models.ContentInfo
+
+<form method="post" singoo-data-ajax="true" singoo-data-edit="true" action="/platform/Content/@(ViewBag.ParamAction)">
+    <ul>
+        @if (ViewBag.ParamAction == "Modify" && Model != null)
+        {
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    文章编号：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    #@(Model.AutoID)
+                    <a href="/article/detail/@(Model.AutoID)" target="_blank">查看文章>></a>
+                </div>
+            </li>
+        }
+        <li class="form-item clear-fix">
+            <div class="form-item-title">
+                当前栏目：
+            </div>
+            <div class="form-item-con text-item focus-item">
+                @(ViewBag.NodeNavigate)
+            </div>
+        </li>
+        @*扩展字段*@
+        @foreach (var item in ViewBag.FieldList)
+        {
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    @(item.FieldAlias)：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    @(Html.Raw(await item.Render()))
+                </div>
+            </li>
+        }
+        <li class="form-item clear-fix">
+            <div class="form-item-title">
+                模板文件：
+            </div>
+            <div class="form-item-con text-item focus-item">
+                <input name="TmplFile" type="text" value="@(Model.TemplateFile)" id="TmplFile" />
+                <input singoo-tmplselector="true" singoo-tmplselector-target="TmplFile" type="button" value="选择模板" class="smallbtn" />
+            </div>
+        </li>
+        @*<li class="form-item clear-fix">
+            <div class="form-item-title">
+                浏览密码：
+            </div>
+            <div class="form-item-con text-item focus-item">
+                <input name="lockpwd" type="text" value="@(Model.LockPassword)" maxlength="50" placeholder="置空任意访问" />
+            </div>
+        </li>*@
+        <li class="form-item clear-fix">
+            <div class="form-item-title">
+                审核状态：
+            </div>
+            <div class="form-item-con text-item focus-item">
+                <label>
+                    <input @((ViewBag.ParamAction == "Add" || Model.Status == 99) ? "checked='checked'" : "") type="checkbox" id="isaudit" name="isaudit" value="99" class="common-check" />
+                    <span></span>
+                </label>
+            </div>
+        </li>
+        <li class="btn-box">
+            <input type="submit" value="保 存" class="btn-style sure-btn" />
+            <input type="hidden" name="_nodeid" value="@(ViewBag.CurrNode.AutoID)" />
+        </li>
+    </ul>
+</form>

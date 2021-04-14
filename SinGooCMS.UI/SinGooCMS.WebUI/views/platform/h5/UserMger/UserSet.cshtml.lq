@@ -1,0 +1,124 @@
+﻿@{
+    Layout = "~/Platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+
+<form method="post" singoo-data-ajax="true" singoo-data-dialog="true">
+    <script type="text/html" id="singoo-template">
+        {{#result}}
+        <div class="form-box">
+            <ul>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        会员名称正则规范：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox2" type="text" value="{{UserNameRule}}" maxlength="100" id="TextBox2" />
+                        <div class="notice-tip clear-fix">
+                            <i class="iconfont" tip="会员注册时，普通会员名称必须符合此规则">&#xe62e;</i>
+                        </div>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        保留会员名：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <textarea name="TextBox3" rows="3" cols="60" id="TextBox3" lenlimit="255">{{SysUserName}}</textarea>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        注册协议：
+                    </div>
+                    <div class="form-item-con text-item focus-item col-editor">
+                        <textarea singoo-editor="true" singoo-editor-toolbar="Basic" singoo-editor-param="98%|360" name="TextBox6" rows="2" cols="20" id="TextBox6" style="height:360px;width:98%;">{{{RegAgreement}}}</textarea>                       
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        注册赠送积分：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input type="number" name="TextBox7" value="{{RegGiveIntegral}}" id="TextBox7" class="form-control" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        推广注册积分：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input type="number" name="TextBox8" value="{{TgIntegral}}" id="TextBox8" class="form-control" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        上传文件容量：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input type="number" name="filespace" value="{{FileCapacityExt}}" id="filespace" class="form-control" />MB
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        注册需要验证：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <label>
+                            <input name="CheckBox1" {{#VerifycodeForReg}}checked="checked"{{/VerifycodeForReg}} type="checkbox" id="CheckBox1" class="common-check" />
+                            <span class="no-float"></span>是
+                        </label>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        登录需要验证：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <label>
+                            <input name="CheckBox2" {{#VerifycodeForLogin}}checked="checked"{{/VerifycodeForLogin}} type="checkbox" id="CheckBox2" class="common-check" />
+                            <span class="no-float"></span>是
+                        </label>
+                        
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        登录尝试次数：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input type="number" name="TextBox9" value="{{TryLoginTimes}}" maxlength="10" id="TextBox9" class="form-control" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        登录状态保留时长：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        {{{radios}}}
+                    </div>
+                </li>
+                <li class="btn-box">
+                    <input type="submit" name="btnok" value="保 存" id="btnok" class="btn-style sure-btn" />
+                </li>
+            </ul>
+        </div>
+        {{/result}}
+    </script>
+</form>
+
+<script>
+    var json = @Html.Raw(ViewBag.InitData); //数据
+    json.result.radios=function(){
+        var str="", arr=["浏览器关闭即失效","一周","一年"];
+        $(arr).each(function(index,item){
+            str+="<label><input "+(json.result.CookieTime==item?"checked='checked'":"")+" type='radio' name='RadioButtonList10' value='"+item+"' class='common-check radio' /><span class='no-float'></span> "+item +"</label> ";
+        });
+        return str;
+    }
+    json.result.FileCapacityExt=function(){
+        var byte=parseInt(json.result.FileCapacity);
+        return (byte/(1024*1024)).toString();
+    }
+    var tmpl=$("#singoo-template").html(); //模板
+    h5.render($("form"),tmpl,json); //渲染并显示模板    
+</script>

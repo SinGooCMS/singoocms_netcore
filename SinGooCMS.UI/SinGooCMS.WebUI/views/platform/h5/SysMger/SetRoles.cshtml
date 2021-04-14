@@ -1,0 +1,59 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/IFrame.cshtml"; //母版页
+}
+
+<form singoo-data-ajax="true" singoo-data-list="true" singoo-data-dialog="true">
+    <table class="tab-con" id="rowItems">
+        <tr class="tab-title">
+            <td style="width: 60px;">
+                <label>
+                    <input type="checkbox" id="checkall" class="common-check" />
+                    <span></span>
+                </label>
+            </td>
+            <td>
+                角色名称
+            </td>
+            <td>
+                备注说明
+            </td>
+            <td style="width: 150px;">
+                添加时间
+            </td>
+        </tr>
+        <tbody id="singoo-content"></tbody>
+        <script id="singoo-template" type="text/html">
+            {{#data}}
+            <tr>
+                <td>
+                    <label>
+                        <input name="chk" {{#selected}}checked="checked"{{/selected}} type="checkbox" class="common-check" value="{{AutoID}}" />
+                        <span></span>
+                    </label>
+                    <input type="hidden" name="AutoID" value="{{AutoID}}" />
+                </td>
+                <td>
+                    {{RoleName}}
+                </td>
+                <td>
+                    {{Remark}}
+                </td>
+                <td class="short-input">
+                    {{AutoTimeStamp}}
+                </td>
+            </tr>
+            {{/data}}
+            {{^data}}
+            <tr><td colspan='4'> 没有找到任何数据</td></tr>
+            {{/data}}
+        </script>
+    </table>
+    <!--分页 start-->
+    <div id="singoo-pager"></div>
+    <!--分页 end-->
+    <div style="margin-top: 10px;">
+        <input type="submit" value="确 认" class="btn-style sure-btn" />
+        <input id="btncancel" singoo-dialog-close="true" type="button" value="取 消(ESC)" class="btn-style cancel-btn" />
+        <input type="hidden" name="action" value="SetAccountRoles" />
+    </div>
+</form>

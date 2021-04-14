@@ -1,0 +1,65 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>SinGooCMS.WebUI</RootNamespace>
+    <!--不编译Views里面的视图文件-->
+    <RazorCompileOnPublish>false</RazorCompileOnPublish>
+    <Version>1.6.0</Version>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+    <UserSecretsId>5dddbb8d-7ead-42f9-bb22-d60292b7c940</UserSecretsId>
+    <AnalysisLevel>none</AnalysisLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <!--不进行代码分析，不会生成各种语言包文件-->
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <!--<EnableDefaultContentItems>false</EnableDefaultContentItems>-->
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <!--不进行代码分析，不会生成各种语言包文件-->
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <AllowedReferenceRelatedFileExtensions>.allowedextension</AllowedReferenceRelatedFileExtensions>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="views\templates\pro-green\**" />
+    <Content Remove="views\templates\pro-green\**" />
+    <EmbeddedResource Remove="views\templates\pro-green\**" />
+    <None Remove="views\templates\pro-green\**" />
+  </ItemGroup>  
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="5.2.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.4" />
+    <PackageReference Include="Microsoft.Extensions.Caching.SqlServer" Version="3.1.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\SinGooCMS.Main\SinGooCMS.Platform\SinGooCMS.Platform.csproj" />
+    <ProjectReference Include="..\..\SinGooCMS.Support\SinGooCMS.Infrastructure\SinGooCMS.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--发布时总是输出以下文件夹/文件-->
+    <None Update="ipdata\qqwry.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="robots.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="配置说明.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

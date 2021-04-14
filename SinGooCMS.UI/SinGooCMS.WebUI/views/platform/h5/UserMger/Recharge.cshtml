@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/IFrame.cshtml"; //母版页
+}
+
+<form singoo-data-ajax="true" singoo-data-dialog="true" action="/platform/UserMger/Recharge">
+    <div class="form-box">
+        <ul>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    数值：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input type="number" placeholder="请输入有效的数值 可以为负数" id="TextBox1" name="TextBox1" required="required" />
+                </div>
+            </li>
+            <li class="btn-box">
+                <input type="submit" name="btnok" value="确 认" id="btnok" class="btn-style sure-btn" />
+                <input id="btncancel" singoo-dialog-close="true" type="button" value="取 消" class="btn-style cancel-btn" />
+                <input type="hidden" name="_UserID" value="@(SinGooCMS.Utility.WebUtils.GetQueryVal<int>("UserID"))" />
+                <input type="hidden" name="_Type" value="@(SinGooCMS.Utility.WebUtils.GetQueryVal<string>("Type"))" />
+            </li>
+        </ul>
+    </div>
+</form>

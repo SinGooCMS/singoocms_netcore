@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+@model IEnumerable<SinGooCMS.IFieldControl>;
+<form singoo-data-ajax="true">
+    <div class="form-box">
+        <ul>
+            @foreach (var item in Model)
+            {
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        @(item.FieldAlias)：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        @(Html.Raw(await item.Render()))
+                    </div>
+                </li>
+            }
+            <li class="btn-box">
+                <input type="submit" name="btnok" value="保 存" id="btnok" class="btn-style sure-btn" />
+            </li>
+        </ul>
+    </div>
+</form>

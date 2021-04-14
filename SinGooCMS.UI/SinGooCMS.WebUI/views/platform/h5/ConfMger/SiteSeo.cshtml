@@ -1,0 +1,53 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+
+<form singoo-data-ajax="true">
+    <div class="form-box" id="singoo-content">
+        <script type="text/html" id="singoo-template">
+            {{#data}}
+            <ul>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        全局搜索引擎关键字：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <textarea name="TextBox1" rows="5" cols="80" id="TextBox1" lenlimit="255" placeholder="多个关键字用逗号&#39;,&#39;分隔，不超过255个字符。">{{SEOKey}}</textarea>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        全局搜索引擎描述：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <textarea name="TextBox2" rows="5" cols="80" id="TextBox2" lenlimit="255" placeholder="多个描述用逗号&#39;,&#39;分隔，不超过255个字符。">{{SEODescription}}</textarea>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        提交搜索引擎：
+                    </div>
+                    <div class="form-item-con text-item focus-item seo-btn">
+                        <a href="http://zhanzhang.baidu.com/sitesubmit/index" target="_blank">提交到百度</a>
+                        <a href="http://www.google.com/submityourcontent" target="_blank">提交到google</a>
+                        <a href="http://cn.bing.com/docs/submit.Aspx" target="_blank">提交到必应</a>
+                        <a href="http://search.yahoo.com/info/submit.html" target="_blank">提交到雅虎</a>
+                        <a href="http://search.tom.com/tools/weblog/log.php" target="_blank">提交到TOM</a>
+                        <a href="http://tellbot.youdao.com/report" target="_blank">提交到有道搜索</a>
+                        <a href="http://zhanzhang.sogou.com/index.php/urlSubmit/index" target="_blank">提交到搜狗</a>
+                    </div>
+                </li>
+                <li class="btn-box">
+                    <input type="submit" name="btnok" value="保 存" id="btnok" class="btn-style sure-btn" />
+                </li>
+            </ul>
+            {{/data}}
+        </script>
+    </div>
+</form>
+
+<script>
+    var json = @Html.Raw(ViewBag.InitData); //数据
+    var tmpl=$("#singoo-template").html(); //模板
+    h5.render($("#singoo-content"),tmpl,json.result); //渲染并显示模板
+</script>

@@ -1,0 +1,203 @@
+﻿@inject SinGooCMS.Domain.Interface.ICMSContext context;
+@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+@*razor模板和mustache模板同样能够实现前端呈现*@
+<form singoo-data-ajax="true">
+    <div class="form-box">
+        <ul>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    是否允许文件上传：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <label>
+                        <input name="CheckBox1" type="checkbox" @(context.SiteConfig.EnableFileUpload ? "checked='checked'" : "" ) id="CheckBox1" class="common-check" />
+                        <span></span>
+                    </label>
+                    是
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    是否启用阿里云存储：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <label>
+                        <input name="CheckBox2" type="checkbox" @(context.SiteConfig.EnableAliyunOSS ? "checked='checked'" : "" ) id="CheckBox1" class="common-check" />
+                        <span></span>
+                    </label>
+                    是
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    阿里云存储(OSS)：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <i class="iconfont">&#xe614;</i>
+                    <a href="/platform/FileConfig/AliyunOSS" class="tab-a">
+                        <span>云存储配置</span>
+                    </a>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    允许上传文件扩展名：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <textarea name="TextBox2" rows="3" cols="50" id="TextBox2">@(context.SiteConfig.EnableUploadExt)</textarea>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    单个上传文件大小限制：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input type="number" name="TextBox3" value="@(context.SiteConfig.UploadSizeLimit)" id="TextBox3" style="width: 100px;" />(KB)
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    上传文件命名规则：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox4" type="text" value="@(context.SiteConfig.UploadSaveRule)" maxlength="100" id="TextBox4" style="width:360px;" />
+                    <div class="notice-tip clear-fix">
+                        <i class="iconfont" tip="如:${year}${month}${day}${hour}${minute}${second}${millisecond}${rnd}，不填写则默认原文件名">
+                            &#xe62e;
+                        </i>
+                    </div>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    上传图片宽度限制：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input placeholder="0表示不限制" type="number" name="WidthLimit" value="@(context.SiteConfig.UploadImgWidthLimit)" id="WidthLimit" style="width: 100px;" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    上传图片高度限制：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input placeholder="0表示不限制" type="number" name="HeightLimit" value="@(context.SiteConfig.UploadImgHeightLimit)" id="HeightLimit" style="width: 100px;" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    缩略图尺寸：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input type="number" name="TextBox5" value="@(context.SiteConfig.ThumbSize.Split('X')[0])" id="TextBox5" class="clear no-float" style="width: 80px;" />
+                    X &nbsp;&nbsp;<input type="number" name="TextBox6" value="@(context.SiteConfig.ThumbSize.Split('X')[1])" id="TextBox6" class="clear no-float" style="width: 80px;" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    缩略图模式：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <select name="ddl_cutmode" id="ddl_cutmode">
+                        @{
+                            var arr = new string[] { "Cut", "HW", "W", "H" };
+                            var arrDesc = new string[] { "裁切", "指定宽高", "指定宽", "指定高" };
+                            for (int i = 0; i < arr.Length; i++)
+                            {
+                                <option @(arr[i] == context.SiteConfig.ThumbModel ? "selected='selected'" : "" ) value="@(arr[i])">@(arrDesc[i])</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    水印位置：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    @Html.Raw(ViewBag.WatermarkPosition)
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    水印类型：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <label>
+                        <input value="文字水印" name="sytype" type="radio" id="sytype1" class="common-check radio fl" @(context.SiteConfig.WaterMarkType == "文字水印" ? "checked='checked'" : "" ) />
+                        <span class="no-float"></span>文字水印
+                    </label>
+                    <label>
+                        <input value="图片水印" name="sytype" type="radio" id="sytype2" class="common-check radio" @(context.SiteConfig.WaterMarkType == "图片水印" ? "checked='checked'" : "" ) />
+                        <span class="no-float"></span>图片水印
+                    </label>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    文字类型水印：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox10" type="text" value="@(context.SiteConfig.WaterMarkText)" id="TextBox10" class="input-normal" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    文字水印大小：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input type="number" name="TextBox11" value="@(context.SiteConfig.WaterMarkTextSize)" id="TextBox11" style="width:80px;" />
+                    <span class="customtip">单位:像素</span>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    文字水印字体：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <select name="watermarkfontname" id="watermarkfontname">
+                        @{
+                            var fonts = new System.Drawing.Text.InstalledFontCollection();
+                            foreach (var item in fonts.Families)
+                            {
+                                <option @(item.Name == context.SiteConfig.WaterMarkTextFont ? "selected='selected'" : "" ) value="@(item.Name)">@(item.Name)</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    文字水印颜色：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input type="color" name="TextBox12" value="@(context.SiteConfig.WaterMarkTextColor)" maxlength="10" id="TextBox12" style="width:80px;" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    图片类型水印：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox13" type="text" id="TextBox13" value="@(context.SiteConfig.WaterMarkImage)" class="input-normal" style="width:300px;" />
+                    <a class="smallbtn" singoo-showimg="true" singoo-showimg-target="TextBox13">查看</a>
+                    <a singoo-upload="true" singoo-upload-param="TextBox13|value|single">上传</a>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    图片水印透明度：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input type="number" name="TextBox14" value="@(context.SiteConfig.WaterMarkAlpha.ToString("f1"))" id="TextBox14" step="0.1" min="0.0" max="1.0" style="width:80px;" />
+                    <span class="customtip">取值范围0.1-1.0 (1.0为不透明)</span>
+                </div>
+            </li>
+            <li class="btn-box">
+                <input type="submit" name="btnok" value="保 存" id="btnok" class="btn-style sure-btn" />
+            </li>
+        </ul>
+    </div>
+</form>

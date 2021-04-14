@@ -1,0 +1,23 @@
+一、配置连接字符串
+在配置文件 /appsettings.json 中配置数据库连接字符串
+ProviderName 表示数据库类型，如：SqlServer、Sqlite、MySql
+SQLConnSTR 表示数据库连接字符串
+RedisExchangeHosts 表示Redis缓存服务地址，没有则不填
+
+二、浏览方式
+登录网站后台，系统配置>基本配置>浏览方式
+默认是MVC路由，即MVC默认的路由设置，对于搜索优化，可以考虑使用伪静态
+
+三、页面缓存
+登录网站后台，系统配置>基本配置>是否生成静态文章页 默认是选中状态
+前端访问栏目和文章信息时，自动保存缓存到目录：/include/htmlcache，有效提高了网站的响应速度
+
+四、手机/微信访问
+没有相应的模板，且关闭了移动端，默认访问PC端网站
+登录网站后台，移动端->移动端设置 启用移动端，在手机上访问时就会响应对应的手机模板
+
+五、分布式设置
+分布式、负载均衡部署，请在Startup.cs使用AddDistributedSqlServerCache等设置
+让session保存在持久层（sqlserver、Redis）而不是保存在服务器的内存中
+
+EFcore不要随便更新，否则MySql可能会报这样的错误：System.TypeLoadException:“Method 'Create' in type 'Pomelo.EntityFrameworkCore.MySql.Query.ExpressionVisitors.Internal.MySqlSqlTranslatingExpressionVisitorFactory' from assembly 'Pomelo.EntityFrameworkCore.MySql, Version=3.1.1.0, Culture=neutral, 

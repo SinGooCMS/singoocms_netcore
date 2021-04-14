@@ -1,0 +1,69 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/IFrame.cshtml"; //母版页
+}
+
+<form method="post" singoo-data-ajax="true" singoo-data-dialog="true">
+    <script type="text/html" id="singoo-template">
+        {{#result}}
+        <div class="form-box">
+            <ul>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        标题：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        [{{titleprev}}]{{Title}}
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        内容：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <textarea id="txtcontent" rows="3" cols="60" readonly="readonly">{{Content}}</textarea>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        来自：
+                    </div>
+                    <div class="form-item-con text-item focus-item feed-item">
+                        <span>用户：</span><em>{{showname}}</em>，<span>邮箱：</span><em>{{Email}}{{^Email}}无{{/Email}}</em>，<span>手机：</span><em>{{Mobile}}{{^Mobile}}无{{/Mobile}}</em>，<span>电话：</span><em>{{Telephone}}{{^Telephone}}无{{/Telephone}}</em>，
+                        <span>IP：</span><em>
+                            {{IPAddress}} {{#IPArea}}({{IPArea}}){{/IPArea}}
+                        </em>，<span>时间：</span><em>{{AutoTimeStamp}}</em>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        回复：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <textarea name="txtReply" rows="3" cols="60" id="txtReply" class="mb-10"></textarea><br />
+                        <label>
+                            <input name="chkReply2Mail" type="checkbox" id="chkReply2Mail" class="common-check" />
+                            <span></span>同时回复到邮箱
+                        </label>
+                        <input name="txtMail" type="text" value="admin@sz3w.net" id="txtMail" class="no-float" style="width:200px;" />
+                    </div>
+                </li>
+                <li class="btn-box">
+                    <input type="submit" name="btnok" value="确 认" id="btnok" class="btn-style sure-btn" />
+                    <input id="btncancel" onclick="$.dialog.close();" type="button" value="取 消" class="btn-style cancel-btn" />
+                </li>
+            </ul>
+        </div>
+        {{/result}}
+    </script>
+</form>
+<script type="text/javascript">
+    var json = @Html.Raw(ViewBag.InitData); //数据
+    json.result.titleprev=function(){
+        return json.result.ReplyID>0?"回复":"主题";
+    };
+    json.result.showname=function(){
+        return json.result.UserName==""?"匿名":json.result.UserName;
+    };
+    var tmpl=$("#singoo-template").html(); //模板
+    h5.render($("form"),tmpl,json); //渲染并显示模板
+</script>

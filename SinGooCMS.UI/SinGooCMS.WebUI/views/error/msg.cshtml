@@ -1,0 +1,19 @@
+﻿<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <script src="/include/script/jquery.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <div style='text-align:center'>
+        <img src='/include/error/warning.png' /><br />WARNING!<br /><span id="errinfo" style='font-weight:bold;'></span><br />
+        <a href="mailto:16826375@qq.com">contact me and report this error!</a><br />http://www.singoo.top © 2020 SinGooCMS<br />
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    var querystring = unescape(decodeURI(location.search));
+    querystring = querystring.split('=')[1]
+    if (querystring != "" && querystring != "undefined") {
+        $("#errinfo").text(querystring);
+    }
+</script>

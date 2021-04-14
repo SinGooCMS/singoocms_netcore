@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/IFrame.cshtml"; //母版页
+}
+
+<form method="post" singoo-data-ajax="true" singoo-data-dialog="true" action="/platform/Menu/@(ViewBag.ParamAction)">
+    <script type="text/html" id="singoo-template">
+        {{#result}}
+        <div class="form-box">
+            <ul>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        栏目名称：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox1" type="text" value="{{CatalogName}}" maxlength="50" id="TextBox1" placeholder="请输入栏目名称 如商店管理" required="required" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        栏目代号：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox2" type="text" value="{{CatalogCode}}" maxlength="50" id="TextBox2" {{#CatalogCode}}disabled="disabled"{{/CatalogCode}} placeholder="请输入栏目代码 如 ShopManage" required="required" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        备注：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <textarea name="TextBox3" rows="5" cols="50" id="TextBox3" lenlimit="255">{{Remark}}</textarea>
+                    </div>
+                </li>
+                <li class="btn-box">
+                    <input type="submit" name="btnok" value="确 认" id="btnok" class="btn-style sure-btn" />
+                    <input id="btncancel" singoo-dialog-close="true" onclick="$.dialog.close();" type="button" value="取 消(ESC)" class="btn-style cancel-btn" />
+                </li>
+            </ul>
+        </div>
+        {{/result}}
+    </script>
+</form>
+
+<script>
+    var json = @Html.Raw(ViewBag.InitData); //数据
+    var tmpl=$("#singoo-template").html(); //模板
+    h5.render($("form"),tmpl,json); //渲染并显示模板
+</script>

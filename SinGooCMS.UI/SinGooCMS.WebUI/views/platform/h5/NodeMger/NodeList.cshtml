@@ -1,0 +1,159 @@
+﻿@inject SinGooCMS.Domain.Interface.ICMSContext context;
+@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+
+<form singoo-data-ajax="true" singoo-data-list="true">
+    <div class="top-fix clear-fix">
+        <div class="clear-fix">
+            <ul class="btn-group clear-fix">
+                <li>
+                    <label class="label-box" for="checkall">
+                        <input type="checkbox" class="common-check" id="checkall" />
+                        <span></span>全选
+                    </label>
+                </li>
+            </ul>
+            <ul class="btn-group clear-fix">
+                <li>
+                    <a singoo-action="SetSort" singoo-data-url="/platform/Node/SetSort"><i class='iconfont'>&#xe604;</i><span>保存排序</span></a>
+                </li>
+                <li>
+                    <a href="/platform/NodeMove/Index" id="nodemove" class="tab-a">
+                        <i class="iconfont">&#xe601;</i><span>栏目移动</span>
+                    </a>
+                </li>
+                <li>
+                    <a id="bnt_Import"><i class="iconfont">&#xe64e;</i><span>导入数据</span></a>
+                </li>
+                <li>
+                    <a singoo-action="Export" singoo-data-url="/platform/Node/ExportNode"><i class="iconfont">&#xe610;</i><span>导出数据</span></a>
+                </li>
+            </ul>
+            @*<ul class="btn-group clear-fix">
+                <li>
+                    <a id="bnt_ExpressGen" singoo-action="ExpressGen"><i class="iconfont">&#xe64e;</i><span>快速生成器</span></a>
+                </li>
+            </ul>*@
+            <ul class="btn-group clear-fix">
+                <li class="blue">
+                    <a class="tab-a" href="/platform/Node/Edit?Action=Add&ParentID=@(ViewBag.ParentID)">
+                        <i class="iconfont">&#xe611;</i><span>新增栏目</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="search-box focus-item fr">
+                <input name="key" singoo-search-item="true" type="text" placeholder="请输入栏目名称" />
+                <input type="button" singoo-action="Search" name="searchbtn" value="&#xe60a;" class="search-btn iconfont" />
+            </div>
+        </div>
+    </div>
+    <table class="tab-con" style="margin-top: 50px;" id="rowItems">
+        <tr class="tab-title">
+            <td style="width: 60px;"></td>
+            <td>
+                栏目名称
+            </td>
+            <td>
+                标识代码
+            </td>
+            <td>
+                内容模型
+            </td>
+            <td style="width: 120px;">
+                排序
+            </td>
+            <td style="width: 80px;">
+                操作
+            </td>
+        </tr>
+        <tbody id="singoo-content"></tbody>
+        <script id="singoo-template" type="text/html">
+            {{#data}}
+            <tr>
+                <td>
+                    <label>
+                        <input name="chk" type="checkbox" class="common-check" value="{{AutoID}}" />
+                        <span></span>
+                    </label>
+                    <input type="hidden" name="AutoID" value="{{AutoID}}" />
+                </td>
+                <td>
+                    [#{{AutoID}}] {{NodeName}}
+                </td>
+                <td>
+                    {{NodeIdentifier}}
+                </td>
+                <td>
+                    {{ModelName}}
+                </td>
+                <td class="short-input">
+                    <input type="number" name="txtSort" {{#Sort}} value="{{Sort}}" {{/Sort}} {{^Sort}} value="99999" {{/Sort}} id="txtSort" step="1" />
+                </td>
+                <td>
+                    <div class="icon-btn clear-fix">
+                        <div class="icon-btn-item pos-r fl">
+                            <a class="tab-a" href="/platform/Node/Edit?Action=Modify&opid={{AutoID}}">
+                                <span class="iconfont">&#xe67f;<i>编辑栏目</i></span>
+                            </a>
+                        </div>
+                        <a singoo-action="Delete" singoo-data-id="{{AutoID}}" class="iconfont">&#xe6eb;<i>删除</i></a>
+                        <a class="tab-a" href="/platform/Node/Edit?Action=Add&opid={{AutoID}}">
+                            <span class="iconfont">&#xe611;<i>增加子栏目</i></span>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {{/data}}
+            {{^data}}
+            <tr><td colspan='6'> 没有找到任何数据</td></tr>
+            {{/data}}
+        </script>
+    </table>
+    <!--分页 start-->
+    <div id="singoo-pager"></div>
+    <!--分页 end-->
+</form>
+<form id="importform" enctype="multipart/form-data">
+    <div id="importdata" style="display: none; background: white; border: 1px solid #ccc;
+        width: 360px; height: 160px; position: absolute; padding: 10px; top: 200px; left: 200px;
+        z-index: 999">
+        <div style="text-align: right; background: #5a9ac2; height: 22px; line-height: 22px;
+            color: white; padding: 0 10px">
+            <a href="javascript:void(0)" id="close" style="color: white">关闭</a>
+        </div>
+        <p style="padding: 10px 0">
+            <input type="file" name="fu_Import" id="fu_Import" style="width:320px" class="input-normal" />
+        </p>
+        <input type="submit" id="btn_ImportNode" name="btn_ImportNode" value="确定提交栏目数据" class="btn-normal" />
+        <input type="hidden" name="action" value="ImportNode" />
+        <p style="padding: 10px 0">
+            <span style="color: Red">请上传规范格式的XML文件.文件导入可能会造成栏目数据丢失,请在操作前做好备份</span>
+        </p>
+    </div>
+</form>
+
+<script type="text/javascript">
+    $("#bnt_Import").click(function () {
+        $("#importdata").show();
+    });
+    $("#close").click(function () {
+        $("#importdata").hide();
+    });
+    $("#importform").submit(function () {
+        var filename = $("#fu_Import").val();
+        if (filename == "") {
+            showtip("请选择文件");
+        } else if (new RegExp(".xml").test(filename) == false) {
+            showtip("文件格式不正确，请上传xml文件");
+        } else {
+            var url = "/platform/Node/ImportNode";
+            var formData = new FormData($("#importform")[0]);
+            singoo.ajaxSubmit(formData, function (result) {
+                if (result.url = "loadData") parent.location.reload(); //刷新栏目主页面
+                else showtip(result.msg);
+            }, url, "post", true);
+        }
+        return false;
+    });
+</script>

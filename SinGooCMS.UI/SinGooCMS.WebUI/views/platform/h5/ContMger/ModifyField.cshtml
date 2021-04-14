@@ -1,0 +1,288 @@
+﻿@inject SinGooCMS.Domain.Interface.ICMSContext context;
+@{
+    Layout = "~/views/platform/h5/MasterPage/IFrame.cshtml"; //母版页
+}
+
+<form method="post" singoo-data-ajax="true" singoo-data-dialog="true" action="/platform/ContField/@(ViewBag.ParamAction)">
+    <script type="text/html" id="singoo-template">
+        {{#data}}
+        <div class="form-box" style="padding:10px 5px;">
+            <ul>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        所属内容模型：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        @(ViewBag.ContModel.ModelName)
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        字段名称：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox2" type="text" value="{{FieldName}}" maxlength="50" id="TextBox2" {{#FieldName}} readonly="readonly" {{/FieldName}} placeholder="请输入字段名称，英文+数字，如 Title" required="required" pattern="\w+" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        显示名称：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox3" type="text" value="{{FieldAlias}}" maxlength="255" id="TextBox3" placeholder="请输入字段显示名称 如 城市" required="required" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        表单类型：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <select name="DropDownList5" id="DropDownList5">
+                            {{{droplist5}}}
+                        </select>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        默认值：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <textarea name="TextBox6" rows="3" cols="50" id="TextBox6" lenlimit="255">{{DefaultValue}}</textarea>
+                    </div>
+                </li>
+                {{#Settings}}
+                <li class="form-item clear-fix ext" style="display: none" id="attr1">
+                    <div class="form-item-title">
+                        表单宽度：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input type="number" name="ExtTextBox1" value="{{ControlWidth}}" id="ExtTextBox1" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix ext" style="display: none" id="attr2">
+                    <div class="form-item-title">
+                        表单高度：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input type="number" name="ExtTextBox2" value="{{ControlHeight}}" id="ExtTextBox2" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix ext" style="display: none" id="attr3">
+                    <div class="form-item-title">
+                        文本框类型：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        {{{texttype}}}
+                    </div>
+                </li>
+                <li class="form-item clear-fix ext" style="display: none" id="attr4">
+                    <div class="form-item-title">
+                        日期格式：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="ExtTextBox4" type="text" value="{{DateFormat}}" id="ExtTextBox4" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix ext" style="display: none" id="attr6">
+                    <div class="form-item-title">
+                        数据来源：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <select name="ExtDropDownList6" id="ExtDropDownList6">
+                            {{{droplist8}}}
+                        </select>
+                    </div>
+                </li>
+                <li class="form-item clear-fix ext extchild " style="display: none" id="attr7">
+                    <div class="form-item-title">
+                        文本列表：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <textarea name="ExtTextBox7" rows="3" cols="50" id="ExtTextBox7"></textarea>
+                    </div>
+                </li>
+                <li class="form-item clear-fix ext extchild" style="display: none" id="attr8">
+                    <div class="form-item-title">
+                        数据字典：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="ExtTextBox8" type="text" id="ExtTextBox8" class="form-control w200 fl" />
+                        <div class="fl ml-20">
+                            <input type="button" id="btn_getdict" class="smallbtn" value="选择字典" onclick="$.dialog.open('/DictSelector/Index?type=single&elementid=ExtTextBox8&attr=value&backtype=names',{title:'选择字典',width:680,height:450},false);" />
+                        </div>
+                    </div>
+                </li>
+                <li class="form-item clear-fix ext extchild" style="display: none" id="attr9">
+                    <div class="form-item-title">
+                        数据查询：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <textarea name="ExtTextBox9" rows="3" cols="50" id="ExtTextBox9" class="form-control"></textarea>
+                    </div>
+                </li>
+                {{/Settings}}
+                <li class="form-item clear-fix ext" style="display: none" id="attr5">
+                    <div class="form-item-title">
+                        数据长度：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input type="number" name="ExtTextBox5" value="{{DataLength}}" id="ExtTextBox5" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        是否启用：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <label>
+                            <input name="CheckBox7" {{#IsUsing}} checked="checked" {{/IsUsing}} type="checkbox" id="CheckBox7" class="common-check" />
+                            <span></span>
+                        </label>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        允许为空：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <label>
+                            <input name="CheckBox9" {{#EnableNull}} checked="checked" {{/EnableNull}} type="checkbox" id="CheckBox9" class="common-check" />
+                            <span></span>
+                        </label>
+                    </div>
+                </li>
+                <li class="btn-box">
+                    <input type="submit" name="btnok" value="确 认" id="btnok" class="btn-style sure-btn" />
+                    <input id="btncancel" singoo-dialog-close="true" type="button" value="取 消(ESC)" class="btn-style cancel-btn" />
+                    <input type="hidden" name="_modelid" value="@(ViewBag.ModelID)" />
+                </li>
+            </ul>
+        </div>
+        {{/data}}
+    </script>
+</form>
+<script type="text/javascript">
+
+    var json = @Html.Raw(ViewBag.InitData); //数据
+    var fileType=@Html.Raw(ViewBag.fileTypeStrJson);
+    if($.isEmptyObject(json.result.data))
+        json.result.data={"DataLength":50,"Sort":999};
+    if(json.result.data.Settings==null || $.isEmptyObject(json.result.data.Settings))
+        json.result.data.Settings={"ControlWidth":100,"DataFormat":"yyyy-MM-dd","TextMode":"Text"}; //没有Settings，这块区域不显示
+    json.result.data.droplist5=function(){
+        var str="";
+        for(var item in json.result.fieldType)
+            str+="<option value='"+item+"' "+(item==json.result.data.FieldType?"selected='selected'":"")+">"+json.result.fieldType[item]+"</option>";
+
+        return str;
+    };
+    json.result.data.droplist8=function(){
+        var dataFrom=json.result.data.Settings==null?"":json.result.data.Settings.DataFrom;
+        var str="",arr=new Array("Text","DataDictionary","SQLQuery"),arrDesc=new Array("文本列表","数据字典","数据查询");
+        for(var i=0;i<arr.length;i++)
+            str+="<option value='"+arr[i]+"' "+(arr[i]==dataFrom?"selected='selected'":"")+">"+arrDesc[i]+"</option>";
+
+        return str;
+    };
+    json.result.data.texttype=function(){
+        var str="", textMode=json.result.data.Settings==null?"":json.result.data.Settings.TextMode;
+        for(var item in json.result.textmode){
+            str+="<label><input "+(item==textMode?"checked='checked'":"")+" type='radio' name='ExtRadioButtonList3' value='"+item+"' class='common-check radio' /><span class='no-float'></span>"+json.result.textmode[item]+"</lable> ";
+        };
+
+        return str;
+    };
+    var tmpl=$("#singoo-template").html(); //模板
+    h5.render($("form"),tmpl,json.result); //渲染并显示模板
+
+    //单文本
+    var group1 = ["attr1", "attr3", "attr5"];
+    //普通文本
+    var group2 = ["attr1", "attr2","attr5"];
+    //Key Value
+    var group3 = ["attr6", "attr7"];
+    //File
+    var group4 = ["attr1"];
+    //Mutile File
+    var group5 = [""];
+    //日期
+    var group6 = ["attr1", "attr4"];
+    //HTML在线编辑器
+    var group7=["attr1", "attr2"];
+
+    $(function(){
+        showextcontrol(@(ViewBag.ShowGroup));
+        if(@(ViewBag.ShowGroup)==group3){
+            showdatafrom(json.result.data.Settings.DataFrom); //显示控件
+            switch (json.result.data.Settings.DataFrom)
+            {
+                case "Text":
+                    $("#ExtTextBox7").val(json.result.data.Settings.DataSource);
+                    break;
+                case "DataDictionary":
+                    $("#ExtTextBox8").val(json.result.data.Settings.DataSource);
+                    break;
+                case "SQLQuery":
+                    $("#ExtTextBox9").val(json.result.data.Settings.DataSource);
+                    break;
+            }
+        }
+    });
+
+    $("#DropDownList5").change(function () {
+        jQuery(".ext").hide();
+        var controlType =jQuery(this).find("option:selected").val();
+        switch (controlType) {
+            case "SingleText":
+                showextcontrol(group1);
+                break;
+            case "MultipleText":
+                showextcontrol(group2);
+                break;
+            case "MultipleHtml":
+                showextcontrol(group7);
+                break;
+            case "RadioButton":
+            case "CheckBox":
+            case "DropDownList":
+                showextcontrol(group3);
+                break;
+            case "Picture":
+            case "File":
+                showextcontrol(group4);
+                break;
+            case "MultiPicture":
+            case "MultiFile":
+                showextcontrol(group5);
+                break;
+            case "DateTime":
+                showextcontrol(group6);
+                break;
+        }
+    });
+    function showextcontrol(controlgroup) {
+        for (var i = 0; i < controlgroup.length; i++) {
+            jQuery("#" + controlgroup[i]).show();
+        }
+    }
+    jQuery("#ExtDropDownList6").click(function () {
+        showdatafrom(jQuery(this).find("option:selected").val());
+    });
+    function showdatafrom(datafrom){
+        jQuery(".extchild").hide();
+        switch (datafrom) {
+            case "Text":
+                jQuery("#attr7").show();
+                break;
+            case "DataDictionary":
+                jQuery("#attr8").show();
+                break;
+            case "SQLQuery":
+                jQuery("#attr9").show();
+                break;
+            case "AjaxData":
+                jQuery("#attr11").show();
+                break;
+        }
+    }
+</script>

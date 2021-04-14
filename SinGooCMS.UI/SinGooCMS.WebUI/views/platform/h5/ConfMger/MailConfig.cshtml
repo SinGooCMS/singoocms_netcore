@@ -1,0 +1,94 @@
+﻿@inject SinGooCMS.Domain.Interface.ICMSContext context;
+@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+
+<form singoo-data-ajax="true">
+    <div class="form-box" id="singoo-content">
+        <script type="text/html" id="singoo-template">
+            {{#data}}
+            <ul>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        系统邮箱帐号：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input type="email" name="TextBox1" value="{{ServMailAccount}}" maxlength="50" id="TextBox1" placeholder="请输入邮箱账号" required="required" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        系统邮箱用户名：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox2" type="text" value="{{ServMailUserName}}" maxlength="50" id="TextBox2" required="required" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        系统邮箱密码：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox3" type="text" value="{{ServMailUserPwd}}" maxlength="50" id="TextBox3" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        系统邮箱服务器：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox4" type="text" value="{{ServMailSMTP}}" maxlength="50" id="TextBox4" />
+                        <div class="notice-tip clear-fix">
+                            <i class="iconfont" tip="如果无法发送邮件，请确认邮箱设置中是否启用了SMTP ">&#xe62e;</i>
+                        </div>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        系统邮箱端口号：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input type="number" name="TextBox5" value="{{ServMailPort}}" id="TextBox5" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        是否启用SSL连接：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <label>
+                            <input {{#ServMailIsSSLExt}} checked="checked" {{/ServMailIsSSLExt}} name="CheckBox6" type="checkbox" class="common-check" />
+                            <span></span>
+                        </label>
+                        是
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        发送测试邮件：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input type="email" name="txtReciver" maxlength="50" id="txtReciver" placeholder="请输入接收邮件的测试邮箱账号" onclick="this.select();" />
+                        <input type="button" singoo-action="SendTestMail" singoo-data-url="/platform/Config/SendTestMail" value="提交" class="smallbtn" /><br />
+                        <div style="margin-top:10px;">
+                            <img src="/include/theme/h5/images/opensmtp.jpg" alt="" />
+                        </div>
+                    </div>
+                </li>
+                <li class="btn-box">
+                    <input type="submit" name="btnok" value="保 存" id="btnok" class="btn-style sure-btn" />
+                </li>
+            </ul>
+            {{/data}}
+        </script>
+    </div>
+</form>
+
+<script>
+    var json = @Html.Raw(ViewBag.InitData); //数据
+    json.result.data.ServMailIsSSLExt=function(){
+        return json.result.data.ServMailIsSSL=="True"; //json输出的是字符串，但这里需要是布尔型
+    };
+    var tmpl=$("#singoo-template").html(); //模板
+    h5.render($("#singoo-content"),tmpl,json.result); //渲染并显示模板
+</script>

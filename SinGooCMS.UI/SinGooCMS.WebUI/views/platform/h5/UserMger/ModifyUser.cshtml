@@ -1,0 +1,168 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+<form method="post" singoo-data-ajax="true" singoo-data-edit="true" action="/platform/UserMger/@(ViewBag.ParamAction)">
+    <ul>
+        <li class="form-item clear-fix">
+            <div class="form-item-title">
+                会员组：
+            </div>
+            <div class="form-item-con text-item focus-item">
+                @(ViewBag.CurrGroup.GroupName)
+            </div>
+        </li>
+        <li class="form-item clear-fix">
+            <div class="form-item-title">
+                会员名称：
+            </div>
+            <div class="form-item-con text-item focus-item">
+                <input name="TextBox1" value="@(ViewBag.CurrUser.UserName)" type="text" id="TextBox1" required="required" placeholder="请输入会员名称" />
+                <div class="notice-tip clear-fix">
+                    <i class="iconfont" tip="符合会员名称规则、邮箱地址或者手机号码">&#xe62e;</i>
+                </div>
+            </div>
+        </li>
+        <li class="form-item clear-fix">
+            <div class="form-item-title">
+                密 码：
+            </div>
+            <div class="form-item-con text-item focus-item">
+                <input name="TextBox4" type="password" id="TextBox4" placeholder="密码长度不低于6位 留空表示不修改" />
+                <div class="notice-tip clear-fix">
+                    <i class="iconfont" tip="修改时置空将保留原密码">&#xe62e;</i>
+                </div>
+            </div>
+        </li>
+        <li class="form-item clear-fix">
+            <div class="form-item-title">
+                会员等级：
+            </div>
+            <div class="form-item-con text-item focus-item selectBox no-margin">
+                <select name="DropDownList3" id="DropDownList3" class="fl">
+                    @{
+                        foreach (var item in ViewBag.UserLevel)
+                        {
+                            <option @(ViewBag.CurrUser.LevelID == item.AutoID ? "selected='selected'" : "") value="@(item.AutoID)">@(item.LevelName)</option>
+                        }
+                    }
+                </select>
+                <div class="notice-tip fr">
+                    <i class="iconfont" tip="当积分达到一定额度时，会员等级将得到提升">&#xe62e;</i>
+                </div>
+            </div>
+        </li>
+        <li class="form-item clear-fix">
+            <div class="form-item-title">
+                电子邮箱：
+            </div>
+            <div class="form-item-con text-item focus-item">
+                <input type="email" value="@(ViewBag.CurrUser.Email)" name="TextBox5" id="TextBox5" placeholder="可用于登录会员、找回密码" />
+            </div>
+        </li>
+        <li class="form-item clear-fix">
+            <div class="form-item-title">
+                手机号码：
+            </div>
+            <div class="form-item-con text-item focus-item">
+                <input name="TextBox6" value="@(ViewBag.CurrUser.Mobile)" type="text" id="TextBox6" placeholder="可用于登录会员、找回密码" />
+            </div>
+        </li>
+        @if (ViewBag.ParamAction == "Modify")
+        {
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    用户金额：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input type="number" id="TextBox10" name="TextBox10" readonly="readonly" value="@(ViewBag.CurrUser.Amount.ToString("f2"))" />
+                    <a class="smallbtn" singoo-action="Recharge" singoo-dialog="true" singoo-data-url="/platform/UserMger/Recharge" singoo-dialog-param="金额充值|480|150" singoo-data-urlext="&UserID=@(ViewBag.CurrUser.AutoID)&Type=Amount">
+                        金额充值
+                    </a>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    用户积分：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input type="number" id="TextBox11" name="TextBox11" readonly="readonly" value="@(ViewBag.CurrUser.Integral)" />
+                    <a class="smallbtn" singoo-action="Recharge" singoo-dialog="true" singoo-data-url="/platform/UserMger/Recharge" singoo-dialog-param="积分充值|480|150" singoo-data-urlext="&UserID=@(ViewBag.CurrUser.AutoID)&Type=Integral">
+                        积分充值
+                    </a>
+                </div>
+            </li>
+        }
+        <li class="form-item clear-fix">
+            <div class="form-item-title">
+                文件容量：
+            </div>
+            <div class="form-item-con text-item focus-item">
+                <input type="number" name="FileSpace" value="@(ViewBag.UserFileSpace)" id="FileSpace" />
+                <div class="fl w100">
+                    MB/已使用@(ViewBag.HasUploadTotal)MB
+                </div>
+            </div>
+        </li>
+        <li class="form-item clear-fix">
+            <div class="form-item-title">
+                证件类型：
+            </div>
+            <div class="form-item-con text-item focus-item selectBox no-margin">
+                <select name="DropDownList12" id="DropDownList12">
+                    @{
+                        foreach (var item in ViewBag.Certs)
+                        {
+                            <option @(ViewBag.CurrUser.CertType == item.KeyValue ? "selected='selected'" : "") value="@(item.KeyValue)">@(item.KeyValue)</option>
+                        }
+                    }
+                </select>
+            </div>
+        </li>
+        <li class="form-item clear-fix">
+            <div class="form-item-title">
+                证件号码：
+            </div>
+            <div class="form-item-con text-item focus-item">
+                <input name="TextBox13" value="@(ViewBag.CurrUser.CertNo)" type="text" id="TextBox13" />
+            </div>
+        </li>
+        @*扩展字段*@
+        @foreach (var item in ViewBag.FieldList)
+        {
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    @(item.FieldAlias)：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    @(Html.Raw(await item.Render()))
+                </div>
+            </li>
+        }
+        <li class="form-item clear-fix">
+            <div class="form-item-title">
+                审核状态：
+            </div>
+            <div class="form-item-con text-item focus-item">
+                <label>
+                    <input name="isaudit" @((ViewBag.ParamAction == "Add" || ViewBag.CurrUser.Status == 99) ? "checked='checked'" : "") type="checkbox" id="isaudit" class="common-check" value="99" />
+                    <span></span>
+                </label>
+            </div>
+        </li>
+        @if (ViewBag.ParamAction == "Modify")
+        {
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    注册时间：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    @(ViewBag.CurrUser.AutoTimeStamp.ToString("yyyy-MM-dd HH:mm:ss"))
+                </div>
+            </li>
+        }
+        <li class="btn-box">
+            <input type="submit" name="btnok" value="保 存" id="btnok" class="btn-style sure-btn" />
+            <input type="hidden" name="_groupid" value="@(ViewBag.CurrGroup.AutoID)" />
+        </li>
+    </ul>
+</form>

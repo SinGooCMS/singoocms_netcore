@@ -1,0 +1,40 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/IFrame.cshtml"; //母版页
+}
+
+<form method="post" singoo-data-ajax="true" singoo-data-dialog="true" action="/platform/DataDict/@(ViewBag.ParamAction)">
+    <script type="text/html" id="singoo-template">
+        {{#result}}
+        <div class="form-box">
+            <ul>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        字典名称：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox1" type="text" value="{{DictName}}" maxlength="50" id="TextBox1" required="required" placeholder="请输入字典名称(英文、数字) 如 CertType" pattern="\w+" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        显示名称：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox2" type="text" value="{{DictDesc}}" maxlength="100" id="TextBox2" placeholder="请输入显示标题 如 证件类型" required="required" />
+                    </div>
+                </li>
+                <li class="btn-box">
+                    <input type="submit" name="btnok" value="确 认" id="btnok" class="btn-style sure-btn" />
+                    <input id="btncancel" onclick="$.dialog.close();" type="button" value="取 消(ESC)" class="btn-style cancel-btn" />
+                </li>
+            </ul>
+        </div>
+        {{/result}}
+    </script>
+</form>
+
+<script>
+    var json = @Html.Raw(ViewBag.InitData);
+    var tmpl=$("#singoo-template").html(); //模板
+    h5.render($("form"),tmpl,json); //渲染并显示模板
+</script>

@@ -1,0 +1,250 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+@using System.Linq;
+@model SinGooCMS.Domain.Models.NodeInfo
+<form method="post" singoo-data-ajax="true" singoo-data-edit="true" action="/platform/Node/@(ViewBag.ParamAction)">
+    <div class="form-box">
+        <ul>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    栏目名称：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox1" type="text" value="@(Model.NodeName)" maxlength="255" id="TextBox1" placeholder="请输入栏目名称 如 关于我们 (必填√)" required="required" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    栏目标识：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox2" pattern="\w+" type="text" value="@(Model.NodeIdentifier)" maxlength="255" id="TextBox2" placeholder="栏目标识唯一值，英文，数字或者下划线组成 (必填√)" required="required" />
+                    <div class="notice-tip clear-fix">
+                        <i class="iconfont" tip="栏目标识是唯一值，用于地址重写及静态页生成的路径，请填写有意义的英文名称">&#xe62e;</i>
+                    </div>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    上级栏目：
+                </div>
+                <div class="form-item-con text-item focus-item selectBox no-margin">
+                    <select name="DropDownList3" id="DropDownList3" @(ViewBag.ParamAction == "Modify" ? "disabled='disabled'" : "")>
+                        <option value="0">根栏目</option>
+                        @foreach (var item in ViewBag.ParentNodes)
+                        {
+                            <option @(Model.ParentID == item.AutoID ? "selected='selected'" : "") value="@(item.AutoID)">@(item.NodeName)</option>
+                        }
+                    </select>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    内容模型：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <select name="DropDownList4" id="DropDownList4" class="selectCon">
+                        @foreach (var item in ViewBag.ContModels)
+                        {
+                            <option @(Model.ModelID == item.AutoID ? "selected='selected'" : "") value="@(item.AutoID)">@(item.ModelName)</option>
+                        }
+                    </select>
+                    <span style="color: Red">注意：修改模型将使内容丢失</span>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    栏目横幅：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox3" value="@(Model.NodeBanner)" type="text" id="TextBox3" style="width:340px;" />
+                    <a class="smallbtn" singoo-showimg="true" singoo-showimg-target="TextBox3">查看</a>
+                    <a singoo-upload="true" singoo-upload-param="TextBox3|value|single">上传</a>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    栏目图片：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox5" value="@(Model.NodeImage)" type="text" id="TextBox5" style="width:340px;" />
+                    <a class="smallbtn" singoo-showimg="true" singoo-showimg-target="TextBox5">查看</a>
+                    <a singoo-upload="true" singoo-upload-param="TextBox5|value|single">上传</a>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    搜索优化关键字：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <textarea name="TextBox6" rows="3" cols="60" id="TextBox6" placeholder="多个关键字用逗号&#39;,&#39;分隔，准确的关键字有助于搜索引擎收录" class="txtarea-normal" checklen="true">@(Model.SeoKey)</textarea>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    搜索优化描述：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <textarea name="TextBox7" rows="3" cols="60" id="TextBox7" class="txtarea-normal">@(Model.SeoDescription)</textarea>
+                </div>
+            </li>
+            <div class="col-add-btn text-r">
+                <label>
+                    <i class="iconfont">&#xe75f;</i><span>栏目选填项</span>
+                </label>
+            </div>
+            <div class="col-add-box">
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        栏目说明：
+                    </div>
+                    <div class="form-item-con text-item focus-item col-editor">
+                        <textarea singoo-editor="true" singoo-editor-toolbar="Basic" singoo-editor-param="100%|360" name="NodeDesc" id="NodeDesc">@Html.Raw(Model.Remark)</textarea>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        列表每页显示记录数：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input type="number" name="TextBox9" value="@(Model.ItemPageSize)" id="TextBox9" style="width:80px;" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        显示在菜单：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <label>
+                            <input name="CheckBox10" @((ViewBag.ParamAction == "Add" || Model.IsShowOnMenu) ? "checked='checked'" : "") type="checkbox" id="CheckBox10" class="common-check" />
+                            <span></span>是
+                        </label>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        显示在导航：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <label>
+                            <input name="CheckBox11" @((ViewBag.ParamAction == "Add" || Model.IsShowOnNav) ? "checked='checked'" : "") type="checkbox" id="CheckBox11" class="common-check" />
+                            <span></span>是
+                        </label>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        栏目置顶：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <label>
+                            <input name="CheckBox12" @(Model.IsTop ? "checked='checked'" : "") type="checkbox" id="CheckBox12" class="common-check" />
+                            <span></span>是
+                        </label>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        栏目推荐：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <label>
+                            <input name="CheckBox13" @(Model.IsRecommend ? "checked='checked'" : "") type="checkbox" id="CheckBox13" class="common-check" />
+                            <span></span>是
+                        </label>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        自定义链接：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox14" value="@(Model.CustomLink)" type="text" id="TextBox14" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        选项：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <label>
+                            <input name="CheckBox15" @(Model.NodeSetting.EnableAddInParent ? "checked='checked'" : "") type="checkbox" id="CheckBox15" class="common-check" />
+                            <span></span>包含下级栏目时允许添加内容
+                        </label>
+                        <br />
+                        <label>
+                            <input name="CheckBox16" @(Model.NodeSetting.AllowComment ? "checked='checked'" : "") type="checkbox" id="CheckBox16" class="common-check" />
+                            <span></span>允许评论
+                        </label>
+                        <br />
+                        <label>
+                            <input name="CheckBox17" @(Model.NodeSetting.NeedLogin ? "checked='checked'" : "") type="checkbox" id="CheckBox17" class="common-check" />
+                            <span></span>需要登录浏览
+                        </label>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        允许浏览会员组：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        @foreach (SinGooCMS.Domain.Models.UserGroupInfo item in ViewBag.UserGroup)
+                        {
+                            string isChecked = (Model.NodeSetting.EnableViewUGroups != null && Model.NodeSetting.EnableViewUGroups.Split(',').Contains(item.AutoID.ToString())) ? "checked='checked'" : "";
+                            <label><input class="common-check" id="CheckBoxList18_@(item.AutoID)" type="checkbox" @isChecked name="CheckBoxList18" value="@(item.AutoID)" /><span class='no-float'></span>@(item.GroupName)</label>
+                        }
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        允许浏览会员等级：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        @foreach (SinGooCMS.Domain.Models.UserLevelInfo item in ViewBag.UserLevel)
+                        {
+                            string isChecked = (Model.NodeSetting.EnableViewULevel != null && Model.NodeSetting.EnableViewULevel.Split(',').Contains(item.AutoID.ToString())) ? "checked='checked'" : "";
+                            <label><input class="common-check" id="CheckBoxList19_@(item.AutoID)" type="checkbox" @isChecked name="CheckBoxList19" value="@(item.AutoID)" /><span class='no-float'></span>@(item.LevelName)</label>
+                        }
+                    </div>
+                </li>
+            </div>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    栏目首页模板：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox20" type="text" value="@(Model.NodeSetting.TemplateOfNodeIndex)" id="TextBox20" />
+                    <input singoo-tmplselector="true" singoo-tmplselector-target="TextBox20" type="button" value="选择模板" class="smallbtn" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    栏目列表页模板：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox21" type="text" value="@(Model.NodeSetting.TemplateOfNodeList)" id="TextBox21" />
+                    <input singoo-tmplselector="true" singoo-tmplselector-target="TextBox21" type="button" value="选择模板" class="smallbtn" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    内容详情页模板：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox22" type="text" value="@(Model.NodeSetting.TemplateOfNodeContent)" id="TextBox22" />
+                    <input singoo-tmplselector="true" singoo-tmplselector-target="TextBox22" type="button" value="选择模板" class="smallbtn" />
+                </div>
+            </li>
+            <li class="btn-box">
+                <input type="submit" name="btnok" value="确 认" id="btnok" class="btn-style sure-btn" />
+                <input id="btncancel" singoo-dialog-close="true" type="button" value="取 消(ESC)" class="btn-style cancel-btn hide" />
+            </li>
+        </ul>
+    </div>
+</form>
+<script>
+    $(".col-add-btn label").click(function () {
+        $(".col-add-box").toggleClass("show");
+    })
+</script>

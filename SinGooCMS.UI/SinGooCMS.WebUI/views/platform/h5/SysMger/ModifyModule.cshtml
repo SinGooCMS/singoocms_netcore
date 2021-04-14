@@ -1,0 +1,65 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/IFrame.cshtml"; //母版页
+}
+
+<form method="post" singoo-data-ajax="true" singoo-data-dialog="true" action="/platform/Module/@(ViewBag.ParamAction)">
+    <script type="text/html" id="singoo-template">
+        {{#result}}
+        <div class="form-box">
+            <ul>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        所属栏目：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        @(ViewBag.Catalog.CatalogName)
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        模块名称：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox1" type="text" value="{{ModuleName}}" maxlength="50" id="TextBox1" placeholder="请输入模块名称 如 订单列表" required="required" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        模块代号：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox2" type="text" value="{{ModuleCode}}" maxlength="50" id="TextBox2" {{#ModuleCode}}readonly="readonly"{{/ModuleCode}} placeholder="请输入模块代码 如 OrderList" required="required" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        文件路径：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox3" type="text" value="{{FilePath}}" maxlength="255" id="TextBox3" placeholder="请输入文件路径" required="required" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        备注：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <textarea name="TextBox4" rows="5" cols="40" id="TextBox4" lenlimit="255">{{Remark}}</textarea>
+                    </div>
+                </li>
+                <li class="btn-box">
+                    <input type="submit" name="btnok" value="确 认" id="btnok" class="btn-style sure-btn" />
+                    <input id="btncancel" singoo-dialog-close="true" type="button" value="取 消(ESC)" class="btn-style cancel-btn" />
+                    <input type="hidden" name="_cataid" value="@(ViewBag.Catalog.AutoID)" />
+                </li>
+            </ul>
+        </div>
+        {{/result}}
+    </script>
+</form>
+
+<script>
+    var json = @Html.Raw(ViewBag.InitData); //数据
+    var tmpl=$("#singoo-template").html(); //模板
+    h5.render($("form"),tmpl,json); //渲染并显示模板
+</script>

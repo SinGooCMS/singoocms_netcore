@@ -1,0 +1,106 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/IFrame.cshtml"; //母版页
+}
+<form method="post" singoo-data-ajax="true" singoo-data-dialog="true" action="/platform/Ads/@(ViewBag.ParamAction)">
+    <script type="text/html" id="singoo-template">
+        {{#result}}
+        <div class="form-box">
+            <ul>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        广告名称：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox1" type="text" value="{{AdName}}" maxlength="50" id="TextBox1" placeholder="请输入广告名称" required="required" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        广告类型：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <select name="ddlADType" id="ddlADType">
+                            {{{droplist}}}
+                        </select>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        广告文本：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <textarea name="TextBox4" rows="3" cols="60" id="TextBox4" maxlength="10">{{AdText}}</textarea>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        广告媒体：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox6" type="text" value="{{AdMediaPath}}" maxlength="100" id="TextBox6" placeholder="请选择广告图片、Flash或者视频文件" style="width:300px;" />
+                        <a class="smallbtn" singoo-showimg="true" singoo-showimg-target="TextBox6">查看</a> 
+                        <a singoo-upload="true" singoo-upload-param="TextBox6|value|single">上传</a>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        链接地址：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox2" type="text" value="{{AdLink}}" maxlength="100" id="TextBox2" placeholder="请输入链接地址，需要以http://开头" style="width:300px;" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        有效日期：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="timestart" type="text" value="{{BeginDate}}" id="timestart" class="Wdate no-float" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="width:120px;" />
+                        -
+                        <input name="timeend" type="text" value="{{EndDate}}" id="timeend" class="Wdate no-float ml-10" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="width:120px;" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        排序：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input type="number" name="TextBox5" {{#Sort}} value="{{Sort}}" {{/Sort}} {{^Sort}} value="99999" {{/Sort}} id="TextBox5" style="width:60px;" />
+
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        状态：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <label>
+                            <input name="isaudit" type="checkbox" id="isaudit" class="common-check" {{#IsAudit}} checked="checked" {{/IsAudit}} />
+                            <span></span>已审核
+                        </label>
+                    </div>
+                </li>
+                <li class="btn-box">
+                    <input type="submit" name="btnok" value="确 认" id="btnok" class="btn-style sure-btn" />
+                    <input id="btncancel" onclick="$.dialog.close();" type="button" value="取 消" class="btn-style cancel-btn" />
+                    <input type="hidden" name="_PlaceID" value="@(ViewBag.PlaceID)" />
+                </li>
+            </ul>
+        </div>
+        {{/result}}
+    </script>
+</form>
+<script>
+    var json = @Html.Raw(ViewBag.InitData);
+    json.result.droplist=function(){ //扩展一个字段
+        var str="";
+        var arr=new Array("文本广告","图片广告","Flash广告","视频广告");
+        for(var i=0;i<arr.length;i++)
+            str+="<option value='"+i+"' "+(json.result.AdType==i?"selected='selected'":"")+" >"+arr[i]+"</option>";
+
+        return str;
+    };
+
+    var tmpl=$("#singoo-template").html(); //模板
+    h5.render($("form"),tmpl,json); //渲染并显示模板
+</script>

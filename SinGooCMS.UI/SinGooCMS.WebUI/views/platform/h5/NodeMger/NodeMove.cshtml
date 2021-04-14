@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+
+<form singoo-data-ajax="true">
+    <div class="main-content">
+        <div class="column">
+            <!--内容-->
+            <table border="0" cellspacing="1" cellpadding="2" style="width: 520px; margin: 10px auto;">
+                <tr>
+                    <td style="width: 50%; text-align: left;">
+                        <strong>当前栏目：</strong><br />
+                        <br />
+                        @Html.DropDownList("lbSourceNode", ViewBag.SourceItems as List<SelectListItem>, new { Class = "selectoption", Style = "height:380px;width:250px;", size = "20" });
+                    </td>
+                    <td class="pmtbcptd">
+                        <strong>目标栏目：</strong>
+                        <br />
+                        <br />
+                        @Html.DropDownList("lbTargetNode", ViewBag.TargetItems as List<SelectListItem>, new { Class = "selectoption", Style = "height:380px;width:250px;", size = "20" });
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:center;">
+                        <br />
+                        <input type="submit" name="btnMove" value="移动" id="btnMove" class="btn-style sure-btn" />
+                        &nbsp;&nbsp;
+                        <input id="btncancel" type="button" value="关 闭" class="btn-style cancel-btn hide" onclick="closeMenuName(this)" />
+                    </td>
+                </tr>
+            </table>
+            <!--内容end-->
+        </div>
+    </div>
+</form>

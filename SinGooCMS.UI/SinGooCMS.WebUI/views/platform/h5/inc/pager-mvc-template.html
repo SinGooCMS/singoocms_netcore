@@ -1,0 +1,44 @@
+﻿<div class="com-pager clear-fix mt-20">
+    {{#pager}}
+    <div class="fr">
+        {{#IsShowTotalPage}}
+        <div class="com-pager-oper clear-fix fl">
+            <label>
+                第<span>{{pageIndex}}</span>页<span>/</span>共<span>{{totalPage}}</span>页
+            </label>
+        </div>
+        {{/IsShowTotalPage}}
+        <div class="com-pager-main clear-fix fr">
+            {{#IsShowPageSize}}
+            <span>
+                每页<select class="w-60">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>条 / 共{{totalRecord}}条记录
+            </span>
+            {{/IsShowPageSize}}
+            {{{firstPageLink}}}
+            {{{prevPageLink}}}
+            {{#pagerNums}}
+            {{{url}}}
+            {{/pagerNums}}
+            {{{nextPageLink}}}
+            {{{endPageLink}}}
+        </div>
+    </div>
+    {{/pager}}
+</div>
+<script>
+    $(function () {
+        var pageSize = singoo.request["pagesize"];  
+        if (pageSize == null || pageSize == undefined || pageSize < 1) pageSize = 20;
+        $(".com-pager-main select").find("option[value='" + pageSize + "']").attr("selected", "selected"); //当前选中
+
+        $(".com-pager-main").find("select").change(function () {
+            location = singoo.createUrl(location.href, "pagesize", $(this).val());
+        });
+    });
+</script>

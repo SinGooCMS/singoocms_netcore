@@ -1,0 +1,61 @@
+﻿@inject SinGooCMS.Domain.Interface.IManager manager;
+@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+<div class="form-box">
+    <form method="post" singoo-data-ajax="true">
+        <ul>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    当前登录的账户:
+                </div>
+                <div class="form-item-con select-item focus-item">
+                    @(manager.AccountName)
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    原密码:
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="oldpwd" type="password" id="oldpwd" required="required" style="width: 300px;" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    新密码:
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="newpwd1" type="password" id="newpwd1" required="required" style="width: 300px;" placeholder="新密码长度不少于6位" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    确认新密码:
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="newpwd2" type="password" id="newpwd2" required="required" style="width: 300px;" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    电子邮箱:
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input value="@(manager.LoginAccount.Email)" name="email" type="text" placeholder="您的电子邮箱" id="email" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    手机号码:
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input value="@(manager.LoginAccount.Mobile)" name="mobile" type="text" placeholder="您的手机号码" id="mobile" />
+                </div>
+            </li>
+            <li class="btn-box">
+                <input type="submit" name="btnok" value="确 认" id="btnok" class="btn-style sure-btn" />
+            </li>
+        </ul>
+    </form>
+</div>

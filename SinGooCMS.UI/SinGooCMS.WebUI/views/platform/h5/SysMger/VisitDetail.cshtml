@@ -1,0 +1,175 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+
+<form method="post" singoo-data-ajax="true" singoo-data-dialog="true">
+    <script type="text/html" id="singoo-template">
+        {{#result}}
+        <div class="form-box">
+            <ul>
+                <li class="form-item clear-fix visitItem">
+                    <div class="form-item-title">
+                        IP地址：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        {{IPAddress}}
+                    </div>
+                </li>
+                <li class="form-item clear-fix visitItem">
+                    <div class="form-item-title">
+                        操作系统：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        {{OPSystem}}
+                    </div>
+                </li>
+                <li class="form-item clear-fix visitItem">
+                    <div class="form-item-title">
+                        语言文化：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        {{CustomerLang}}
+                    </div>
+                </li>
+                <li class="form-item clear-fix visitItem">
+                    <div class="form-item-title">
+                        浏览器：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        {{Navigator}}
+                    </div>
+                </li>
+                <li class="form-item clear-fix visitItem">
+                    <div class="form-item-title">
+                        用户信息：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        {{UserAgent}}
+                    </div>
+                </li>
+                <li class="form-item clear-fix visitItem">
+                    <div class="form-item-title ">
+                        是否移动设备：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        {{IsMobileDevice}}
+                    </div>
+                </li>
+                <li class="form-item clear-fix visitItem">
+                    <div class="form-item-title">
+                        是否支持ActiveX：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        {{IsSupportActiveX}}
+                    </div>
+                </li>
+                <li class="form-item clear-fix visitItem">
+                    <div class="form-item-title">
+                        是否支持Cookie：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        {{IsSupportCookie}}
+                    </div>
+                </li>
+                <li class="form-item clear-fix visitItem">
+                    <div class="form-item-title">
+                        是否支持Javascript：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        {{IsSupportJavascript}}
+                    </div>
+                </li>
+                <li class="form-item clear-fix visitItem">
+                    <div class="form-item-title">
+                        .NET版本：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        {{NETVer}}
+                    </div>
+                </li>
+                <li class="form-item clear-fix visitItem">
+                    <div class="form-item-title">
+                        是否网络爬虫访问：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        {{IsCrawler}}
+                    </div>
+                </li>
+                <li class="form-item clear-fix visitItem">
+                    <div class="form-item-title">
+                        搜索引擎：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        {{Engine}}
+                    </div>
+                </li>
+                <li class="form-item clear-fix visitItem">
+                    <div class="form-item-title">
+                        关键字：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        {{KeyWord}}
+                    </div>
+                </li>
+                <li class="form-item clear-fix visitItem">
+                    <div class="form-item-title">
+                        来路页：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        {{ApproachUrl}}
+                    </div>
+                </li>
+                <li class="form-item clear-fix visitItem">
+                    <div class="form-item-title">
+                        访问页：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        {{VPage}}
+                    </div>
+                </li>
+                <li class="form-item clear-fix visitItem">
+                    <div class="form-item-title">
+                        GET参数：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        {{GETParameter}}
+                    </div>
+                </li>
+                <li class="form-item clear-fix visitItem">
+                    <div class="form-item-title">
+                        POST参数：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        {{POSTParameter}}
+                    </div>
+                </li>
+                <li class="form-item clear-fix visitItem">
+                    <div class="form-item-title">
+                        Cookie参数：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        {{CookieParameter}}
+                    </div>
+                </li>
+                <li class="form-item clear-fix visitItem">
+                    <div class="form-item-title">
+                        访问时间：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        {{AutoTimeStamp}}
+                    </div>
+                </li>
+                <li class="btn-box hide">
+                    <input id="btn_cancel" onclick="closeMenuName('日志详情');" type="button" value="取 消" class="btn-style cancel-btn" />
+                </li>
+            </ul>
+        </div>
+        {{/result}}
+    </script>
+</form>
+
+<script>
+    var json = @Html.Raw(ViewBag.InitData); //数据
+    var tmpl=$("#singoo-template").html(); //模板
+    h5.render($("form"),tmpl,json); //渲染并显示模板
+</script>

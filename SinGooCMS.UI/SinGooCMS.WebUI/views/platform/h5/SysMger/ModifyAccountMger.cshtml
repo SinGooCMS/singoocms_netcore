@@ -1,0 +1,59 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/IFrame.cshtml"; //母版页
+}
+
+<form singoo-data-ajax="true" singoo-data-dialog="true" action="/platform/AccountMger/@(ViewBag.ParamAction)">
+    <script type="text/html" id="singoo-template">
+        {{#result}}
+        <div class="form-box">
+            <ul>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        帐户名称：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox1" type="text" value="{{AccountName}}" maxlength="50" id="TextBox1" {{#AccountName}}readonly="readonly"{{/AccountName}} placeholder="请输入帐户名称 如 admin" required="required" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        登录密码：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox2" type="password" maxlength="50" id="TextBox2" placeholder="请输入登录密码" />
+                        <div class="notice-tip clear-fix">
+                            <i class="iconfont" tip="编辑状态下留空则不修改">&#xe62e;</i>
+                        </div>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        电子邮箱：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input type="text" name="TextBox3" value="{{Email}}" maxlength="50" id="TextBox3" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        手机号码：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox4" type="text" value="{{Mobile}}" maxlength="50" id="TextBox4" />
+                    </div>
+                </li>
+                <li class="btn-box">
+                    <input type="submit" name="btnok" value="确 认" id="btnok" class="btn-style sure-btn" />
+                    <input id="btncancel" singoo-dialog-close="true" type="button" value="取 消(ESC)" class="btn-style cancel-btn" />
+                </li>
+            </ul>
+        </div>
+        {{/result}}
+    </script>
+</form>
+
+<script>
+    var json = @Html.Raw(ViewBag.InitData); //数据
+    var tmpl=$("#singoo-template").html(); //模板
+    h5.render($("form"),tmpl,json); //渲染并显示模板
+</script>

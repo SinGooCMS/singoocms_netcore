@@ -1,0 +1,60 @@
+﻿@inject SinGooCMS.Domain.Interface.ICMSContext context;
+@inject SinGooCMS.Domain.Interface.ICacheStore cacheStore;
+@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+
+<form singoo-data-ajax="true" singoo-data-list="true">
+    <div class="top-fix clear-fix">
+        <div class="clear-fix">
+            <ul class="btn-group clear-fix">
+                <li>
+                    <a singoo-action="Add" singoo-data-url="/platform/Template/Edit" singoo-dialog-param="增加模板|680|420">
+                        <i class="iconfont">&#xe611;</i><span>新增</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="search-box focus-item fr">
+                <input name="key" singoo-search-item="true" type="text" placeholder="请输入模板名称" />
+                <input type="button" singoo-action="Search" name="searchbtn" value="&#xe60a;" class="search-btn iconfont" />
+            </div>
+        </div>
+    </div>
+    <div class="wrap clear-fix" id="rowItems">
+        <div id="singoo-content"></div>
+        <script id="singoo-template" type="text/html">
+            {{#data}}
+            <div class="fl" style="width:33.333%;padding:15px 15px 0 0;">
+                <div class="model-box {{#IsDefault}}now{{/IsDefault}}">
+                    {{#IsDefault}}<div class="model-now iconfont">&#xe6d8;</div>{{/IsDefault}}
+                    <a singoo-action="Modify" singoo-data-url="/platform/Template/Edit" singoo-data-urlext="&opid={{AutoID}}" singoo-dialog-param="编辑模板|680|420">
+                        <div style="position: relative;">
+                            <img src="{{ShowPicExt}}" alt="模板预览" style="width: 305px; height: 230px" />
+                        </div>
+                    </a>
+                </div>
+                <div class="model-do clear-fix">
+                    <b>
+                        <a singoo-action="Modify" singoo-data-url="/platform/Template/Edit" singoo-data-urlext="&opid={{AutoID}}" singoo-dialog-param="编辑模板|680|420">
+                            {{TemplateNameExt}}
+                        </a>
+                    </b>
+                    <span>
+                        <a class="tab-a" href="/platform/TemplateFile/Index?opid={{AutoID}}">
+                            文件列表
+                        </a>
+                        <a singoo-action="SetDefault" singoo-data-id="{{AutoID}}" singoo-data-url="/platform/Template/SetDefault" CssClass="set">设为默认</a>
+                        <a singoo-action="Delete" singoo-data-id="{{AutoID}}" class="iconfont">&#xe6eb;<i>删除</i></a>
+                    </span>
+                </div>
+            </div>
+            {{/data}}
+            {{^data}}
+            <div> 没有找到任何数据</div>
+            {{/data}}
+        </script>
+    </div>
+    <!--分页 start-->
+    <div id="singoo-pager"></div>
+    <!--分页 end-->
+</form>

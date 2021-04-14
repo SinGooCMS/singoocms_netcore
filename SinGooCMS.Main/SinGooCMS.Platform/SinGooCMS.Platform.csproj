@@ -1,0 +1,122 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <ApplicationIcon />
+    <OutputType>Library</OutputType>
+    <StartupObject />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\**" />
+    <Compile Remove="OAuth\**" />
+    <Compile Remove="Platform\**" />
+    <Compile Remove="Publish\**" />
+    <Content Remove="Controllers\**" />
+    <Content Remove="OAuth\**" />
+    <Content Remove="Platform\**" />
+    <Content Remove="Publish\**" />
+    <EmbeddedResource Remove="Controllers\**" />
+    <EmbeddedResource Remove="OAuth\**" />
+    <EmbeddedResource Remove="Platform\**" />
+    <EmbeddedResource Remove="Publish\**" />
+    <None Remove="Controllers\**" />
+    <None Remove="OAuth\**" />
+    <None Remove="Platform\**" />
+    <None Remove="Publish\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="WebUploader.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Controllers\ArticleController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Controllers\ErrorControler.cs" />
+    <Compile Include="Controllers\IncludeControler.cs" />
+    <Compile Include="Controllers\LogController.cs" />
+    <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\SinGooDefController.cs" />
+    <Compile Include="Controllers\SinGooInfoController.cs" />
+    <Compile Include="Controllers\ToolsController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="OAuth\AlipayAuthController.cs" />
+    <Compile Include="OAuth\Config\MD5.cs" />
+    <Compile Include="OAuth\Config\OAuthConfig.cs" />
+    <Compile Include="OAuth\OAuthPageBase.cs" />
+    <Compile Include="OAuth\QQAuthController.cs" />
+    <Compile Include="OAuth\SinaAuthController.cs" />
+    <Compile Include="OAuth\TaobaoAuthController.cs" />
+    <Compile Include="OAuth\WeixinAuthController.cs" />
+    <Compile Include="Platform\AccountController.cs" />
+    <Compile Include="Platform\ADMger\AdPlaceController.cs" />
+    <Compile Include="Platform\ADMger\AdsController.cs" />
+    <Compile Include="Platform\ADMger\FeedbackController.cs" />
+    <Compile Include="Platform\ADMger\FriendLinkController.cs" />
+    <Compile Include="Platform\ConfMger\ConfigController.cs" />
+    <Compile Include="Platform\ConfMger\DataDictController.cs" />
+    <Compile Include="Platform\ConfMger\DictItemController.cs" />
+    <Compile Include="Platform\ConfMger\SettingCateController.cs" />
+    <Compile Include="Platform\ConfMger\SettingController.cs" />
+    <Compile Include="Platform\ContMger\CommentMgerController.cs" />
+    <Compile Include="Platform\ContMger\ContentController.cs" />
+    <Compile Include="Platform\ContMger\ContFieldController.cs" />
+    <Compile Include="Platform\ContMger\ContModelController.cs" />
+    <Compile Include="Platform\ContMger\FileConfigController.cs" />
+    <Compile Include="Platform\ContMger\FolderController.cs" />
+    <Compile Include="Platform\ContMger\TagsController.cs" />
+    <Compile Include="Platform\ContMger\UpfilesController.cs" />
+    <Compile Include="Platform\MobMger\MobileSetController.cs" />
+    <Compile Include="Platform\MobMger\SMSConfigController.cs" />
+    <Compile Include="Platform\MobMger\SMSTemplateController.cs" />
+    <Compile Include="Platform\NodeMger\NodeController.cs" />
+    <Compile Include="Platform\NodeMger\NodeMoveController.cs" />
+    <Compile Include="Platform\PlatformController.cs" />
+    <Compile Include="Platform\Selector\DictSelectorController.cs" />
+    <Compile Include="Platform\SysMger\AccountMgerController.cs" />
+    <Compile Include="Platform\SysMger\IPStrategyController.cs" />
+    <Compile Include="Platform\SysMger\MenuController.cs" />
+    <Compile Include="Platform\SysMger\ModuleController.cs" />
+    <Compile Include="Platform\SysMger\OperationController.cs" />
+    <Compile Include="Platform\SysMger\PermissionController.cs" />
+    <Compile Include="Platform\SysMger\RoleController.cs" />
+    <Compile Include="Platform\SysMger\RoleSetController.cs" />
+    <Compile Include="Platform\SysMger\SysLogController.cs" />
+    <Compile Include="Platform\SysMger\SysMgerController.cs" />
+    <Compile Include="Platform\SysMger\VisitorLogController.cs" />
+    <Compile Include="Platform\TemplateMger\TemplateController.cs" />
+    <Compile Include="Platform\TemplateMger\TemplateEditorController.cs" />
+    <Compile Include="Platform\TemplateMger\TemplateFileController.cs" />
+    <Compile Include="Platform\TemplateMger\TmplSelectorController.cs" />
+    <Compile Include="Platform\UserMger\MessageMgerController.cs" />
+    <Compile Include="Platform\UserMger\AccDetailController.cs" />
+    <Compile Include="Platform\UserMger\ThirdLoginController.cs" />
+    <Compile Include="Platform\UserMger\UserFieldController.cs" />
+    <Compile Include="Platform\UserMger\UserGroupController.cs" />
+    <Compile Include="Platform\UserMger\UserLevelController.cs" />
+    <Compile Include="Platform\UserMger\UserMgerController.cs" />
+    <Compile Include="Platform\UserMger\UserSetController.cs" />
+    <Compile Include="Platform\VoteMger\VoteLogController.cs" />
+    <Compile Include="Platform\VoteMger\VoteMgerController.cs" />
+    <Compile Include="Platform\WeixinMger\CustomMenuController.cs" />
+    <Compile Include="Platform\WeixinMger\KeyRlyController.cs" />
+    <Compile Include="Platform\WeixinMger\WeixinMgerController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\SinGooCMS.Support\SinGooCMS.Weixin\SinGooCMS.Weixin.csproj" />
+    <ProjectReference Include="..\SinGooCMS.Application\SinGooCMS.Application.csproj" />
+  </ItemGroup>
+
+</Project>

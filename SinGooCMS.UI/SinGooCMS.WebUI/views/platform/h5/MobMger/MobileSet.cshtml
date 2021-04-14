@@ -1,0 +1,40 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+
+<form method="post" singoo-data-ajax="true">
+    <div class="form-box">
+        <div class="content-title">
+            <h2 class="title">移动端设置</h2>
+            <blockquote>
+                1、只有存在相应的移动端网站模板时，启用移动端网站才有效。<br />
+                2、未启用状态下在移动端将显示PC端的网站效果。
+            </blockquote>
+        </div>
+        <ul>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    是否启用移动端：
+                </div>
+                <div class="form-item-con text-item focus-item" id="singoo-content">
+                    <script id="singoo-template" type="text/html">
+                        {{#data}}
+                        <label>
+                            <input type="checkbox" name="ismobopen" class="common-check" {{#EnabledMobile}} checked="checked" {{/EnabledMobile}} />
+                            <span></span>是
+                        </label>
+                        {{/data}}
+                    </script>
+                </div>                
+            </li>
+            <li class="btn-box">
+                <input type="submit" value="保 存" class="btn-style sure-btn" />
+            </li>
+        </ul>
+    </div>
+</form>
+<script>
+    var json = @Html.Raw(ViewBag.InitData); //数据
+    var tmpl=$("#singoo-template").html(); //模板
+    h5.render($("#singoo-content"),tmpl,json.result); //渲染并显示模板
+</script>

@@ -1,0 +1,105 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/IFrame.cshtml"; //母版页
+}
+@model SinGooCMS.Domain.Models.VoteInfo;
+
+<form method="post" singoo-data-ajax="true" singoo-data-dialog="true" action="/platform/VoteMger/@(ViewBag.ParamAction)">
+    <div class="form-box">
+        <ul>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    投票标题：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox1" type="text" value="@(Model.Title)" maxlength="255" id="TextBox1" placeholder="请输入投票标题" required="required" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    投票选项：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <div style="text-align: right">
+                        <span id="jia_VoteItem" style="cursor: pointer">增加行[+]</span>
+                    </div>
+                    @{
+                        if (Model.VoteItems != null && Model.VoteItems.Count() > 0)
+                        {
+                            <table class="table" id="VoteItems">
+                                @{
+                                    foreach (var item in Model.VoteItems)
+                                    {
+                                        <tr>
+                                            <td class="left child-clear" style="padding:5px 0;">
+                                                <input type="text" id="voteitem_txt_@(item.ItemID)" name="voteitem_txt" value='@(item.VoteOption)' class="input-txt" style="width: 400px" tip="投票数：@(item.VoteNum)" />
+                                                <input type="hidden" id="voteitem_id_@(item.ItemID)" name="voteitem_id" value="@(item.ItemID)" />
+                                                <span style="cursor: pointer" onclick="$(this).parent().parent().remove();" class="jian" title="移除">&nbsp;&nbsp;[-]移除</span>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </table>
+                        }
+                        else
+                        {
+                            <table class="table" id="VoteItems">
+                                <tr>
+                                    <td class="left child-clear" style="padding:5px 0;">
+                                        <input type="text" id="voteitem_txt_add" name="voteitem_txt" value='' class="input-txt" style="width: 400px" />
+                                        <input type="hidden" id="voteitem_id_add" name="voteitem_id" value="" />
+                                        <span style="cursor: pointer" onclick="$(this).parent().parent().remove();" class="jian" title="移除">&nbsp;&nbsp;[-]移除</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        }
+                    }
+
+                    <script type="text/javascript">
+                        $("#jia_VoteItem").click(function () {
+                            var trid = singoo.getRandStr(6);
+                            $("#VoteItems").append('<tr><td class="left child-clear" style="padding:5px 0;"><input type="text" id="voteitem_txt_' + trid + '" name="voteitem_txt" class="input-txt" style="width:400px"/><input type="hidden" id="voteitem_id_' + trid + '" name="voteitem_id" value="" /><span onclick="$(this).parent().parent().remove();" class="jian" title="移除" style="cursor:pointer">&nbsp;&nbsp;[-]移除</span> </td></tr>');
+                        });
+                    </script>
+
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    是否多选：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <label>
+                        <input name="chkDuo" @(Model.IsMultiChoice ? "checked='checked'" : "") type="checkbox" id="chkDuo" class="common-check" />
+                        <span></span>是
+                    </label>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    是否匿名：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <label>
+                        <input name="chkAny" @(Model.IsAnonymous ? "checked='checked'" : "") type="checkbox" id="chkAny" class="common-check" />
+                        <span></span>是
+                    </label>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    是否审核：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <label>
+                        <input name="chkClose" @(Model.IsAudit ? "checked='checked'" : "") type="checkbox" id="chkClose" class="common-check" />
+                        <span></span>是
+                    </label>
+                </div>
+            </li>
+            <li class="btn-box">
+                <input type="submit" name="btnok" value="确 认" id="btnok" class="btn-style sure-btn" />
+                <input id="btncancel" singoo-dialog-close="true" type="button" value="取 消(ESC)" class="btn-style cancel-btn" />
+            </li>
+        </ul>
+    </div>
+</form>

@@ -1,0 +1,226 @@
+﻿@inject SinGooCMS.Domain.Interface.ICMSContext context;
+@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+
+<style type="text/css">
+    .feedback-wrap {
+        width: 100%;
+        margin: 0 auto;
+        border: 1px #ccc solid;
+    }
+
+    .feedback-rows {
+        height: 35px;
+        padding: 0px 10px;
+        border-bottom: 1px #ccc solid;
+        line-height: 35px;
+        background: #f0f0f0;
+    }
+
+    .feedback-rows-left {
+        float: left;
+        text-align: left;
+    }
+
+    .feedback-rows-right {
+        float: right;
+        text-align: right;
+    }
+
+        .feedback-rows-right span {
+            margin-left: 10px;
+            font-size: 12px;
+        }
+
+            .feedback-rows-right span a {
+                color: #f00;
+                text-decoration: underline;
+            }
+
+    .feedback-rows-left span {
+        margin-right: 10px;
+        font-size: 12px;
+    }
+
+    .feedback-txt {
+        padding: 10px 5px;
+    }
+
+        .feedback-txt p {
+            color: #333;
+            display: block;
+            margin: 0 auto;
+            padding: 5px;
+            font-size: 12px; /*border-bottom: 1px #ccc solid;*/
+        }
+
+    .feed-reply {
+        display: none;
+        width: 94%;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        margin-left: 5%;
+        border-bottom: 1px #ddd solid;
+    }
+
+        .feed-reply .feedback-txt {
+            border-left: 1px #ccc solid;
+            border-right: 1px #ccc solid;
+        }
+
+        .feed-reply .feedback-rows {
+            font-size: 12px;
+            background: #FFC;
+            border: 1px #ccc solid;
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+
+            .feed-reply .feedback-rows span {
+                margin-right: 10px;
+            }
+
+    .reply-write {
+        background: #f0f0f0;
+        padding: 10px;
+        display: block;
+        margin: 0 auto;
+        font-size: 12px;
+        border: 1px #ccc solid;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+        .reply-write textarea {
+            float: left;
+            width: 70%;
+            border: 0px;
+            padding: 10px;
+            font-size: 12px;
+            min-height: 100px;
+            color: #333;
+        }
+
+    .reply-submit {
+        float: left;
+        margin-left: 15px;
+    }
+
+        .reply-submit input {
+            display: block;
+            color: #333;
+            font-weight: bold;
+            width: 50px;
+            height: 22px;
+        }
+
+    .reply-chose {
+        margin-bottom: 10px;
+    }
+</style>
+<form method="post" singoo-data-ajax="true" singoo-data-list="true">
+    <div class="top-fix clear-fix">
+        <div class="clear-fix">
+            <ul class="btn-group clear-fix">
+                <li>
+                    <label class="label-box" for="checkall">
+                        <input type="checkbox" class="common-check" id="checkall" />
+                        <span></span>全选
+                    </label>
+                </li>
+                <li>
+                    <a singoo-action="BatDelete"><i class='iconfont'>&#xe6eb;</i><span>删除</span></a>
+                </li>
+            </ul>
+            <div class="search-box focus-item fr">
+                <input name="key" singoo-search-item="true" type="text" placeholder="请输入留言内容" />
+                <input type="button" singoo-action="Search" name="searchbtn" value="&#xe60a;" class="search-btn iconfont" />
+            </div>
+        </div>
+    </div>
+    <div style="padding-top: 20px">
+    </div>
+    <div id="rowItems">
+        <div id="singoo-content">
+            <!--渲染的模板会在这里显示-->
+        </div>
+    </div>
+    <script id="singoo-template" type="text/html">
+        {{#data}}
+        <div class="feedback-wrap">
+            <div class="feedback-rows">
+                <div class="feedback-rows-left">
+                    <label>
+                        <input name="chk" type="checkbox" class="common-check" value="{{AutoID}}" />
+                        <span></span>
+                    </label>
+                    <input type="hidden" name="AutoID" value="{{AutoID}}" />
+                    #{{AutoID}}
+                    <span>
+                        {{UserName}}
+                        时间：{{AutoTimeStamp}}
+                        IP：{{IPAddress}}
+                    </span>
+                </div>
+                <div class="feedback-rows-right">
+                    <span>
+                        <a href="javascript:void(0)" class="reply-num" {{#ReplyCount}}onclick="showReply($('#reply_{{AutoID}}'),{{AutoID}})"{{/ReplyCount}}>{{ReplyCount}}条回复</a>
+                    </span>
+                    <a href="javascript:void(0)" title="回复留言" style="color: Green" onclick="$.dialog.open('/platform/Feedback/Edit?opid={{AutoID}}',{title:'查看详情',width:680,height:450},false);">
+                        回复留言
+                    </a>
+                    <a singoo-action="Delete" singoo-data-id="{{AutoID}}" class="iconfont">&#xe6eb;<i>删除</i></a>
+                </div>
+                <div style="clear: both;">
+                </div>
+            </div>
+            <div class="feedback-txt">
+                {{Content}}
+            </div>
+            <div class="feed-reply" id='reply_{{AutoID}}'>
+                <!--留言回复-->
+            </div>
+        </div>
+        <br />
+        {{/data}}
+        {{^data}}
+        <div class="feedback-wrap">
+            <div class="feedback-rows">
+                没有找到任何数据
+            </div>
+        </div>
+        {{/data}}
+    </script>
+    <script id="singoo-replytemplate" type="text/html">
+        {{#data}}
+        <div class="feedback-rows">
+            #{{AutoID}}
+            {{UserName}}
+            <span>时间：{{AutoTimeStamp}}</span><span>IP：{{IPAddress}}</span>
+            <div class="feedback-rows-right">
+                <a singoo-action="Delete" singoo-data-id="{{AutoID}}" class="iconfont">&#xe6eb;<i>删除回复</i></a>
+            </div>
+        </div>
+        <div class="feedback-txt">
+            <p>
+                {{Content}}
+            </p>
+        </div>
+        {{/data}}
+    </script>
+    <!--分页 start-->
+    <div id="singoo-pager"></div>
+    <!--分页 end-->
+</form>
+<script>
+    function showReply(e, arg) { //显示回复
+        $(e).toggle();
+        if (!$(e).is(":hidden")) {
+            var tmpl=$("#singoo-replytemplate").html();
+            $.getJSON("/platform/Feedback/Reply/" + arg, function (data) {
+                h5.render($(e), tmpl, data.result);
+            });
+        }
+    }
+</script>

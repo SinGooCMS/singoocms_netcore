@@ -1,0 +1,82 @@
+﻿@inject SinGooCMS.Domain.Interface.ICMSContext context;
+@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+@model SinGooCMS.ContStatus;
+
+<script src="/include/plugin/zTree/jquery.ztree.core-3.5.min.js" type="text/javascript"></script>
+<link href="/include/plugin/zTree/zTreeStyle/zTreeStyle.css" rel="stylesheet" type="text/css" />
+<div class="thir-nav">
+    <div class="panel panel-default" style="width:300px">
+        <div class="panel-body">
+            <ul id="nodeTree" class="ztree"></ul>
+        </div>
+    </div>
+</div>
+<div class="inter-frame" id="interFrameBox">
+    <div class="interBtnBox iconfont">
+        &#xe62c;
+    </div>
+    <iframe src="/platform/Content/List?ListType=@(Model.ToString())" id="interFrame" name="interFrame"></iframe>
+</div>
+<script type="text/javascript">
+    //控制内层iframe的高度
+    var clientH = document.documentElement.clientHeight || document.body.clientHeight;
+    document.getElementById("interFrameBox").style.height = clientH + "px"; //clientH - 20 + "px";
+    //控制内层菜单收缩展开
+    function interSideToggle() {
+        $(".interBtnBox").css({ "top": ($(window).height() - $(".interBtnBox").outerHeight()) / 2 + "px" })
+        var flag = true;
+        $(".interBtnBox").click(function () {
+            if (flag) {
+                $(".inter-frame").eq(0).animate({ "margin-left": "30px" });
+                $(".btn-con").html("&#xe60b;");
+                flag = false;
+            } else {
+                $(".inter-frame").eq(0).animate({ "margin-left": "180px" });
+                $(".btn-con").html("&#xe62c;");
+                flag = true;
+            }
+            (function () {
+                console.log(flag);
+            })()
+            $(".thir-nav").eq(0).toggleClass('thir-nav-fade');
+        })
+    }
+    interSideToggle();
+
+    //异步加载栏目树
+    var status = @((int)Model);
+    var setting = {
+        async: {
+            enable: true,
+            url: "/platform/Content/NodeTree",
+            autoParam: ["id", "name"],
+            otherParam: { "status": status, "Action":"View" },
+            dataFilter: filter
+        },
+        view: {
+            selectedMulti: false
+        }
+    };
+    function filter(treeId, parentNode, childNodes) {
+        if (!childNodes) return null;
+        for (var i = 0, l = childNodes.length; i < l; i++) {
+            childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.') + "(" + childNodes[i].contcount+")";
+        }
+        return childNodes;
+    }
+    $(document).ready(function () {
+        $.fn.zTree.init($("#nodeTree"), setting);
+        var treeObj = $.fn.zTree.getZTreeObj("nodeTree");
+        var listType = "@(Model.ToString())";
+        var showName = "全部栏目";
+        if (listType == "DraftBox") showName = "草稿箱";
+        else if (listType == "Recycle") showName = "回收站";
+        var newNode = { id: '0', name: showName, isParent: false, icon: '/platform/h5/images/root.gif', 'click': "AppendVal(0,'全部栏目')" };
+        newNode = treeObj.addNodes(null, newNode);
+    });
+    function AppendVal(id, name) {
+        document.getElementById("interFrame").src = "/platform/Content/List?ListType=@(Model.ToString())&NodeID=" + id;
+    }
+</script>

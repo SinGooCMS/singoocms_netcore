@@ -1,0 +1,15 @@
+#
+# robots.txt for SinGooCMS
+# Version 1.6
+#
+
+User-agent: *
+
+Disallow: /bin/
+Disallow: /db/
+Disallow: /config/
+Disallow: /include/
+Disallow: /views/
+Disallow: /upload/
+Disallow: /install/
+Disallow: /upgrade/

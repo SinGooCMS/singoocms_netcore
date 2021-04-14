@@ -1,0 +1,63 @@
+﻿@inject SinGooCMS.Domain.Interface.ICMSContext context;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="X-UA-Compatible" content="IE=EmulateIE8" />
+    <link rel="stylesheet" type="text/css" href="/include/style/base.css" />
+    <link rel="stylesheet" type="text/css" href="/include/theme/h5/css/reset.min.css" />
+    <link rel="stylesheet" type="text/css" href="/include/plugin/My97DatePicker/skin/WdatePicker.css" />
+    <script src="/include/script/jquery.min.js"></script>
+    <script src="/include/plugin/ckeditor/ckeditor.js"></script>
+    <script src="/include/plugin/ckeditor/config.js"></script>
+    <script src="/include/script/publicfun.js"></script>
+    <script src="/include/script/uploadtool.js"></script>
+    <script src="/include/script/manage.js"></script>
+    <link rel="stylesheet" type="text/css" href="/include/plugin/artDialog/skins/twitter.css" />
+    <script src="/include/plugin/artDialog/jquery.artDialog.js"></script>
+    <script src="/include/plugin/artDialog/plugins/iframeTools.js"></script>
+    <link rel="stylesheet" type="text/css" href="/include/theme/h5/css/viewer.min.css" />
+    <link href="/include/style/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
+    <script src="/include/script/mustache.min.js"></script>
+</head>
+<body>
+    <div id="loading" style="margin: 100px auto; width: 100px;">
+        <img src="/include/images/loading.gif" border="0" alt="" /><br />
+        加载中...
+    </div>
+    <div class="pl-10">
+        <input type="hidden" name="singoo-data-dataurl" id="singoo-data-dataurl" value="@(context.DataUrl)" />
+        <input type="hidden" name="singoo-data-paramaction" id="singoo-data-paramaction" value="@(context.ParamAction)" />
+        <input type="hidden" name="singoo-data-opid" id="singoo-data-opid" value="@(context.OpID)" />
+        <input type="hidden" name="singoo-data-controller" id="singoo-data-controller" value="@(context.ControllerName)" />
+        <input type="hidden" name="singoo-data-action" id="singoo-data-action" value="@(context.ActionName)" />
+        @RenderBody()
+    </div>
+</body>
+</html>
+<script src="/include/theme/h5/js/tab-min.js" defer></script>
+<script src="/include/theme/h5/js/viewer.min.js"></script>
+<script src="/include/plugin/My97DatePicker/WdatePicker.js"></script>
+<script src="/include/script/jquery.qtip.min.js"></script>
+<script language="javascript">
+    $(function () {
+        $("#loading").hide();
+        $(".tab-a").tab(); //初始化a标签链接到tab
+        //初始化main-box
+        $(".main-box-con").css({ "height": $(window).height() - 70 + "px" });
+        $("#page-content").css({ "height": $(window).height() - 100 + "px" });
+        $("#checkall").change(function () {
+            singoo.chkAll(this, "chk"); //全选/全不选
+        });
+        //查看图片
+        $("body").find("img[viewer='true'],div[viewer='true']").viewer({ url: "data-original" });
+        //提示
+        $('input[tip],textarea[tip],a[tip],img[tip],i[tip]').qtip({
+            content: { attr: 'tip' }, position: { my: 'bottom center', at: 'top center' },
+            show: { event: 'mouseenter', solo: false, ready: false, modal: false }, hide: { event: 'mouseleave' },
+            style: 'ui-tooltip-default'
+        });
+    });
+</script>

@@ -1,0 +1,97 @@
+﻿@inject SinGooCMS.Domain.Interface.ICMSContext context;
+@{
+    Layout = "~/views/platform/h5/MasterPage/IFrame.cshtml"; //母版页
+}
+
+<form method="post" singoo-data-ajax="true" singoo-data-dialog="true" action="/platform/Template/@(ViewBag.ParamAction)">
+    <script type="text/html" id="singoo-template">
+        {{#result}}
+        <div class="form-box">
+            <ul>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        模板名称：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox1" type="text" value="{{TemplateName}}" id="TextBox1" placeholder="请输入模板名称 如Tcl模板" required="required" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        模板路径：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <select name="ddlTmplPath" id="ddlTmplPath">
+                            {{{droplist}}}
+                        </select>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        首页模板：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox3" type="text" value="{{HomePage}}" id="TextBox3" placeholder="首页模板默认为：index.html" />
+                        <input id="btn_selecthome" class="btn-style sure-btn" type="button" value="选择模板" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        预览图片：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="previmg" type="text" id="previmg" value="{{ShowPic}}" class="input-normal" style="width:300px;" />
+                        <input id="btn_selectprevimg" singoo-upload="true" singoo-upload-param="previmg|value|single" class="btn-style sure-btn" type="button" value="选择图片" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        模板说明：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <textarea name="TextBox4" rows="3" cols="50" id="TextBox4" class="textarea-normal">{{TemplateDesc}}</textarea>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        作者：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox6" value="{{Author}}" type="text" id="TextBox6" class="input-normal" />
+                    </div>
+                </li>
+                <li class="btn-box">
+                    <input type="submit" name="btnok" value="确 认" id="btnok" class="btn-style sure-btn" />
+                    <input id="btncancel" singoo-dialog-close="true" type="button" value="取 消(ESC)" class="btn-style cancel-btn" />
+                </li>
+            </ul>
+        </div>
+        {{/result}}
+    </script>
+</form>
+
+<script>
+    var json = @Html.Raw(ViewBag.InitData); //数据
+    var dirs = @Html.Raw(ViewBag.TmplDirs); //模板目录集合
+    json.result.droplist = function () { //扩展一个字段
+        var str = "";
+        //console.log("json.result.TemplateName:" + json.result.TemplateName);
+        for (var i = 0; i < dirs.length; i++) {
+            if (json.result.TemplateName != null && json.result.TemplateName != undefined)
+                str += "<option value='" + dirs[i] + "' " + (json.result.TemplatePath.indexOf(dirs[i]) != -1 ? "selected='selected'" : "") + " >" + dirs[i] + "</option>";
+            else
+                str += "<option value='" + dirs[i] + "'>" + dirs[i] + "</option>";
+        }           
+
+        return str;
+    };
+
+    var tmpl=$("#singoo-template").html(); //模板
+    h5.render($("form"),tmpl,json); //渲染并显示模板
+
+    $("#btn_selecthome").click(function () {
+        var tmplDir = $("#ddlTmplPath").val();
+        if (tmplDir == "") showalert("请输入模板路径");
+        else $.dialog.open('/platform/TmplSelector/Index?elementid=TextBox3&tmplDir=' + tmplDir + '&temp=' + Math.random(), { title: '选择网站首页模板', width: 680, height: 500 }, false);
+    });
+</script>

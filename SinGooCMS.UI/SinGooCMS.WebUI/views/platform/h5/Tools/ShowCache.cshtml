@@ -1,0 +1,56 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+
+<form>
+    <div class="clear-fix">
+        <ul class="btn-group clear-fix">
+            <li>
+                <a href="javascript:;" singoo-action="clear" singoo-data-url="/platform/ClearCache"><i class='iconfont'></i><span>清空缓存</span></a>
+            </li>
+        </ul>
+        <ul class="btn-group clear-fix">
+            <li>
+                <a href="javascript:;" singoo-action="ClearPageCache" singoo-data-url="/platform/ClearPageCache"><i class='iconfont'></i><span>清空页面缓存</span></a>
+            </li>
+            <li>
+                <a href="javascript:;" singoo-action="ClearNodePageCache" singoo-data-url="/platform/ClearNodePageCache"><i class='iconfont'></i><span>清空栏目页面缓存</span></a>
+            </li>
+            <li>
+                <a href="javascript:;" singoo-action="ClearContPageCache" singoo-data-url="/platform/ClearContPageCache"><i class='iconfont'></i><span>清空文章页面缓存</span></a>
+            </li>
+        </ul>
+        <div class="search-box focus-item fl" style="width:230px;">
+            <input name="PageCacheFileName" type="text" placeholder="请输入缓存文件名称" />
+            &nbsp;&nbsp;<a href="javascript:;" singoo-action="RemoveContPageCache" singoo-data-url="/platform/RemoveContPageCache" style="width:50px;"><i class='iconfont'></i><span>删除缓存页</span></a>
+        </div>
+    </div>
+    <table class="tab-con mt-10">
+        <tr class="tab-title mt-10">
+            <td>
+                缓存关键字
+            </td>
+            <td style="width: 40px;">
+                操作
+            </td>
+        </tr>
+        @{
+            foreach (var item in ViewBag.Data)
+            {
+                <tr>
+                    <td>
+                        @item
+                    </td>
+                    <td>
+                        <div class="icon-btn clear-fix">
+                            <a singoo-action="Delete" singoo-data-id="@item"><span class='iconfont'>&#xe6eb;<i>删除</i></span></a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <!--分页 start-->
+    <div id="singoo-pager"></div>
+    <!--分页 end-->
+</form>

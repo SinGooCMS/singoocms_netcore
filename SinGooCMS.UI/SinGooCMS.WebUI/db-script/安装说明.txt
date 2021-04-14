@@ -1,0 +1,13 @@
+第一步：配置数据库连接
+打开配置文件appsettings.json
+ProviderName ：数据库类型，如 SqlServer / MySql / Sqlite
+SQLConnSTR : 数据库连接字符串
+
+第二步：运行SQL脚本
+1）安装系统数据
+打开目录/db-script/，按数据库类型运行相应的脚本
+
+2）安装模板数据
+如果是下载的模板，请解压并放到模板目录下/views/templates/，并运行Install文件夹下相应的数据库类型脚本
+
+安装完成后，重新启动站点

@@ -1,0 +1,5 @@
+1、ckeditor 编辑使用了代高亮
+2、普通页面实现代码高亮
+<script src="/include/plugin/highlight/highlight.pack.js"></script>
+<link href="/include/plugin/highlight/styles/vs2015.css" rel="stylesheet" />   
+<script>hljs.initHighlightingOnLoad();</script>

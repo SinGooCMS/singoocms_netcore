@@ -1,0 +1,84 @@
+﻿@inject SinGooCMS.Domain.Interface.ICMSContent cms;
+@inject SinGooCMS.Domain.Interface.ICMSContext context;
+@inject SinGooCMS.Domain.Interface.IUser user;
+<html>
+<head>
+    <script src="~/include/script/jquery-1.9.min.js"></script>
+    <script src="~/include/vue/vue.min.js"></script>
+    <script src="~/include/script/publicfun.js"></script>
+    <style>
+        table {
+            width:100%;
+        }
+        .table1 {
+            table-layout: fixed;
+        }
+
+        .header1 td {
+            background: #0d1e7d;
+            padding: 5px 3px;
+            font-size: 14px;
+            color: white
+        }
+
+        .content1 td {
+            background: #fafafc;
+            padding: 3px;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <form singoo-data-ajax="true">
+        <div id="singoo-content">
+            <h1 style="font-size:16px;">SinGooCMS环境变量</h1>
+            <hr />
+            <h1 style="font-size:16px;">请求头信息</h1>
+            <table>
+                <tr class="header1"><td style="width:30%">名称</td><td style="width:45%">值</td><td style="width:25%">说明</td></tr>
+                @foreach (var item in ViewBag.EnvParams)
+                {
+                    <tr class="content1"><td>@(item.VarName)</td><td>@(item.VarVal)</td><td>@(item.Remark)</td></tr>
+                }
+            </table>
+            <hr />
+            <h1 style="font-size:16px;">系统变量</h1>
+            <table>
+                <tr class="header1"><td style="width:30%">名称</td><td style="width:45%">值</td><td style="width:25%">说明</td></tr>
+                @foreach (var item in ViewBag.CMSParams)
+                {
+                    <tr class="content1"><td>@(item.VarName)</td><td>@(item.VarVal)</td><td>@(item.Remark)</td></tr>
+                }
+            </table>
+            <hr />
+            <h1 style="font-size:16px;">全局ViewBag</h1>
+            <table>
+                <tr class="header1"><td style="width:30%">名称</td><td style="width:45%">值</td><td style="width:25%">说明</td></tr>
+                <tr class="content1"><td>@@(ViewBag.mbpath)</td><td>@(ViewBag.mbpath)</td><td>当前模板路径</td></tr>
+                <tr class="content1"><td>@@(ViewBag.CurrNode)</td><td>@(ViewBag.CurrNode?.NodeName)</td><td>当前栏目名称</td></tr>
+                <tr class="content1"><td>@@(ViewBag.CurrContId)</td><td>@(ViewBag.CurrContId)</td><td>当前内容ID</td></tr>
+                <tr class="content1"><td>@@(ViewBag.ParamAction)</td><td>@(ViewBag.ParamAction)</td><td>当前操作类型</td></tr>
+                <tr class="content1"><td>@@(ViewBag.OpID)</td><td>@(ViewBag.OpID)</td><td>当前操作对象ID</td></tr>
+            </table>
+            <hr />
+            <h1 style="font-size:16px;">注入context/cms</h1>
+            <table>
+                <tr class="header1"><td style="width:30%">名称</td><td style="width:45%">值</td><td style="width:25%">说明</td></tr>
+                <tr class="content1"><td colspan="3">首先在页面顶部引入 @@inject SinGooCMS.Domain.Interface.ICMSContent cms; 然后就能直接调用cms了。 </td></tr>
+                <tr class="content1"><td>@@(cms.GetNode(1)?.NodeName)</td><td>@(cms.GetNode(1)?.NodeName)</td><td>栏目（ID:1）的栏目名称</td>
+                <tr class="content1"><td>@@(cms.GetContent(1)?.Title)</td><td>@(cms.GetContent(1).GetAwaiter().GetResult()?.Title)</td><td>文章（ID:1）的标题</td></tr>
+                <tr class="content1"><td>@@(cms.GetSingleCont(1)?.Title)</td><td>@(cms.GetSingleCont(1).GetAwaiter().GetResult()?.Title)</td><td>栏目（ID:1）的单页文章标题</td></tr>
+                <tr class="content1"><td>@@(cms.GetChildNodes(0).Count)</td><td>@(cms.GetChildNodes(0).Count())</td><td>一级栏目总数</td></tr>
+                <tr class="content1"><td>@@(cms.MD5Encode("singoocms"))</td><td>@(cms.MD5Encode("singoocms"))</td><td>MD5加密</td></tr>
+                <tr class="content1"><td colspan="3">首先在页面顶部引入 @@inject SinGooCMS.Domain.Interface.ICMSContext context; 然后就能直接调用context了。 </td></tr>
+                <tr class="content1"><td>@@(context.SiteConfig.SiteName)</td><td>@(context.SiteConfig.SiteName)</td><td>SiteName</td></tr>
+                <tr class="content1"><td>@@(context.ViewDir)</td><td>@(context.ViewDir)</td><td>视图目录</td></tr>
+            </table>
+            <div style="padding:20px;text-align:center">
+                SinGooCMS .net core 运行时间：@ViewBag.RunMilliseconds 毫秒
+            </div>
+        </div>
+    </form>
+</body>
+</html>

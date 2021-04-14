@@ -1,0 +1,236 @@
+﻿a{text-decoration: none;} /* 链接无下划线,有为underline */ 
+a:link {color: #333;text-decoration: none;} /* 未访问的链接 */
+a:visited {color: #333;text-decoration: none;} /* 已访问的链接 */
+a:hover{color: #FF3300;text-decoration: underline;} /* 鼠标在链接上 */ 
+a:active {color: #FF3300;text-decoration: none;} /* 点击激活链接 */
+.nav_l2{text-decoration:none;font-size:14px;color:#000;height:0;filter:dropshadow(offX=1,offY=1,color=#fff);}
+.nav_l2 a:link{text-decoration:none;font-size:14px;color:#000;height:0;filter:dropshadow(offX=1,offY=1,color=#fff);}
+.nav_l2 a:visited{text-decoration:none;font-size:14px;color:#fff;height:0;filter:dropshadow(offX=1,offY=1,color=#fff);}
+.nav_l2 a:active,.nav_l2 a:hover{text-decoration:underline;font-size:14px;color:#fff;height:0;filter:dropshadow(offX=1,offY=1,color=#fff);}
+body{
+    font-family: "新宋体";
+    font-size: 12px;
+    text-decoration: none;
+    line-height: 150%;
+    
+    scrollbar-face-color: #D5D5D5;
+    scrollbar-highlight-color: #9A9A9A;
+    scrollbar-shadow-color: #9A9A9A;
+    scrollbar-3dlight-color: #E0E0E0;
+    scrollbar-arrowcolor: #333;
+    scrollbar-track-color: #C5C5C5;
+    scrollbar-darkshadow-color: #E8E8E8;
+    padding:0px;
+	margin:0;
+}
+ /* 表单类 */
+button,input,textarea{
+    font-family: "新宋体";
+    font-size: 12px;
+	color:#333;
+    text-decoration: none;
+    background-color:#F0F0F0;
+	border: 1px solid #A7A7A7;
+}
+ /* 下拉菜单 */
+select{
+    font-family: "Verdana, 新宋体";
+    font-size: 12px;
+	color:#333;
+    text-decoration: none;
+    line-height: 150%;
+    background-color:#EAEAEA;
+	border:0;
+	margin:0;
+	padding:0;
+}
+.xk {
+	border: 1px solid #696969;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	background:#D8D8D8;
+}
+ /* 定义表CSS */
+.table{
+	border: 1px solid #939393;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	background:#C8C8C8;
+}
+.box	{	border:1px solid #C8C8C8; }
+/* 新菜单定义 */
+.leftframebox	{	border:1px solid #696969; background-color:#E1E1E1; margin:5px auto; width:96%; text-align:left; }
+.leftframebox .box1	{	line-height:180%; padding:6px 2px; margin-left:10px; }
+.leftframebox h4	{	font-size:12px; margin:0; padding:0; display:block; width:100%; height:25px; line-height:25px;
+background: transparent url(../../Folder/main_sys.gif) 5px center no-repeat; text-indent:2em; cursor:pointer;
+font-size: 12px; 
+	FILTER: Glow(color=#A2A2A2, Strength=1) dropshadow(color=#A2A2A2, OffX=1, OffY=1,); 
+	color: #525252;  }
+
+.leftframebox ul	{	margin:2px 5px; padding:0;  }
+.leftframebox ul li	{	display:block; list-style:none; width:100%; margin:0; height:22px; background:url(../../Folder/folderclosed.gif) left 2px no-repeat; text-indent:1.6em; line-height:22px; }
+
+ /* 菜单部分定义表CSS  */
+.leftframetable{
+	border: 1px solid #696969;
+	margin-top: 3px;
+	margin-bottom: 3px;
+	background:#E1E1E1;
+}
+.bt {
+	font-size: 12px;
+	font-weight: bold;
+	color: #EBEBEB;
+	text-decoration: none;
+}
+td {
+	color:#333;
+	font-size:12px;
+    line-height: 18px;
+}
+.toptitle {
+    line-height: 20px;
+	font-family: "Verdana, 新宋体";
+	color:#333;
+	font-size:12px;
+	font-weight:bolder;
+}
+ /* 定义大字体标题CSS  */
+.xingmu {
+    line-height: 20px;
+	font-family: "Verdana, 新宋体";
+	color:#333;
+	font-size:12px;
+	font-weight:bolder;
+	background:#DBDAD9;
+	/*background-image : url("images/skin/title_bg.gif");*/
+}
+.titledaohang {
+	font-size: 12px; 
+	FILTER: Glow(color=#A2A2A2, Strength=1) dropshadow(color=#A2A2A2, OffX=1, OffY=1,); 
+	color: #525252; 
+	font-weight:bolder;
+	font-family: '宋体'
+}
+a.admintx:link {
+	font-weight: normal; font-size: 12px; color: #3D3D3D; text-decoration: none;font-weight:bolder;
+}
+a.admintx:visited {
+	font-weight: normal; font-size: 12px; color: #3D3D3D; text-decoration: none;font-weight:bolder;
+}
+a.admintx:hover {
+	font-weight: normal; font-size: 12px; color: #FF0000; text-decoration: none;font-weight:bolder;
+}
+a.admintx:active {
+	font-weight: normal; font-size: 12px; color: #FF0000; text-decoration: none;font-weight:bolder;
+}
+.tr1 td	{	color:#333; font-size:12px; font-weight:bolder; background-color:#DBDAD9; }
+.tal, tr.tal td	{	text-align:left; }
+.tac, tr.tac td	{	text-align:center; }
+.tar, tr.tar td	{	text-align:right; }
+.tr2 td	{	background-color:#EAEAEA;}
+.tr3 td	{	background-color:#D9D9D9; }
+.back {
+	background:#F2F2F2;
+}
+.Leftback {
+	background:#DBDBDB;
+}
+.hback {
+	background:#EAEAEA;
+}
+.hback_1 {
+	background:#D9D9D9;
+}
+ /* 框架CSS  */
+.bordercolor {
+cursor:col-resize;
+border-left:none;
+border-bottom:none;
+border-top:none;
+border-right:solid;
+border-right-width:5px;
+border-right-color:#C6C5C5;
+}
+ /* 大字体CSS  */
+.pagetile {
+	font-weight:bolder;
+	font-size:20px;
+}
+.ischeck
+{
+	color:#FF9900;
+}
+/*自定义CSS样式一，黄色*/
+.CusCss1
+{
+	color:#FFFF00;
+}
+/*自定义CSS样式二,黄蓝*/
+.CusCss2
+{
+	color:#00CCCC;
+}
+/*自定义CSS样式二,黄白*/
+.CusCss3
+{
+	color:#FFCCCC;
+}
+.alps {
+font-size: 9pt; 
+FILTER: Glow(color=#0F42A6, Strength=2) dropshadow(color=#0F42A6, OffX=2, OffY=1,); 
+color: #8AADE9; 
+font-family: '宋体'
+}
+a.top:link {
+	font-weight: normal; font-size: 12px; color: #000000; text-decoration: none
+}
+a.top:visited {
+	font-weight: normal; font-size: 12px; color: #000000; text-decoration: none
+}
+a.top:hover {
+	font-weight: normal; font-size: 12px; color: #FF0000; text-decoration: none
+}
+a.top:active {
+	font-weight: normal; font-size: 12px; color: #FF0000; text-decoration: none
+}
+a.otherset:link {
+	font-weight: normal; font-size: 12px; color: #000000; text-decoration: none
+}
+a.otherset:visited {
+	font-weight: normal; font-size: 12px; color: #000000; text-decoration: none
+}
+a.otherset:hover {
+	font-weight: normal; font-size: 12px; color: #FF0000; text-decoration: none
+}
+a.otherset:active {
+	font-weight: normal; font-size: 12px; color: #FF0000; text-decoration: none
+}
+.tx		{	color:red; }
+span.tx	{	color:#f00;}
+a.sd:link {
+	font-weight: normal; font-size: 12px; color: #333; text-decoration: none
+}
+a.sd:visited {
+	font-weight: normal; font-size: 12px; color: #333; text-decoration: none
+}
+a.sd:hover {
+	font-weight: normal; font-size: 12px; color: #FF0000; text-decoration: none
+}
+a.sd:active {
+	font-weight: normal; font-size: 12px; color: #FF0000; text-decoration: none
+}
+.RightInput	{	border:1px solid #6FBE44; }
+.WarnInput	{	border:1px solid #f00; }
+.tx			{	color:red;}
+img			{	border:0; }
+#pager		{	font-size:14px; }
+#pager a	{font-size:16px; }
+.noborder	{	border:none; }
+
+/*产品生成样式*/
+.refreshbox		{	margin:150px auto; text-align:center; font-size:14px; line-height:220%; }
+.refreshtitle	{	margin:20px; }
+.refreshlen		{	width:76%; text-align:left; margin-bottom:5px; padding:1px; border:1px solid #C8C8C8; text-indent:0.5em; }
+.refreshbox #currentpage,
+.refreshbox #total	{	font-weight:bold; }

@@ -1,0 +1,58 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/IFrame.cshtml"; //母版页
+}
+
+<form method="post" singoo-data-ajax="true" singoo-data-dialog="true" action="/platform/IPStrategy/@(ViewBag.ParamAction)">
+    <script type="text/html" id="singoo-template">
+        {{#result}}
+        <div class="form-box">
+            <ul>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        IP地址：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox1" type="text" value="{{IPStart}}" id="TextBox1" placeholder="请输入起始IP" class="clear no-float" style="width:180px;" /> - &nbsp;&nbsp;<input name="TextBox2" value="{{IPEnd}}" type="text" id="TextBox2" placeholder="请输入结束IP" class="clear no-float" style="width:180px;" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        策略：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <select name="DropDownList3" id="DropDownList3">
+                            {{{droplist}}}
+                        </select>
+                    </div>
+                </li>
+                <li class="btn-box">
+                    <input type="submit" name="btnok" value="确 认" id="btnok" class="btn-style sure-btn" />
+                    <input id="btncancel" onclick="$.dialog.close();" type="button" value="取 消(ESC)" class="btn-style cancel-btn" />
+                </li>
+            </ul>
+        </div>
+        {{/result}}
+    </script>
+</form>
+
+<script>
+    var json = @Html.Raw(ViewBag.InitData); //数据
+    json.result.droplist=function(){
+        var str="",arr=new Array("ALLOW","DENY"),arrDesc=new Array("允许访问","拒绝访问");
+        for(var i=0;i<arr.length;i++)
+            str+="<option value='"+arr[i]+"' "+(arr[i]==json.result.Strategy?"selected='selected'":"")+">"+arrDesc[i]+"</option>";
+        return str;
+    };
+    json.result.IPStart=function(){
+        if(json.result.IPAddress!=null && json.result.IPAddress.indexOf("-")!=-1)
+            return json.result.IPAddress.split('-')[0]
+        return json.result.IPAddress;
+    };
+    json.result.IPEnd=function(){
+        if(json.result.IPAddress!=null && json.result.IPAddress.indexOf("-")!=-1)
+            return json.result.IPAddress.split('-')[1]
+        return "";
+    };
+    var tmpl=$("#singoo-template").html(); //模板
+    h5.render($("form"),tmpl,json); //渲染并显示模板
+</script>

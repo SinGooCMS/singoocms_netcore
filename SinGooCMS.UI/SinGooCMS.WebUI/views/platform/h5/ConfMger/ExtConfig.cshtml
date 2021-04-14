@@ -1,0 +1,93 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+
+<form singoo-data-ajax="true">
+    <div class="form-box" id="singoo-content">
+        <script id="singoo-template" type="text/html">
+            {{#data}}
+            <ul>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        敏感词：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <textarea name="badword" rows="3" cols="60" id="badword" placeholder="多个关键字用逗号&#39;,&#39;分隔">{{BadWords}}</textarea>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        敏感词替换文本：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="bwreplaceword" type="text" value="{{BWReplaceWord}}" id="bwreplaceword" lenlimit="100" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        站点空间总容量(Byte)：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="sitecapacity" type="number" value="{{SiteCapacity}}" id="sitecapacity" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        默认文件编辑器：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox6" type="text" value="{{DefaultHtmlEditor}}" id="TextBox6" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        留言回复邮箱：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input type="email" name="FeedbackRlyEmail" value="{{ReciverEMail}}" id="FeedbackRlyEmail" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        启用来访用户信息采集：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <label>
+                            <input {{#VisitRec}} checked="checked" {{/VisitRec}} name="EnabledSaveCustomInfo" type="checkbox" id="EnabledSaveCustomInfo" class="common-check" />
+                            <span></span>启用
+                        </label>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        启用外部提交(Post)：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <label>
+                            <input {{#AllowOutPost}} checked="checked" {{/AllowOutPost}} name="EnabledAllowOutPost" type="checkbox" id="EnabledAllowOutPost" class="common-check" />
+                            <span></span>启用
+                        </label>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        统计链接代码：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <textarea name="TextBox7" rows="3" cols="60" id="TextBox7">{{STATLink}}</textarea>
+                    </div>
+                </li>
+                <li class="btn-box">
+                    <input type="submit" name="btnok" value="保 存" id="btnok" class="btn-style sure-btn" />
+                </li>
+            </ul>
+            {{/data}}
+        </script>
+    </div>
+</form>
+
+<script>
+    var json = @Html.Raw(ViewBag.InitData); //数据
+    var tmpl=$("#singoo-template").html(); //模板
+    h5.render($("#singoo-content"),tmpl,json.result); //渲染并显示模板
+</script>

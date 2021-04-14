@@ -1,0 +1,63 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+@model SinGooCMS.Plugins.OSS.AliyunOSSConfig;
+<form singoo-data-ajax="true">
+    <div class="form-box">
+        <div class="content-title">
+            <h2 class="title">
+                阿里云存储(oss)配置
+            </h2>
+            <blockquote>
+                1、阿里云对象存储申请网址：<a href="https://www.aliyun.com/product/oss" target="_blank">https://www.aliyun.com/product/oss</a>。<br />
+                2、阿里云对象存储(oss)可以大大提高文件的访问速度，对网站体验更加友好。<br />
+                3、正确配置以上参数并启用后，上传的文件/图片会自动备份到阿里云存储(oss)中，浏览图片会产生费用。
+            </blockquote>
+        </div>
+        <ul>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    网络节点(EndPoint)：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox1" type="text" value="@(Model.EndPoint)" id="TextBox1" class="form-control" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    Access Key ID：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox2" type="text" value="@(Model.AccessKeyId)" id="TextBox2" class="form-control" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    Access Key Secret：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox3" type="text" value="@(Model.AccessKeySecret)" id="TextBox3" class="form-control" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    存储空间：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox4" type="text" value="@(Model.BucketName)" id="TextBox4" class="form-control" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    自定义域名(不含http://)：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox5" type="text" value="@(Model.CName)" id="TextBox5" class="form-control" />
+                </div>
+            </li>
+            <li class="btn-box">
+                <input type="submit" name="btnok" value="保 存" id="btnok" class="btn-style sure-btn" />
+            </li>
+        </ul>
+    </div>
+</form>

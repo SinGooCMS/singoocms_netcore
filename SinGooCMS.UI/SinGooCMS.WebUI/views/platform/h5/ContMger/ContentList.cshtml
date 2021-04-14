@@ -1,0 +1,224 @@
+﻿@inject SinGooCMS.Domain.Interface.ICMSContext context;
+@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+
+<form singoo-data-ajax="true" singoo-data-list="true">
+    <div class="top-fix clear-fix">
+        <div class="inter-top-bar" id="topBar">
+            <div class="fl top-bar-l">
+                <ul class="btn-group clear-fix">
+                    <li>
+                        <label class="label-box" for="checkall">
+                            <input type="checkbox" class="common-check" id="checkall" />
+                            <span></span>全选
+                        </label>
+                    </li>
+                    <li>
+                        <a singoo-action="BatDelete"><i class='iconfont'>&#xe6eb;</i><span>删除</span></a>
+                    </li>
+                    @if (ViewBag.ListType != "Recycle")
+                    {
+                        <li>
+                            <a singoo-action="AuditOk" singoo-data-url="/platform/Content/AuditOk"><i class='iconfont'></i><span>审核通过</span></a>
+                        </li>
+                        <li>
+                            <a singoo-action="AuditCancel" singoo-data-url="/platform/Content/AuditCancel"><i class='iconfont'></i><span>取消审核</span></a>
+                        </li>
+                    }
+                </ul>
+                @if (ViewBag.ListType != "Recycle")
+                {
+                    <div class="selectBox fl">
+                        <select name="ddlMoveTo" id="ddlMoveTo">
+                            @foreach (var item in ViewBag.NodeTree)
+                            {
+                                <option value="@(item.AutoID)">@(item.NodeName)</option>
+                            }
+                        </select>
+                        <input type="button" singoo-action="MoveTo" singoo-data-url="/platform/Content/MoveToNode" value="转移到" class="btn-normal mid-size" />
+                    </div>
+                }
+                <ul class="btn-group clear-fix">
+                    <li class="blue">
+                        <a class="tab-a" href="/platform/Content/Edit?NodeID=@(ViewBag.NodeID)&Action=Add">
+                            <i class="iconfont">&#xe611;</i><span>新增文章</span>
+                        </a>
+                    </li>
+                </ul>
+                @if (ViewBag.ListType != "Recycle")
+                {
+                    <ul class="btn-group">
+                        <li>
+                            <a singoo-action="SetSort" singoo-data-url="/platform/Content/SetSort"><i class='iconfont'>&#xe604;</i><span>保存排序</span></a>
+                        </li>
+                    </ul>
+                }
+                @if (ViewBag.ListType == "Recycle")
+                {
+                    <ul class="btn-group">
+                        <li>
+                            <a id="btn_Clear" singoo-action="RecycleClear" singoo-data-url="/platform/Content/RecycleClear">
+                                <i class='iconfont'>&#xe607;</i><span>清空回收站</span>
+                            </a>
+                        </li>
+                    </ul>
+                }
+                <ul class="btn-group clear-fix">
+                    <li @(ViewBag.ListType == "Normal" ? "style='display:none'" : "" )>
+                        <a class="tab-a" href="/platform/Content/Index?ListType=Normal">
+                            <i class="iconfont">&#xe69c;</i><span>文章列表</span>
+                        </a>
+                    </li>
+                    <li @(ViewBag.ListType == "DraftBox" ? "style='display:none'" : "" )>
+                        <a class="tab-a" href="/platform/Content/Index?ListType=DraftBox">
+                            <i class="iconfont">&#xe648;</i><span>草稿箱</span>
+                        </a>
+                    </li>
+                    <li @(ViewBag.ListType == "Recycle" ? "style='display:none'" : "" )>
+                        <a class="tab-a" href="/platform/Content/Index?ListType=Recycle">
+                            <i class="iconfont">&#xe607;</i><span>回收站</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="fl top-bar-r">
+                <div class="search-box focus-item fr">
+                    <input name="key" singoo-search-item="true" type="text" placeholder="请输入标题" />
+                    <input type="button" singoo-action="Search" name="searchbtn" value="&#xe60a;" class="search-btn iconfont" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <table class="tab-con" id="rowItems">
+            <tr class="tab-title">
+                <td style="width: 50px;"></td>
+                <td>
+                    标题
+                </td>
+                <td style="width: 80px;">
+                    <div class="order-title-box clear-fix">
+                        <span class="fl order-title-con">浏览量</span>
+                        <div class="order-group fl">
+                            <a singoo-sort="true" singoo-sort-type="Hit" singoo-sort-direct="Asc" style="margin-top: -5px;">
+                                <img src="/include/theme/h5/images/order-top.png" alt="按浏览量顺序" title="按浏览量顺序" />
+                            </a>
+                            <a singoo-sort="true" singoo-sort-type="Hit" singoo-sort-direct="Desc">
+                                <img src="/include/theme/h5/images/order-down.png" alt="按浏览量倒序" title="按浏览量倒序" />
+                            </a>
+                        </div>
+                    </div>
+                </td>
+                <td style="width: 90px;">
+                    <div class="order-title-box clear-fix">
+                        <span class="fl order-title-con">排序</span>
+                        <div class="order-group fl">
+                            <a singoo-sort="true" singoo-sort-type="SortNumber" singoo-sort-direct="Asc" style="margin-top: -5px;">
+                                <img src="/include/theme/h5/images/order-top.png" alt="按序号顺序" title="按序号顺序" />
+                            </a>
+                            <a singoo-sort="true" singoo-sort-type="SortNumber" singoo-sort-direct="Desc">
+                                <img src="/include/theme/h5/images/order-down.png" alt="按序号倒序" title="按序号倒序" />
+                            </a>
+                        </div>
+                    </div>
+                </td>
+                <td style="width: 150px;">
+                    <div class="order-title-box clear-fix">
+                        <span class="fl order-title-con">更新时间</span>
+                        <div class="order-group fl">
+                            <a singoo-sort="true" singoo-sort-type="AddDate" singoo-sort-direct="Asc" style="margin-top: -5px;">
+                                <img src="/include/theme/h5/images/order-top.png" alt="按时间顺序" title="按时间顺序" />
+                            </a>
+                            <a singoo-sort="true" singoo-sort-type="AddDate" singoo-sort-direct="Desc">
+                                <img src="/include/theme/h5/images/order-down.png" alt="按时间倒序" title="按时间倒序" />
+                            </a>
+                        </div>
+                    </div>
+                </td>
+                @if (ViewBag.ListType == "Normal")
+                {
+                    <td style="width: 90px;">
+                        属性
+                    </td>
+                }
+                <td style="width: 80px;">
+                    操作
+                </td>
+            </tr>
+            <tbody id="singoo-content"></tbody>
+            <script id="singoo-template" type="text/html">
+                {{#data}}
+                <tr>
+                    <td>
+                        <label>
+                            <input name="chk" type="checkbox" class="common-check" value="{{AutoID}}" />
+                            <span></span>
+                        </label>
+                        <input type="hidden" name="AutoID" value="{{AutoID}}" />
+                    </td>
+                    <td>
+                        <a href='/article/detail/{{AutoID}}' target="_blank">
+                            [#{{AutoID}}] {{Title}}
+                        </a>
+                    </td>
+                    <td>
+                        {{Hit}}
+                    </td>
+                    <td class="short-input">
+                        <input type="number" name="txtSort" {{#Sort}} value="{{Sort}}" {{/Sort}} {{^Sort}} value="99999" {{/Sort}} id="txtSort" step="1" />
+                    </td>
+                    <td>
+                        {{AutoTimeStamp}}
+                    </td>
+                    @if (ViewBag.ListType == "Normal")
+                    {
+                        <td>
+                            <div class="icon-btn clear-fix">
+                                <a singoo-action="SetTop" singoo-data-url="/platform/Content/SetTop" {{#IsTop}} class="now" {{/IsTop}} singoo-data-id="{{AutoID}}"><span class="iconfont">&#xe6e0;<i>热门</i></span></a>
+                                <a singoo-action="SetRecommend" singoo-data-url="/platform/Content/SetRecommend" {{#IsRecommend}} class="now" {{/IsRecommend}} singoo-data-id="{{AutoID}}"><span class="iconfont">&#xe636;<i>推荐</i></span></a>
+                                <a singoo-action="SetNew" singoo-data-url="/platform/Content/SetNew" {{#IsNew}} class="now" {{/IsNew}} singoo-data-id="{{AutoID}}"><span class="iconfont">&#xe6d3;<i>最新</i></span></a>
+                            </div>
+                        </td>
+                    }
+                    <td>
+                        <div class="icon-btn clear-fix">
+                            @if (ViewBag.ListType == "Normal" || ViewBag.ListType == "DraftBox")
+                            {
+                                <div class="icon-btn clear-fix">
+                                    <a class="tab-a" href="/platform/Content/Edit?ListType=@(ViewBag.ListType)&Action=Modify&opid={{AutoID}}&NodeID=@(ViewBag.NodeID)">
+                                        <span class="iconfont">&#xe67f;</span><i>编辑文章</i>
+                                    </a>
+                                    <a singoo-action="ContCopy" singoo-data-id="{{AutoID}}" singoo-data-url="/platform/Content/ContentCopy" class="iconfont">&#xe624;<i>复制</i></a>
+                                    <a singoo-action="Delete" singoo-data-id="{{AutoID}}" singoo-data-url="/platform/Content/Delete" class="iconfont">&#xe6eb;<i>删除</i></a>
+                                </div>
+                            }
+                            @if (ViewBag.ListType == "Recycle")
+                            {
+                                <a singoo-action="DelThorough" singoo-data-id="{{AutoID}}" singoo-data-url="/platform/Content/DelThorough" class="iconfont">&#xe6eb;<i>彻底删除</i></a>
+                                <a singoo-action="Restore" singoo-data-id="{{AutoID}}" singoo-data-url="/platform/Content/Restore" class="iconfont">&#xe654;<i>还原</i></a>
+                            }
+                        </div>
+                    </td>
+                </tr>
+                {{/data}}
+                {{^data}}
+                <tr><td colspan='7'> 没有找到任何数据</td></tr>
+                {{/data}}
+            </script>
+        </table>
+    </div>
+    <!--分页 start-->
+    <div id="singoo-pager"></div>
+    <!--分页 end-->
+</form>
+
+<script>
+    $("body").find("a[singoo-sort='true']").click(function () {
+        var pageSize = singoo.request["pagesize"];
+        if (pageSize == null || pageSize == undefined) pageSize = 20;//默认分页记录数20
+        var type = $(this).attr("singoo-sort-type"), direct = $(this).attr("singoo-sort-direct");
+        h5.PagerUrl = "/platform/Content/DataJson?ListType=@(ViewBag.ListType)&NodeID=@(ViewBag.NodeID)&SortType=" + type + "&SortDirect=" + direct + "&pagesize=" + pageSize;
+        h5.loadData(1);
+    });
+</script>

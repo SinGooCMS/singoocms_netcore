@@ -1,0 +1,87 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+
+<form method="post" singoo-data-ajax="true" singoo-data-list="true">
+    <div class="top-fix clear-fix">
+        <div class="clear-fix">
+            <ul class="btn-group clear-fix">
+                <li>
+                    <label class="label-box" for="checkall">
+                        <input type="checkbox" class="common-check" id="checkall" />
+                        <span></span>全选
+                    </label>
+                </li>
+                @if (ViewBag.IsSuperAdmin)
+                {
+                <li>
+                    <a singoo-action="BatDelete"><i class='iconfont'>&#xe6eb;</i><span>删除</span></a>
+                </li>
+                }
+            </ul>
+            <div class="focus-item fr clear-fix">
+                <div class="fl selectBox">
+                    <select name="logtype" id="logtype" singoo-search-item="true">
+                        <option value="-1">全部日志</option>
+                        <option value="0">登录日志</option>
+                        <option value="1">管理日志</option>
+                        <option value="2">系统日志</option>
+                    </select>
+                </div>
+                <div class="search-box fl">
+                    <input name="key" singoo-search-item="true" type="text" placeholder="请输入事件内容" />
+                    <input type="button" singoo-action="Search" name="searchbtn" value="&#xe60a;" class="search-btn iconfont" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="tab-con" style="margin-top: 50px;" id="rowItems">
+        <tr class="tab-title">
+            <td style="width: 60px;"></td>
+            <td style="width: 120px">
+                事件创建者
+            </td>
+            <td style="width: 150px;">
+                IP 地址
+            </td>
+            <td>
+                事件内容
+            </td>
+            <td style="width: 150px;">
+                事件时间
+            </td>
+        </tr>
+        <tbody id="singoo-content"></tbody>
+        <script id="singoo-template" type="text/html">
+            {{#data}}
+            <tr>
+                <td>
+                    <label>
+                        <input name="chk" type="checkbox" class="common-check" value="{{AutoID}}" />
+                        <span></span>
+                    </label>
+                    <input type="hidden" name="AutoID" value="{{AutoID}}" />
+                </td>
+                <td>
+                    {{UserName}}
+                </td>
+                <td>
+                    {{IPAddress}}
+                </td>
+                <td>
+                    {{EventInfo}}
+                </td>
+                <td>
+                    {{AutoTimeStamp}}
+                </td>
+            </tr>
+            {{/data}}
+            {{^data}}
+            <tr><td colspan='5'> 没有找到任何数据</td></tr>
+            {{/data}}
+        </script>
+    </table>
+    <!--分页 start-->
+    <div id="singoo-pager"></div>
+    <!--分页 end-->
+</form>

@@ -1,0 +1,92 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+@inject SinGooCMS.Domain.Interface.ICMSContext context;
+@model SinGooCMS.Plugins.SMS.SMSConfig;
+
+<form method="post" singoo-data-ajax="true">
+    <div class="form-box" id="singoo-content">
+        <div class="content-title">
+            <h2 class="title">
+                短信配置
+            </h2>
+            <blockquote>
+                1、阿里云短信申请接口，<a href="https://www.aliyun.com/product/sms" target="_blank">https://www.aliyun.com/product/sms</a>。<br />
+                2、腾讯云短信申请接口，<a href="https://cloud.tencent.com/product/sms" target="_blank">https://cloud.tencent.com/product/sms</a>。<br />
+            </blockquote>
+        </div>
+        <ul>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    短信接口插件：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox1" type="text" value="@(context.SiteConfig.SMSClass)" maxlength="50" id="TextBox1" list="sms_list" placeholder="请输入对此接口而编写的插件名称" required="required" />
+                    <datalist id="sms_list">
+                        <option label="阿里云短信接口" value="AliYunSMS" />
+                        <option label="腾迅云短信接口" value="QcloudSMS" />
+                    </datalist>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    账户AccessKeyID：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox2" type="text" value="@(Model.SMSUId)" maxlength="50" id="TextBox2" class="form-control" required="required" placeholder="填写您申请的短信接口用户名" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    账户AccessKeySecret：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox3" type="text" value="@(Model.SMSPwd)" maxlength="50" id="TextBox3" required="required" placeholder="填写您申请的短信接口密码" />
+                    <div class="notice-tip clear-fix">
+                        <i class="iconfont" tip="不同的接口密码定义不一样，有可能是账户密码，也有可能是接口密码，请仔细查看所申请的接口信息">&#xe62e;</i>
+                    </div>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    应用ID(APPID)：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox4" type="text" value="@(Model.APPID)" maxlength="50" id="TextBox4" placeholder="阿里云短信可不填写" />
+                    <div class="notice-tip clear-fix">
+                        <i class="iconfont" tip="阿里云短信可不填">&#xe62e;</i>
+                    </div>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    网络节点(EndPoint)：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox5" type="text" value="@(Model.EndPoint)" maxlength="50" id="TextBox5" required="required" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    短信签名(SignName)：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox6" type="text" value="@(Model.SignName)" maxlength="50" id="TextBox6" required="required" placeholder="短信签名需要申请且审核通过" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    区域(RegionId)：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox7" type="text" value="@(Model.RegionId)" maxlength="50" id="TextBox7" required="required" />
+                </div>
+            </li>
+        </ul>
+        <ul>
+            <li class="btn-box">
+                <input type="submit" name="btnok" value="保 存" id="btnok" class="btn-style sure-btn" />
+            </li>
+        </ul>
+    </div>
+</form>

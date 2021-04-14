@@ -1,0 +1,66 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/IFrame.cshtml"; //母版页
+}
+
+<form method="post" singoo-data-ajax="true" singoo-data-dialog="true" action="/platform/AdPlace/@(ViewBag.ParamAction)">
+    <script type="text/html" id="singoo-template">
+        {{#result}}
+        <div class="form-box">
+            <ul>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        广告位名称：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input value="{{PlaceName}}" type="text" maxlength="50" id="TextBox1" name="TextBox1" placeholder="请输入广告位名称" required="required" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        尺寸：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        宽：<input type="number" value="{{Width}}" name="TextBox2" maxlength="10" id="TextBox2" class="clear no-float" style="width:80px;" />px 
+                        高：<input type="number" value="{{Height}}" name="TextBox3" maxlength="10" id="TextBox3" class="clear no-float" style="width:80px;" />px
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        模板：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input value="{{TemplateFile}}" type="text" maxlength="100" id="TextBox5" name="TextBox5" style="width:200px;" />
+                        <input type="button" value="选择模板" class="smallbtn" singoo-tmplselector="true" singoo-tmplselector-target="TextBox5" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        说明：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <textarea value="{{PlaceDesc}}" rows="3" cols="60" id="TextBox6" name="TextBox6"></textarea>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        排序：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input type="number" {{#Sort}} value="{{Sort}}" {{/Sort}} {{^Sort}} value="99999" {{/Sort}} name="TextBox7" id="TextBox7" style="width:80px;" />
+                    </div>
+                </li>
+                <li class="btn-box">
+                    <input type="submit" name="btnok" value="确 认" id="btnok" class="btn-style sure-btn" />
+                    <input id="btncancel" onclick="$.dialog.close();" type="button" value="取 消" class="btn-style cancel-btn" />
+                </li>
+            </ul>
+        </div>
+        {{/result}}
+    </script>
+</form>
+
+<script type="text/javascript">
+    var json = @Html.Raw(ViewBag.InitData); //数据
+    var tmpl=$("#singoo-template").html(); //模板
+    h5.render($("form"),tmpl,json); //渲染并显示模板
+</script>

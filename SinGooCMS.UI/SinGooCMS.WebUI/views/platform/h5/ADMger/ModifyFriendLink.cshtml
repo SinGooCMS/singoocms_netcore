@@ -1,0 +1,58 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/IFrame.cshtml"; //母版页
+}
+
+<form singoo-data-ajax="true" singoo-data-dialog="true" action="/platform/FriendLink/@(ViewBag.ParamAction)">
+    <script type="text/html" id="singoo-template">
+        {{#result}}
+        <div class="form-box">
+            <ul>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        友链名称：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox1" value="{{LinkName}}" type="text" maxlength="50" id="TextBox1" placeholder="请输入友链名称" required="required" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        友链地址：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input type="url" value="{{LinkUrl}}" name="TextBox2" maxlength="255" id="TextBox2" required="required" placeholder="需要以 http:// 或者 https:// 开头" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        链接图片：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox3" value="{{LinkImage}}" type="text" maxlength="255" id="TextBox3" style="width:300px;" />
+                        <a class="smallbtn" singoo-showimg="true" singoo-showimg-target="TextBox3">查看</a>
+                        <a singoo-upload="true" singoo-upload-param="TextBox3|value|single">上传</a>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        排序：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input type="number" {{#Sort}} value="{{Sort}}" {{/Sort}} {{^Sort}} value="99999" {{/Sort}} name="TextBox4" id="TextBox4" style="width:60px;" />
+                    </div>
+                </li>
+                <li class="btn-box">
+                    <input type="submit" name="btnok" value="确 认" id="btnok" class="btn-style sure-btn" />
+                    <input id="btncancel" singoo-dialog-close="true" type="button" value="取 消" class="btn-style cancel-btn" />
+                </li>
+            </ul>
+        </div>
+        {{/result}}
+    </script>
+</form>
+
+<script>
+    var json = @Html.Raw(ViewBag.InitData); //数据
+    var tmpl=$("#singoo-template").html(); //模板
+    h5.render($("form"),tmpl,json); //渲染并显示模板
+</script>

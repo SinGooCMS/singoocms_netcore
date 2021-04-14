@@ -1,0 +1,111 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+
+@model SinGooCMS.Domain.Models.BaseConfigInfo
+
+<form method="post" singoo-data-ajax="true">
+    <div class="form-box">
+        <ul>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    会员名称正则规范：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox2" type="text" value="@(Model.UserNameRule)" maxlength="100" id="TextBox2" />
+                    <div class="notice-tip clear-fix">
+                        <i class="iconfont" tip="会员注册时，普通会员名称必须符合此规则">&#xe62e;</i>
+                    </div>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    保留会员名：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <textarea name="TextBox3" rows="3" cols="60" id="TextBox3" lenlimit="255">@(Model.SysUserName)</textarea>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    注册协议：
+                </div>
+                <div class="form-item-con text-item focus-item col-editor">
+                    <textarea singoo-editor="true" singoo-editor-toolbar="Basic" singoo-editor-param="98%|360" name="TextBox6" rows="2" cols="20" id="TextBox6" style="height:360px;width:98%;">@(Html.Raw(Model.RegAgreement))</textarea>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    注册赠送积分：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input type="number" name="TextBox7" value="@(Model.RegGiveIntegral)" id="TextBox7" class="form-control" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    推广注册积分：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input type="number" name="TextBox8" value="@(Model.TgIntegral)" id="TextBox8" class="form-control" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    上传文件容量：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input type="number" name="filespace" value="@((Model.FileCapacity/(1024*1024)).ToString("f0"))" id="filespace" class="form-control" />MB
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    注册需要验证：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <label>
+                        <input name="CheckBox1" @(Model.VerifycodeForReg?"checked='checked'":"") type="checkbox" id="CheckBox1" class="common-check" />
+                        <span class="no-float"></span>是
+                    </label>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    登录需要验证：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <label>
+                        <input name="CheckBox2" @(Model.VerifycodeForLogin ? "checked='checked'":"") type="checkbox" id="CheckBox2" class="common-check" />
+                        <span class="no-float"></span>是
+                    </label>
+
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    登录尝试次数：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input type="number" name="TextBox9" value="@(Model.TryLoginTimes)" maxlength="10" id="TextBox9" class="form-control" />
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    登录状态保留时长：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    @{
+                        string[] arr = { "浏览器关闭即失效", "一周", "一年" };
+                        foreach (var item in arr)
+                        {
+                            <label><input @(item==Model.CookieTime?"checked='checked'":"") type='radio' name='RadioButtonList10' value='@(item)' class='common-check radio' /><span class='no-float'></span>@(item)</label>
+                        }
+                    }
+                </div>
+            </li>
+            <li class="btn-box">
+                <input type="submit" name="btnok" value="保 存" id="btnok" class="btn-style sure-btn" />
+            </li>
+        </ul>
+    </div>
+</form>

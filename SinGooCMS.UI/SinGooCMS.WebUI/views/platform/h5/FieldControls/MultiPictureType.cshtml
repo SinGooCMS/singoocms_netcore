@@ -1,0 +1,23 @@
+﻿<div style="text-align: right">
+    <span id="jia_${id}" style="cursor: pointer">增加行[+]</span>
+</div>
+<table class="table" id="imgarea_${id}">
+    ${rows}
+</table>
+<template>
+    <tr>
+        <td class="left child-clear" style="padding:5px 0;">
+            图片描述：<input type="text" name="desc_${id}" value='${Remark}' class="input-txt" style="width: 150px" />
+            选择图片：<input type="text" name="file_${id}" id='file_${AutoID}' value='${FilePath}' class="input-txt" style="width: 300px" />
+            <a class="smallbtn" onclick="showimg($('#file_${AutoID}').val())">查看</a>
+            <a onclick="new UploadTool('file_${AutoID}', 'value', 'single').open();">上传</a>
+            <span style="cursor: pointer" onclick="$(this).parent().parent().remove();" class="jian" title="移除">&nbsp;&nbsp;[-]移除</span>
+        </td>
+    </tr>
+</template>
+<script type="text/javascript">
+    $("#jia_${id}").click(function () {
+        var trid = singoo.getRandStr(6);
+        $("#imgarea_${id}").append('<tr><td class="left child-clear" style="padding:5px 0;">图片描述：<input type="text" name="desc_${id}" class="input-txt" style="width:150px"/> 选择图片：<input type="text" id="file_' + trid + '" name="file_${id}" class="input-txt" style="width:300px" /> <a class="smallbtn" onclick="showimg($(\'#file_' + trid + '\').val())">查看</a>&nbsp;<a onclick="new UploadTool(\'file_' + trid + '\', \'value\', \'single\').open();">上传</a> <span onclick="$(this).parent().parent().remove();" class="jian" title="移除" style="cursor:pointer">&nbsp;&nbsp;[-]移除</span> </td></tr>');
+    });
+</script>

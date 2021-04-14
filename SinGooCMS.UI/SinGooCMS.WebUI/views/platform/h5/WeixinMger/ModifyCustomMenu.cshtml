@@ -1,0 +1,130 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/IFrame.cshtml"; //母版页
+}
+
+<style type="text/css">
+    .xhide {
+        display: none;
+    }
+</style>
+
+<form method="post" singoo-data-ajax="true" singoo-data-dialog="true" action="/platform/CustomMenu/@(ViewBag.ParamAction)">
+    <div class="form-box" id="wxmenu">
+        <ul>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    上级菜单：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <select id="parentmenu" name="parentmenu" @(ViewBag.ParamAction == "Modify" ? "disabled='disabled'" : "")>
+                        <option value="0">做为顶级菜单</option>
+                        @{
+                        foreach (var item in ViewBag.ParentMenu)
+                        {
+                        <option @(ViewBag.WeixinMenu.ParentID == item.AutoID ? "selected='selected'" : "") value="@(item.AutoID)">@(item.Name)</option>
+                        }
+                        }
+                    </select>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    菜单名称：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input type="text" value="@(ViewBag.WeixinMenu.Name)" id="menuname" name="menuname" class="form-control" required="required" placeholder="请输入菜单名称" maxlength="100" />
+                    <div class="notice-tip clear-fix">
+                        <i class="iconfont" tip="一级菜单最多3个，二菜单最多5个">&#xe62e;</i>
+                    </div>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    菜单类型：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <select id="menutype" name="menutype" class="form-control">
+                        <option @(ViewBag.WeixinMenu.Type == "click" ? "selected='selected'" : "") value="click">图文推送</option>
+                        <option @(ViewBag.WeixinMenu.Type == "view" ? "selected='selected'" : "") value="view">地址跳转</option>
+                    </select>
+                </div>
+            </li>
+            <li class="form-item clear-fix xhide tuwei">
+                <div class="form-item-title">
+                    文本：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <textarea id="TextBox1" name="TextBox1" rows="3" cols="60" placeholder="请输入推送文本" maxlength="2000">@(ViewBag.WeixinKey.MsgText)</textarea>
+                </div>
+            </li>
+            <li class="form-item clear-fix xhide tuwei">
+                <div class="form-item-title">
+                    图片：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input type="text" value="@(ViewBag.WeixinKey.MediaPath)" id="TextBox2" name="TextBox2" maxlength="255" style="width:300px" />
+                    <a class="smallbtn" singoo-showimg="true" singoo-showimg-target="TextBox2">查看</a>
+                    <a singoo-upload="true" singoo-upload-param="TextBox2|value|single">上传</a>
+                </div>
+            </li>
+            <li class="form-item clear-fix xhide tuwei">
+                <div class="form-item-title">
+                    描述：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <textarea id="TextBox3" name="TextBox3" rows="3" cols="60" placeholder="请输入推送描述" maxlength="2000">@(ViewBag.WeixinKey.Description)</textarea>
+                </div>
+            </li>
+            <li class="form-item clear-fix xhide link">
+                <div class="form-item-title">
+                    跳转链接：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input value="@(ViewBag.WeixinMenu.Url)" type="url" id="TextBox4" name="TextBox4" maxlength="255" />
+                </div>
+            </li>
+            <li class="btn-box">
+                <input type="submit" value="确 认" class="btn-style sure-btn" id="btnok" />
+                <input id="btncancel" singoo-dialog-close="true" type="button" value="取 消(ESC)" class="btn-style cancel-btn" />
+            </li>
+        </ul>
+    </div>
+</form>
+
+<script type="text/javascript">
+    var action = "@(ViewBag.ParamAction)";
+    $(function () {
+        var type = "@(ViewBag.WeixinMenu.Type)";
+        if (type == "") type = "click";
+        changeSelect(type);
+    });
+    $("#menutype").change(function () {
+        var e = $(this).val();
+        if (e == null && e == "") e = "view";
+        changeSelect(e);
+    });
+    function changeSelect(e) {
+        switch (e) {
+            case "click":
+                $("#wxmenu").find(".tuwei").show();
+                $("#wxmenu").find(".link").hide();
+                break;
+            case "view":
+                $("#wxmenu").find(".tuwei").hide();
+                $("#wxmenu").find(".link").show();
+                break;
+        }
+    }
+    function checkSubmit() { //提交前检查
+        var type = $("menutype.ClientID").val();
+        var txt = $("TextBox1.ClientID").val();
+        var url = $("TextBox4.ClientID").val();
+        if (action != "Modify" && type == "click" && txt == "") {
+            showtip("图文推送事件的文本不能为空");
+            return false;
+        } else if (action != "Modify" && type == "view" && url == "") {
+            showtip("地址跳转事件的地址不能为空");
+            return false;
+        }
+    }
+</script>

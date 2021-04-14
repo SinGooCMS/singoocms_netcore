@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>管理登录 - SinGooCMS</title>
+    <link rel="icon" href="/include/images/favicon.png" />
+    <link rel="stylesheet" type="text/css" href="/include/theme/h5/css/reset.min.css" />
+    <link rel="stylesheet" type="text/css" href="/include/plugin/artDialog/skins/html5.css" />
+    <script src="/include/script/jquery.min.js"></script>
+    <script src="/include/script/publicfun.js"></script>
+    <script src="/include/script/manage.js"></script>
+    <script src="/include/plugin/artDialog/jquery.artDialog.js"></script>
+    <script src="/include/plugin/artDialog/plugins/iframeTools.js"></script>
+    <script src="/include/script/uploadtool.js"></script>
+</head>
+<body>
+    <div class="login-box" style="background-image: url(/include/theme/h5/images/login-banner.jpg)">
+        <!--[if lt IE 9]>
+        <div class="alert alert-danger alert-dismissable" style="width: 800px; margin: 0px auto;color:white">
+            注意，浏览器不支持。本系统支持IE9及以上、Firefox（火狐浏览器），Chrome（谷歌浏览器），请升级或者更换浏览器！
+        </div>
+        <![endif]-->
+        <div class="login-con" id="inter">
+            <form id="loginform">
+                <img src="/include/theme/h5/images/login-logo.png" class="login-logo" title="SinGooCMS" />
+                <label>
+                    <i class="iconfont">&#xe64a;</i>
+                    <input placeholder="请输入账户名称" type="text" class="uname" required="required" id="accountname" maxlength="50" />
+                </label>
+                <label>
+                    <i class="iconfont">&#xe665;</i>
+                    <input placeholder="请输入密码" type="password" class="pwd" required="required" id="accountpwd" maxlength="50" />
+                </label>
+                <label class="clear-fix">
+                    <input placeholder="请输入验证码" type="text" class="code fl" required="required" id="checkcode" maxlength="50" />
+                    <div class="code-pic fr">
+                        <img src="/include/checkcodeimg" alt="验证码" title="点击刷新验证码" id="checkimg"
+                             style="vertical-align: middle; cursor: pointer" onclick="document.getElementById('checkimg').src='/include/checkcodeimg?id='+Math.random();return false;" />
+                    </div>
+                </label>
+                <div style="margin-top: 10px;">
+                    <input type="submit" style="font-size: 16px;" value="登 录" class="login-btn" />
+                </div>
+            </form>
+        </div>
+        <div style="color: white; position: fixed; bottom: 30px; width: 100%; height: 20px;line-height: 20px;text-align: center;">
+            Copyright©2012-2020 <a style="color:White" href="http://www.singoo.top" target="_blank">SinGooCMS</a><br />
+            如果您有任何建议及合作方式，请联系16826375@qq.com或者致电：17788760902(李先生)
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    var box = document.getElementById("inter");
+    var clientH = document.documentElement.clientHeight || document.body.clientHeight;
+    box.style.marginTop = (clientH - box.offsetHeight) / 2 + "px"
+    $(function () {
+        if (window.top !== window.self)
+            window.top.location = this.location.href;
+
+        $("form").submit(function () { h5.ajaxLogin(this, $('#accountname').val(), $('#accountpwd').val(), $('#checkcode').val()); $("#checkimg").click(); return false; });
+    })
+</script>

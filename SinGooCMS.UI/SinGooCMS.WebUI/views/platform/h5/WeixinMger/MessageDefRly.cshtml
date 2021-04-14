@@ -1,0 +1,57 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+
+<div class="form-box">
+    <div class="content-title">
+        <h2 class="title">
+            默认回复
+        </h2>
+        <blockquote>
+            1、文本项必填，仅有文本时为文本消息<br />
+            2、有多媒体文件，如图片时为图文消息，有图片时可以有连接，此时为图文信息，点击连接为详情<br />
+            3、非关注、非关键字之外是默认回复，且都是自动回复
+        </blockquote>
+    </div>
+    <form singoo-data-ajax="true">
+        <ul>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    文本：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <textarea name="TextBox1" rows="5" cols="80" id="TextBox1" required="required" lenlimit="2000">@(ViewBag.InitData.MsgText)</textarea>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    多媒体：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input name="TextBox2" value="@(ViewBag.InitData.MediaPath)" type="text" maxlength="255" id="TextBox2" placeholder="允许上传图片、声音、视频文件" />
+                    <a class="smallbtn" singoo-showimg="true" singoo-showimg-target="TextBox2">查看</a>
+                    <a singoo-upload="true" singoo-upload-param="TextBox2|value|single">上传</a>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    描述：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <textarea name="TextBox3" rows="5" cols="80" id="TextBox3" lenlimit="2000">@(ViewBag.InitData.Description)</textarea>
+                </div>
+            </li>
+            <li class="form-item clear-fix">
+                <div class="form-item-title">
+                    链接：
+                </div>
+                <div class="form-item-con text-item focus-item">
+                    <input type="url" value="@(ViewBag.InitData.LinkUrl)" name="TextBox4" maxlength="255" id="TextBox4" />
+                </div>
+            </li>
+            <li class="btn-box">
+                <input type="submit" name="btnok" value="保 存" id="btnok" class="btn-style sure-btn" />
+            </li>
+        </ul>
+    </form>
+</div>

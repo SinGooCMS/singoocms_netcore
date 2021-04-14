@@ -1,0 +1,66 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/IFrame.cshtml"; //母版页
+}
+
+<form method="post" singoo-data-ajax="true" singoo-data-dialog="true" action="/platform/KeyRly/@(ViewBag.ParamAction)">
+    <script type="text/html" id="singoo-template">
+        {{#result}}
+        <div class="form-box">
+            <ul>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        关键字：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox5" value="{{MsgKey}}" type="text" maxlength="50" id="TextBox5" required="required" />
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        文本：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <textarea name="TextBox1" rows="3" cols="60" id="TextBox1" required="required" lenlimit="2000">{{MsgText}}</textarea>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        多媒体：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input name="TextBox2" value="{{MediaPath}}" type="text" maxlength="255" id="TextBox2" placeholder="允许上传图片、声音、视频文件" />
+                        <a class="smallbtn" singoo-showimg="true" singoo-showimg-target="TextBox2">查看</a>
+                        <a singoo-upload="true" singoo-upload-param="TextBox2|value|single">上传</a>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        描述：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <textarea name="TextBox3" rows="3" cols="60" id="TextBox3" lenlimit="2000">{{Description}}</textarea>
+                    </div>
+                </li>
+                <li class="form-item clear-fix">
+                    <div class="form-item-title">
+                        链接：
+                    </div>
+                    <div class="form-item-con text-item focus-item">
+                        <input type="url" value="{{LinkUrl}}" name="TextBox4" maxlength="255" id="TextBox4" />
+                    </div>
+                </li>
+                <li class="btn-box">
+                    <input type="submit" name="btnok" value="保 存" id="btnok" class="btn-style sure-btn" />
+                    <input id="btncancel" singoo-dialog-close="true" type="button" value="取 消(ESC)" class="btn-style cancel-btn" />
+                </li>
+            </ul>
+        </div>
+        {{/result}}
+    </script>
+</form>
+
+<script>
+    var json = @Html.Raw(ViewBag.InitData); //数据
+    var tmpl=$("#singoo-template").html(); //模板
+    h5.render($("form"),tmpl,json); //渲染并显示模板
+</script>

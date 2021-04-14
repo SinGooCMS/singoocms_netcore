@@ -1,0 +1,66 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+
+<form singoo-data-ajax="true" singoo-data-list="true">
+    <table class="tab-con" style="margin-top: 20px;" id="rowItems">
+        <tr class="tab-title">
+            <td style="width:150px;text-align:center;">
+                登录类型
+            </td>
+            <td>
+                说明
+            </td>
+            <td style="width: 100px;">
+                是否启用
+            </td>
+            <td style="width: 80px;">
+                操作
+            </td>
+        </tr>
+        <tbody id="singoo-content"></tbody>
+        <script id="singoo-template" type="text/html">
+            {{#data}}
+            <tr>
+                <td style="text-align:center;">
+                    <img src='{{ShowImg}}' alt='{{OAuthName}}' /><br />
+                    {{OAuthName}}
+                </td>
+                <td class="short-input">
+                    {{{Remark}}}
+                    <p>
+                        <br />
+                        <a href='{{ApplyUrl}}' target="_blank" class="btn btn-default">在线申请</a>
+                    </p>
+                </td>
+                <td>
+                    {{#IsEnabled}}
+                    <img src='/include/theme/h5/images/yes.png' alt='是'>
+                    {{/IsEnabled}}
+                    {{^IsEnabled}}
+                    <img src='/include/theme/h5/images/no.png' alt='否'>
+                    {{/IsEnabled}}
+                </td>
+                <td>
+                    <div class="icon-btn clear-fix">
+                        <a class="iconfont" singoo-action="Modify" singoo-data-url="/platform/ThirdLogin/Config" singoo-data-urlext="&key={{OAuthKey}}" singoo-dialog-param="信任登录配置|600|220">
+                            &#xe606;<i>配置</i>
+                        </a>
+                        <a class="iconfont" singoo-action="Switch" singoo-data-id="{{OAuthKey}}">
+                            {{^IsEnabled}}
+                            &#xe614;<i>开启</i>
+                            {{/IsEnabled}}
+                            {{#IsEnabled}}
+                            &#xe614;<i>关闭</i>
+                            {{/IsEnabled}}
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {{/data}}
+            {{^data}}
+            <tr><td colspan='4'> 没有找到任何数据</td></tr>
+            {{/data}}
+        </script>
+    </table>
+</form>

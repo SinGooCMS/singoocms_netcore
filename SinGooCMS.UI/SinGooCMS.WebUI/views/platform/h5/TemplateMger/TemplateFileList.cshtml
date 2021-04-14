@@ -1,0 +1,160 @@
+﻿@inject SinGooCMS.Domain.Interface.ICMSContext context
+@{
+    Layout = "~/views/platform/h5/MasterPage/MasterDefault.cshtml"; //母版页
+}
+@model Dictionary<string, string[]>;
+
+<style type="text/css">
+    .headerStyle th {
+        border-bottom: #E0E0E0 solid 1px;
+        font-size: 12px;
+        line-height: 25px;
+        text-align: left;
+        padding: 0 0 0 5px;
+        white-space: nowrap;
+    }
+
+    .rowStyle td {
+        overflow: hidden;
+        white-space: nowrap;
+        border-bottom: #E0E0E0 solid 1px;
+        font-size: 12px;
+        text-align: left;
+        padding: 5px 0 0 5px;
+        height: 25px;
+        line-height: 25px;
+    }
+</style>
+
+<form singoo-data-ajax="true">
+    <div class="main-content">
+        <div class="column">
+            <div class="column-right-title clear-fix">
+                <div>
+                    当前模板目录：@(ViewBag.CurrTmplDir)
+                    <a class="btn-normal mid-size" singoo-action="Add" singoo-data-url="/platform/TemplateEditor/Index" singoo-data-urlext='&folder=@(ViewBag.CurrTmplDir)&opid=@(ViewBag.OpID)' singoo-dialog-param="增加模板文件|780|500">
+                        <i class="iconfont">&#xe611;</i><span>在当前文件夹增加模板文件</span>
+                    </a>
+                </div>
+            </div>
+            <table style="width:100%" border="0" cellpadding="2" cellspacing="1">
+                <tr class="headerStyle">
+                    <th style="width: 50%;">
+                        文件夹(文件)名称
+                    </th>
+                    <th style="width: 10%;">
+                        类型
+                    </th>
+                    <th style="width: 10%;">
+                        大小
+                    </th>
+                    <th style="width: 20%;">
+                        最后修改时间
+                    </th>
+                    <th style="width: 10%;">
+                        操作
+                    </th>
+                </tr>
+                <tr class="tr2" style="display:@(ViewBag.ViewUp);">
+                    <td colspan="5" style="cursor: pointer;">
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td>
+                                    <img src="~/include/images/up.gif" width="18" height="18" alt="" />
+                                </td>
+                                <td>
+                                    <a href="?opid=@(ViewBag.OpID)&folder=@(ViewBag.ParentPath)">
+                                        上级目录
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                @*遍历子目录*@
+                @foreach (var item in ViewBag.directories)
+                {
+                    <tr class="rowStyle" align="center">
+                        <td>
+                            <img src="/include/images/fileico/folder/folder.gif" height="16" alt="" />
+                            <a href="?opid=@(ViewBag.OpID)&folder=@(item.Folder)@(item.Name)">
+                                @(item.Name)
+                            </a>
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            @(item.LastWriteTime)
+                        </td>
+                        <td></td>
+                    </tr>
+                }
+                <tr class="tr3">
+                    <td colspan="5" style="height: 6px;"></td>
+                </tr>
+                @*遍历文件*@
+                @foreach (var item in ViewBag.Files)
+                {
+                    <tr class="rowStyle" align="center">
+                        <td>
+                            <img src="/include/images/fileico/file/@(item.Ico)" width="20" height="16">
+                            @{
+                                if (Model["EditFileExt"].ToList().Contains(item.Ext))
+                                {
+                                    <a href="javascript:void(0)" title='文本编辑' folder="@(item.Folder)" filename="@(item.Name)">@(item.Name)</a>
+                                }
+                                else if (Model["ImageFileExt"].ToList().Contains(item.Ext))
+                                {
+                                    <a href="javascript:void(0)" onclick="showimg('@(item.Folder)@(item.Name)')" folder="@(item.Folder)" filename="@(item.Name)">@(item.Name)</a>
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0)" onclick="$.dialog('不可编辑的文件类型')">@(item.Name)</a>
+                                }
+                            }
+                        </td>
+                        <td>
+                            @(item.Ext)
+                        </td>
+                        <td>
+                            @(SinGooCMS.Utility.FileUtils.GetFileSize(item.FileLength))
+                        </td>
+                        <td>
+                            @(item.LastWriteTime)
+                        </td>
+                        <td>
+                            @{
+                                if (Model["EditFileExt"].ToList().Contains(item.Ext))
+                                {
+                                    <a href="javascript:void(0)" title='文本编辑' folder="@(item.Folder)" filename="@(item.Name)">文本编辑</a>
+                                }
+                                else if (Model["ImageFileExt"].ToList().Contains(item.Ext))
+                                {
+                                    <a href="javascript:void(0)" onclick="showimg('@(item.Folder)@(item.Name)')" folder="@(item.Folder)" filename="@(item.Name)">查看图片</a>
+                                }
+                            }
+                            <a singoo-action="Delete" singoo-data-urlext="&_CurrTmplDir=@(ViewBag.CurrTmplDir)&_CurrFolder=@(ViewBag.CurrFolder)&filename=@(item.Name)">删除</a>
+                        </td>
+                    </tr>
+                }
+                <tr class="tr3">
+                    <td colspan="5" style="height: 6px;"></td>
+                </tr>
+            </table>
+            <div style="margin: 20px 0 10px 0; text-align: right;">
+            </div>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    $("a[title='文本编辑']").click(function () {
+        var folder = encodeURI($(this).attr("folder"));
+        var filename = encodeURI($(this).attr("filename"));
+        $.dialog.open('/platform/TemplateEditor/Index?Action=Modify&folder=' + folder + '&opid=@(ViewBag.OpID)&file=' + filename, { title: '编辑模板文件', width: 780, height: 500 }, false);
+    });
+</script>

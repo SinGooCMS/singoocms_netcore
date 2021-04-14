@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <!-- 通用 -->
+  <data name="OperationSuccess">操作成功</data>
+  <data name="OperationFail">操作失败</data>
+  <data name="OperationNotSupported">操作不支持</data>
+  <data name="OperationObjectExists">操作对象已存在</data>
+  <data name="OperationChildObjectExists">操作对象已存在下级对象</data>
+  <data name="OperationDataNotFound">操作对象不存在或者已删除</data>
+  <data name="OperationNeedLogin">操作要求首先登录</data>
+  <data name="OperationMainBodyRequire">操作对象主体信息不完整</data>
+  <data name="NothingSelected">没有选择任何项</data>
+  <data name="NothingDataWasFound">没有找到任何记录</data>
+  <data name="ValidateCodeIncorrect">验证码不正确</data>
+  <data name="ValidateCodeExpired">验证码已过期</data>
+  <data name="PostNotAllowEmpty">发布的内容不能为空</data>
+  <data name="SystemAlertTitle">系统提示</data>
+  <data name="DialogTitle">温馨提示</data>
+  <data name="UserNoLogin">用户/账户未登录，或者登录超时</data>
+  <data name="UserHasLoginOut">用户/账户已退出登录</data>
+  <data name="CharacterInvalid">非法的字符</data>
+  <data name="SendEmailFail">邮件发送失败,请检查是否启用了服务邮件并且开通了SMTP功能</data>
+  <data name="SendSMSFail">短信发送失败,请检查接口参数是否正确</data>
+  <!--权限-->
+  <data name="NoLoginOrRoleNoSet">未登录或者角色未设置</data>
+  <data name="ModuleNotFound">未找到模块</data>
+  <data name="PermissionNotSet">未找到操作权限设置</data>
+  <data name="AccessDenied">权限不足，拒绝访问</data>
+  <data name="OperationUnauthorized">非法操作</data>
+  <data name="AccessUnauthorized">非法访问</data>
+  <!--模型-->
+  <data name="Model_ModelNameExists">模型名称已存在</data>
+  <data name="Model_UserGroupNameExists">会员组名称已存在</data>
+  <data name="Model_DataTableNameExists">数据表名已存在</data>
+  <data name="Model_TableExists">数据表已存在</data>
+  <data name="Model_RefingByNode">模型正在被栏目引用</data>
+  <data name="Model_RefingByContent">模型正在被内容引用</data>
+  <data name="Model_RefingByUser">会员组正在被会员引用</data>
+  <data name="Field_HasRowNotEnableNull">已有数据行不能设置非空列</data>
+  <data name="Field_SysFieldNotAllowModify">系统字段不能修改</data>
+  <data name="Field_SysFieldNotAllowDelete">系统字段不能删除</data>
+  <data name="FieldCtrl_TextInputRequire">请输入</data>
+  <data name="FieldCtrl_NothingToChange">不填写表示不修改</data>
+  <data name="FieldCtrl_UrlFormatTip">http(s):// 或者 虚拟路径</data>
+  <!--栏目-->
+  <data name="Node_NodeCodeExists">栏目标识已存在</data>
+  <data name="Node_ParentNodeNotExists">上级栏目不存在</data>
+  <data name="Node_ChildNodeExists">存在下级栏目</data>
+  <data name="Node_OwnContentExists">存在内容</data>
+  <data name="NodeMove_SelectTheSourceNode">请选择源栏目</data>
+  <data name="NodeMove_SourceAndTargetEqual">源栏目与目标栏目相同</data>
+  <data name="NodeMove_CannotMoveToChilds">不能移动到自己的子栏目下</data>
+  <!--文件-->
+  <data name="File_SelectTheUpFile">请选择上传文件</data>
+  <data name="File_NotEnableFileUpload">系统设置不允许文件上传</data>
+  <data name="File_FileSizeLimit">文件尺寸过大</data>
+  <data name="File_FileExtFormatNotSupported">文件格式不支持</data>
+  <data name="File_UserFileSpaceLimit">用户空间不足</data>
+  <data name="File_UploadFileSuccess">上传文件成功</data>
+  <!-- CMS -->
+  <data name="CMS_NodeNotExist">栏目不存在</data>
+  <data name="CMS_ContentNotExist">内容不存在</data>
+  <data name="CMS_NodeNeedLoginToView">本栏目内容需要登录查看</data>
+  <data name="CMS_TheUserGroupAccessDenied">您所在会员组没有权限查看本栏目内容</data>
+  <data name="CMS_TheUserLevelAccessDenied">您所在会员等级没有权限查看本栏目内容</data>
+  <data name="CMS_FileNotExist">文件不存在</data>
+  <data name="CMS_CommentContentRequire">评论内容不为空</data>
+  <data name="CMS_SendCommentFrequently">评论间隔时间过短</data>
+  <data name="CMS_NotExistLanguageSet">不存在此语言设置</data>
+  <data name="CMS_TmplDirNotExists">模板目录不存在</data>
+  <data name="CMS_CurrTmplIsUsing">当前模板正在使用中</data>
+  <data name="CMS_TmplFolderNotExists">模板文件不存在</data>
+  <!--Platform-->
+  <data name="PLFM_EndDateMustGreatThenStart">截止日期不能小于起始日期</data>
+  <data name="PLFM_CopyContentOk">复制内容成功，请在草稿箱中查看</data>
+  <data name="PLFM_SysRoleDeleteDenied">系统角色不可删除</data>
+  <data name="Menu_SysModuleDeleteDenied">系统模块不可删除</data>
+  <data name="Menu_SysMenuDeleteDenied">系统菜单不可删除</data>
+  <data name="Menu_RefByChildModule">菜单正被子模块引用</data>
+  <data name="Menu_MenuCodeExists">菜单代码已存在</data>
+  <data name="Menu_ModuleCodeExists">模块代码已存在</data>
+  <data name="Role_RefByAccount">角色正在被账户引用</data>
+  <data name="PLFM_IPAddrInvalid">不是有效的IP地址</data>
+  <data name="PLFM_SysAccountDeleteDenied">系统帐户不可删除</data>
+  <data name="PLFM_SuperAdminDeleteDenied">超级管理员(superadmin)不可删除</data>
+  <data name="PLFM_CurrAccountIsLoging">当前帐户正在登录,不可删除</data>
+  <!-- 用户 -->
+  <data name="User_UserNameExists">账户/用户名已存在</data>
+  <data name="User_UserNotExists">账户/用户名不存在</data>
+  <data name="User_EmailExists">邮箱地址已存在</data>
+  <data name="User_EmailNotExists">邮箱地址不存在</data>
+  <data name="User_EmailFormatIncorrect">邮箱地址格式不正确</data>
+  <data name="User_MobileExists">手机号码已存在</data>
+  <data name="User_MobileNotExists">手机号码不存在</data>
+  <data name="User_MobileFormatIncorrect">手机号码格式不正确</data>
+  <data name="User_UserNameInvalid">无效的账户/用户名称</data>
+  <data name="User_UserNameLenNeed">账户/用户名长度不少于5位</data>
+  <data name="User_UserNameAlreadyExists">账户/用户名已存在</data>
+  <data name="User_UserPwdLenNeed">密码长度不少于6位</data>
+  <data name="User_OldPwdIncorrect">原密码不正确</data>
+  <data name="User_TwoPwdInputedNotEqual">两次密码输入不一致</data>
+  <!-- 注册 -->
+  <data name="Reg_Success">恭喜你，注册成功</data>
+  <data name="Reg_SuccessWillJumpMemberCenter">恭喜你，注册成功，即将跳转到会员中心</data>
+  <data name="Reg_Fail">非常遗憾，注册失败</data>
+  <data name="Reg_InvalidUserNameForMobile">无效的用户名,请输入11位手机号码</data>
+  <data name="Reg_InvalidUserNameForEmail">无效的用户名,请输入有效的邮箱地址</data>
+  <data name="Reg_SystemRetainsUserName">系统保留会员名称，请选择其它会员名称</data>
+  <data name="Reg_UserAccountActive">会员账号激活</data>
+  <data name="Reg_RegOkAndActiveByEmail">注册成功，请登录您的注册邮箱进行会员激活</data>
+  <!-- 登录 -->
+  <data name="Login_UserNameIncorrect">用户名不正确</data>
+  <data name="Login_EmailIncorrect">邮箱地址不正确</data>
+  <data name="Login_MobileIncorrect">手机号码不正确</data>
+  <data name="Login_PasswordIncorrect">密码不正确</data>
+  <data name="Login_LoginTooFrequently">登录频率太频繁</data>
+  <data name="Login_StatusNotAllow">账户未审核</data>
+  <data name="Login_LoginFailTooMany">连续登录失败多次，5分钟内禁止登录</data>
+  <data name="Login_Success">恭喜您登录成功</data>
+  <data name="Login_Fail">登录失败，用户名或者密码错误</data>
+  <data name="Login_SuperAdminLoginDenied">本站配置已拒绝超级管理员登录</data>
+  <!-- 重置密码 -->
+  <data name="ResetPwd_NotFindUserInfo">找不到会员信息</data>
+  <data name="ResetPwd_NewPwdNotEmpty">新密码不能为空</data>
+  <data name="ResetPwd_NewPwdConfirmNotEmpty">确认新密码不能为空</data>
+  <data name="ResetPwd_2PwdInputNoMatch">两次新密码输入不一致</data>
+  <data name="ResetPwd_NewPwdLenCannotLess6">新密码长度不能少于6位</data>
+  <data name="ResetPwd_InvalidEmailAddress">无效的邮箱地址</data>
+  <data name="ResetPwd_ResetPwdExpired">重置密码时间已过期</data>
+  <data name="ResetPwd_EmailAndRegEmailNoMatch">邮箱地址与注册邮箱不匹配</data>
+  <data name="ResetPwd_Fail">密码重置失败</data>
+  <data name="ResetPwd_Success">密码重置成功</data>
+  <!-- 修改密码 -->
+  <data name="ChangePwd_Success">修改密码成功</data>
+  <data name="ChangePwd_Fail">修改密码失败</data>
+  <data name="ChangePwd_OldPwdNotEmpty">原密码不正确</data>
+  <data name="ChangePwd_NewPwdNotEmpty">新密码不正确</data>
+  <!-- 留言反馈 -->
+  <data name="Feedback_UserNameEmpty">姓名不能为空</data>
+  <data name="Feedback_ContentEmpty">内容不能为空</data>
+  <data name="Feedback_Success">留言成功,我们将尽快答复您</data>
+  <data name="Feedback_Fail">留言失败,请联系管理员</data>
+  <!-- 投票 -->
+  <data name="Vote_Closed">投票已关闭</data>
+  <data name="Vote_ItemNotMatchMain">投票选项与主体信息不匹配</data>
+  <data name="Vote_OneVoteRequire">请选择至少一个投票项</data>
+  <data name="Vote_YouHasVoted">您已经投过票，请勿重复投票</data>
+  <!-- 收货地址 -->
+  <data name="Addr_ConsigneeNotEmpty">收件人不能为空</data>
+  <data name="Addr_DetailAddrNotEmpty">街道地址不能为空</data>
+  <data name="Addr_ZipCodeNotEmpty">邮政编码不能为空</data>
+  <data name="Addr_MobileOrPhoneMustOne">手机号码或者电话必填一项</data>
+  <data name="Addr_AddFail">添加失败</data>
+  <data name="Addr_UpdateFail">修改失败</data>
+  <!-- 会员订单 -->
+  <data name="Order_StatusIncorrect">状态不符合</data>
+  <data name="Order_NoFindOrderInfo">没有找到订单信息</data>
+</root>

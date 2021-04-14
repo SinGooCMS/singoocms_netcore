@@ -1,0 +1,66 @@
+﻿@{
+    Layout = "~/views/platform/h5/MasterPage/IFrame.cshtml"; //母版页
+}
+
+<form singoo-data-ajax="true" singoo-data-list="true">
+    <div style="padding-right: 10px;">
+        <div class="top-fix clear-fix" style="margin-top: 20px;">
+            <div class="clear-fix">
+                <ul class="btn-group clear-fix"></ul>
+                <div class="search-box focus-item fr">
+                    <input name="key" singoo-search-item="true" type="text" id="key" placeholder="请输入字典名称" />
+                    <input type="button" singoo-action="Search" name="searchbtn" value="&#xe60a;" id="searchbtn" class="search-btn iconfont" />
+                </div>
+            </div>
+        </div>
+        <table class="tab-con" id="rowItems">
+            <tr class="tab-title">
+                <td style="width: 60px;"></td>
+                <td>
+                    字典名称
+                </td>
+                <td>
+                    显示名称
+                </td>
+            </tr>
+            <tbody id="singoo-content"></tbody>
+            <script id="singoo-template" type="text/html">
+                {{#data}}
+                <tr>
+                    <td>
+                        <label>
+                            <input type='@(ViewBag.SelectType=="single"?"radio":"checkbox")' name="inputcheck" id='{{AutoID}}'
+                                   title="选择器" value='{{DictName}}' class="common-check @(ViewBag.SelectType=="single"?"radio":"checkbox")" />
+                            <span></span>
+                        </label>
+                        <input type="hidden" name="AutoID" value="{{AutoID}}" />
+                    </td>
+                    <td>
+                        {{DictName}}
+                    </td>
+                    <td class="short-input">
+                        {{DictDesc}}
+                    </td>
+                </tr>
+                {{/data}}
+                {{^data}}
+                <tr><td colspan='5'> 没有找到任何数据</td></tr>
+                {{/data}}
+            </script>
+        </table>
+        <!--分页 start-->
+        <div id="singoo-pager"></div>
+        <!--分页 end-->
+
+        <div class="profile-body" style="clear: both;">
+            <ul>
+                <li class="text-r">
+                    <input type="button" id="btnselect" value="确认选择" onclick="selectOk()" class="btn-style sure-btn" />
+                    <input id="btncancel" onclick="$.dialog.close();" type="button" value="取 消(Esc)"
+                           class="btn-style cancel-btn" />
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="/include/theme/h5/js/SelectCommon.js" type="text/javascript"></script>
+</form>
