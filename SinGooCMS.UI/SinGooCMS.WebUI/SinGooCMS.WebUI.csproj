@@ -27,14 +27,7 @@
     <!--不进行代码分析，不会生成各种语言包文件-->
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <AllowedReferenceRelatedFileExtensions>.allowedextension</AllowedReferenceRelatedFileExtensions>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="views\templates\pro-green\**" />
-    <Content Remove="views\templates\pro-green\**" />
-    <EmbeddedResource Remove="views\templates\pro-green\**" />
-    <None Remove="views\templates\pro-green\**" />
-  </ItemGroup>  
+  </PropertyGroup>  
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="5.2.0" />
@@ -60,6 +53,12 @@
     <None Update="配置说明.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="log\" />
+    <Folder Include="upload\" />
+    <Folder Include="views\templates\" />
   </ItemGroup>
 
 </Project>
